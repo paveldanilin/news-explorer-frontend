@@ -1,0 +1,14 @@
+@import './icon_logout.css';
+@import './icon_trash.css';
+@import './icon_menu.css';
+@import './icon_bookmark.css';
+@import './icon_bookmark-marked.css';
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+}

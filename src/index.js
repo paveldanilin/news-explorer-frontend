@@ -1,9 +1,12 @@
 import 'normalize.css';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
+import './components/components';
 
-function test(a, b) {
-  return a + b;
+import Dialog from './components/dialog/dialog';
+
+export function signDialogToggle(current, target) {
+  Dialog.close(current);
+  Dialog.show(target);
 }
 
-
-test(1, 1);
+export { Dialog };

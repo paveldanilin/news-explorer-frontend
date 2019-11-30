@@ -4,7 +4,75 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-  TEST
+<body style="background-color: olivedrab">
+  <button class="btn">test</button>
+  <button class="btn btn_rad-80 btn_brd-none">test</button>
+  <button class="btn btn_style-light btn_brd-1">Super test</button>
+  <button class="btn btn_style-light btn_brd-none">Light</button>
+  <button class="btn btn_style-primary btn_size-xs">Primary</button>
+  <button class="btn btn_style-primary btn_rad-100 btn_brd-none btn_size-s" onclick="Dialog.show('dialog_signin')">GO!</button>
+  <button class="btn btn_style-primary btn_rad-80 btn_brd-none btn_size-m" disabled>GGGGGGGGGGG</button>
+
+  <div style="background-color: gray">
+    TEST
+    <br>
+    <button class="btn btn_style-primary btn_brd-1 btn_rad-100 btn_size-m transparent">Ha-Ha-Ha <i class="icon icon_trash"></i> </button>
+    <button class="btn btn_brd-1 btn_rad-80 btn_size-s transparent">Logout <i class="icon icon_logout"></i></button>
+    <button class="btn btn_style-light btn_rad-8 btn_size-xxs"><i class="icon icon_menu"></i></button>
+    <button class="btn btn_style-light btn_rad-8 btn_size-xxs"><i class="icon icon_bookmark"></i></button>
+  </div>
+
+
+  <div style="width: 800px">
+    <div class="search">
+      <div class="search__textbox">
+        <input type="text" class="textbox textbox_size-m textbox_brd-none" placeholder="Test me!">
+      </div>
+      <div class="search__button">
+        <button class="btn btn_style-primary btn_size-m btn_rad-100 btn_brd-none">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dialog_signin" class="dialog">
+    <div class="dialog__content" style="width: 430px">
+      <div class="dialog__header">
+        <i class="dialog__close"></i>
+      </div>
+      <div class="dialog__body">
+          <h3>Signin</h3>
+          <form class="form" style="padding: 30px">
+            <label for="signin_email">Email</label>
+            <input id="signin_email" type="text" class="textbox textbox_size-s textbox_brd-b" placeholder="Email">
+            <label for="signin_password">Password</label>
+            <input id="signin_password" type="password" class="textbox textbox_size-s textbox_brd-b" placeholder="Password">
+            <button class="btn btn_brd-none btn_style-primary btn_size-s btn_rad-100 center">Sign in</button>
+          </form>
+        <a href="#" onclick="signDialogToggle('dialog_signin', 'dialog_signup')">->Signup</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="dialog_signup" class="dialog">
+    <div class="dialog__content" style="width: 430px">
+      <div class="dialog__header">
+        <i class="dialog__close"></i>
+      </div>
+      <div class="dialog__body">
+        <h3>Sign up</h3>
+        <form class="form" style="padding: 30px">
+          <label for="signup_email">Email</label>
+          <input id="signup_email" type="text" class="textbox textbox_size-s textbox_brd-b" placeholder="Email">
+          <label for="signup_password">Password</label>
+          <input id="signup_password" type="password" class="textbox textbox_size-s textbox_brd-b" placeholder="Password">
+          <label for="signup_name">Name</label>
+          <input id="signup_name" type="text" class="textbox textbox_size-s textbox_brd-b" placeholder="Name">
+          <button class="btn btn_brd-none btn_style-primary btn_size-s btn_rad-100 center">Sign up</button>
+        </form>
+        <a href="#" onclick="signDialogToggle('dialog_signup', 'dialog_signin')">->Signin</a>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

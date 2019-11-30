@@ -1,0 +1,11 @@
+@import './_size/textbox_size.css';
+@import './_brd/textbox_brd.css';
+
+.textbox {
+  outline: none;
+  width: 100%;
+}
+
+.textbox::placeholder {
+  color: #B6BCBF;
+}

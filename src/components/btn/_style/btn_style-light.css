@@ -1,0 +1,8 @@
+.btn_style-light {
+  background-color: #FFFFFF;
+  color: #1A1B22;
+}
+
+.btn_style-light:hover {
+  opacity: 0.8;
+}

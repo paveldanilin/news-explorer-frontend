@@ -1,0 +1,7 @@
+@import './__button/search__button.css';
+@import './__textbox/search__textbox.css';
+
+.search {
+  display: inline-flex;
+  width: 100%;
+}
