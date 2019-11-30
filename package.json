@@ -10,7 +10,8 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "core-js": "3.4.5"
+    "core-js": "3.4.5",
+    "normalize.css": "8.0.1"
   },
   "devDependencies": {
     "gh-pages": "2.1.1",
