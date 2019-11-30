@@ -3,7 +3,7 @@ import './dialog.css';
 export default class Dialog {
   static init() {
     setTimeout(() => {
-      const dialogCloseButtons = document.getElementsByClassName("dialog__close");
+      const dialogCloseButtons = document.getElementsByClassName('dialog__close');
       for (let closeButton of dialogCloseButtons) {
         const dialog = closeButton.closest('.dialog');
         if (dialog) {
@@ -13,6 +13,16 @@ export default class Dialog {
         }
       }
     }, 0);
+
+    window.addEventListener('keydown', (event) => {
+      if (event.code !== 'Escape') {
+        return;
+      }
+      const dialog = Dialog.getActiveHTMLElement();
+      if (dialog) {
+        Dialog.close(dialog.id);
+      }
+    });
   }
 
   static show(id) {
@@ -27,6 +37,25 @@ export default class Dialog {
     if (dialog && dialog.classList.contains('dialog')) {
       dialog.style.display = 'none';
     }
+  }
+
+  static toggle(targetId) {
+    const currentDialog = Dialog.getActiveHTMLElement();
+    if (!currentDialog) {
+      return;
+    }
+    Dialog.close(currentDialog.id);
+    Dialog.show(targetId);
+  }
+
+  static getActiveHTMLElement() {
+    const dialogs = document.getElementsByClassName('dialog');
+    for (let dialog of dialogs) {
+      if (dialog.style.display === 'block') {
+        return dialog;
+      }
+    }
+    return null;
   }
 }
 
