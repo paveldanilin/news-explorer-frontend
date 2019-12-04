@@ -1,50 +1,49 @@
 import './dialog.css';
+import TemplateLoader from '../../template-loader/template-loader';
+
+function resolveDialogElement(id) {
+  const htmlEl = document.getElementById(id);
+  if (!htmlEl) {
+    return null;
+  }
+  if (htmlEl.classList.contains('dialog')) {
+    return htmlEl;
+  }
+  // It is supposed to be a container element, and the dialog element is a first child element
+  return htmlEl.firstElementChild || null;
+}
 
 export default class Dialog {
-  static init() {
-    setTimeout(() => {
-      const dialogCloseButtons = document.getElementsByClassName('dialog__close');
-      for (let closeButton of dialogCloseButtons) {
-        const dialog = closeButton.closest('.dialog');
-        if (dialog) {
-          closeButton.onclick = () => {
-            dialog.style.display = 'none';
-          };
-        }
-      }
-    }, 0);
-
-    window.addEventListener('keydown', (event) => {
-      if (event.code !== 'Escape') {
-        return;
-      }
-      const dialog = Dialog.getActiveHTMLElement();
-      if (dialog) {
-        Dialog.close(dialog.id);
-      }
-    });
-  }
-
-  static show(id) {
-    const dialog = document.getElementById(id);
-    if (dialog && dialog.classList.contains('dialog')) {
-      dialog.style.display = 'block';
+  static show(el) {
+    let dialogEl = el;
+    if (typeof dialogEl === 'string' || typeof dialogEl === 'number') {
+      dialogEl = resolveDialogElement(dialogEl);
+    }
+    if (dialogEl) {
+      dialogEl.style.display = 'block';
     }
   }
 
-  static close(id) {
-    const dialog = document.getElementById(id);
-    if (dialog && dialog.classList.contains('dialog')) {
-      dialog.style.display = 'none';
+  static close(el) {
+    let dialogEl = el;
+    if (typeof dialogEl === 'string' || typeof dialogEl === 'number') {
+      dialogEl = resolveDialogElement(dialogEl);
+    }
+    if (dialogEl) {
+      dialogEl.style.display = 'none';
+      // Clear all inputs
+      dialogEl.querySelectorAll('input').forEach((inputEl) => {
+        inputEl.value = '';
+      });
     }
   }
 
   static toggle(targetId) {
-    const currentDialog = Dialog.getActiveHTMLElement();
-    if (!currentDialog) {
+    const currentDialogEl = Dialog.getActiveHTMLElement();
+    if (!currentDialogEl) {
       return;
     }
-    Dialog.close(currentDialog.id);
+    Dialog.close(currentDialogEl);
     Dialog.show(targetId);
   }
 
@@ -59,4 +58,26 @@ export default class Dialog {
   }
 }
 
-Dialog.init();
+// Register 'Escape' handler
+window.addEventListener('keydown', (event) => {
+  if (event.code !== 'Escape') {
+    return;
+  }
+  const dialog = Dialog.getActiveHTMLElement();
+  if (dialog && dialog.parentNode) {
+    Dialog.close(dialog.parentNode.id);
+  }
+});
+
+// Load dialog templates
+TemplateLoader.load('data-dialog', (containerEl) => {
+  const closeButtons = containerEl.getElementsByClassName('dialog__close');
+  for (let closeButton of closeButtons) {
+    const dialog = closeButton.closest('.dialog');
+    if (dialog) {
+      closeButton.onclick = () => {
+        dialog.style.display = 'none';
+      };
+    }
+  }
+});

@@ -4,4 +4,8 @@ import './components/components';
 
 import Dialog from './components/dialog/dialog';
 
-export { Dialog };
+function signinHandler(el) {
+  Dialog.close('dialog_signin');
+}
+
+export { Dialog, signinHandler };
