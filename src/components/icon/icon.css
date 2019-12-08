@@ -7,6 +7,8 @@
 @import './icon_close-black.css';
 @import './icon_close-white.css';
 @import './icon_avatar.css';
+@import './icon_github.css';
+@import './icon_fb.css';
 
 .icon {
   display: inline-block;

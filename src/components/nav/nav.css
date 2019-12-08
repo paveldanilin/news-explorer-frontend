@@ -1,6 +1,7 @@
 @import './__item/nav__item.css';
 @import './__item_selected/nav__item_selected.css';
 @import './__item_hoverable/nav__item_hoverable.css';
+@import './_style/nav_style.css';
 
 .nav {
   list-style-type: none;

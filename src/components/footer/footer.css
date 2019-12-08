@@ -1,0 +1,9 @@
+@import './__nav/footer__nav.css';
+@import './__social/footer__social.css';
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+  vertical-align: middle;
+}

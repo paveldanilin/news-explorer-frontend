@@ -36,7 +36,7 @@
   }
 
   /* hide all items except first one */
-  .nav .nav__item:not(:first-child) {
+  .header .nav .nav__item:not(:first-child) {
     display: none;
   }
 
