@@ -1,10 +1,23 @@
 .search__textbox {
-  width: 90%;
+  width: 440px;
 }
 
 .search__textbox input[type="text"] {
   width: 100%;
   border-radius: 100px;
-  padding-right: 20px;
+ /* padding-right: 25px;*/
+  padding-left: 25px;
+  padding-right: 25px;
   border: none;
+  outline: none;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .search__textbox {
+  }
+  .search__textbox input[type="text"] {
+    padding-left: 12px;
+    padding-right: 0;
+  }
 }

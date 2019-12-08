@@ -1,3 +1,15 @@
 .search__button {
-  width: 10%;
+  width: 168px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .search__button {
+    width: 100%;
+    padding-top: 16px;
+  }
+
+  .search__button .btn {
+    width: 100%;
+  }
 }
