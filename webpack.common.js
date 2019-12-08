@@ -11,14 +11,14 @@ module.exports = {
     filename: 'index.js',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    globalObject: 'this'
+    globalObject: 'this',
   },
 
   plugins: [
     new CopyPlugin([
       {
         from: 'src/templates',
-        to: 'templates'
+        to: 'templates',
       },
     ]),
     new MiniCssExtractPlugin({
@@ -27,12 +27,12 @@ module.exports = {
       ignoreOrder: false,
       options: {
         reloadAll: true,
-      }
+      },
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       hash: true,
-      inject: true
+      inject: true,
     }),
   ],
 
@@ -47,25 +47,24 @@ module.exports = {
               outputPath: './fonts',
             },
           },
-        ]
+        ],
       },
       {
         test: /\.(png|jpg|gif|ico|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[name].[ext]'
-            }
-          }
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: 'images/[name].[ext]',
+          },
+        },
         ],
       },
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.css$/,
@@ -76,19 +75,19 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1
+              importLoaders: 1,
             },
           },
           {
             loader: 'postcss-loader',
             options: {
               config: {
-                path: path.resolve(__dirname, 'postcss.config.js')
+                path: path.resolve(__dirname, 'postcss.config.js'),
               },
             },
           },
         ],
       },
-    ]
-  }
+    ],
+  },
 };

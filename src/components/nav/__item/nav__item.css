@@ -8,7 +8,6 @@
   font-family: var(--primary-font-family);
   font-style: var(--primary-font-style);
   font-weight: 500;
-  border: 1px solid red;
 }
 
 .nav__item a {

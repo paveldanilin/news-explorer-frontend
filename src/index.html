@@ -8,7 +8,7 @@
 <body>
   <header class="header">
     <ul class="nav header__nav transparent">
-      <li class="nav__item logo logo_light">NewsExplorer</li>
+      <li class="nav__item logo logo_light"><a href="#">NewsExplorer</a></li>
       <li class="nav__item nav__item_pull-right"><a href="#">Главная</a></li>
       <li class="nav__item"><a href="#">О проекте</a></li>
       <li class="nav__item">
@@ -41,21 +41,15 @@
     </div>
   </header>
 
-  <button class="btn">test</button>
-  <button class="btn btn_rad-80 btn_brd-none">test</button>
-  <button class="btn btn_style-light btn_brd-1">Super test</button>
-  <button class="btn btn_style-light btn_brd-none">Light</button>
-  <button class="btn btn_style-primary btn_size-xs">Primary</button>
-  <button class="btn btn_style-primary btn_rad-100 btn_brd-none btn_size-s" onclick="Dialog.show('dialog_signin')">GO!</button>
-  <button class="btn btn_style-primary btn_rad-80 btn_brd-none btn_size-m" disabled>GGGGGGGGGGG</button>
-
-  <div style="background-color: gray">
-    TEST
-    <br>
-    <button class="btn btn_style-primary btn_brd-1 btn_rad-100 btn_size-m transparent">Ha-Ha-Ha <i class="icon icon_trash"></i> </button>
-    <button class="btn btn_brd-1 btn_rad-80 btn_size-s transparent">Logout <i class="icon icon_logout"></i></button>
-    <button class="btn btn_style-light btn_rad-8 btn_size-xxs"><i class="icon icon_menu"></i></button>
-    <button class="btn btn_style-light btn_rad-8 btn_size-xxs"><i class="icon icon_bookmark"></i></button>
+  <div class="about">
+    <div class="about__info card">
+      <img src="images/avatar.png" class="about__avatar" alt="Author avatar">
+      <div class="about__text card__body">
+        <h2>Об авторе</h2>
+        <p>Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.</p>
+        <p>Также можно рассказать о процессе обучения в Практикуме, чему вы тут научились, и чем можете помочь потенциальным заказчикам.</p>
+      </div>
+    </div>
   </div>
 
   <span id="dialog_signin" data-dialog="templates/signin-dialog.html"></span>

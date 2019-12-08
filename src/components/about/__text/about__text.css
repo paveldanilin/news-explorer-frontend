@@ -1,0 +1,27 @@
+.about__text {
+  width: 600px;
+  margin-left: auto;
+  padding-top: 51px;
+}
+
+.about__text p {
+  padding-bottom: 24px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .about__text {
+    width: 288px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .about__text {
+    width: 424px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -9,3 +9,5 @@ import './btn/btn.css';
 import './dropdown/dropdown';
 import './logo/logo.css';
 import './header/header.css';
+import './about/about.css';
+import './card/card.css';

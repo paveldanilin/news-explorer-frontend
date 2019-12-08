@@ -1,0 +1,15 @@
+@import './__info/about__info.css';
+@import './__text/about__text.css';
+@import './__avatar/about__avatar.css';
+
+.about {
+  height: 624px;
+  width: 100%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .about .card {
+    flex-direction: column;
+  }
+}

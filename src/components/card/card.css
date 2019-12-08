@@ -1,0 +1,6 @@
+@import './__body/card__body.css';
+@import './_dir/card_dir.css';
+
+.card {
+  display: flex;
+}
