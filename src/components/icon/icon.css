@@ -1,8 +1,11 @@
 @import './icon_logout.css';
 @import './icon_trash.css';
 @import './icon_menu.css';
+@import './icon_menu_white.css';
 @import './icon_bookmark.css';
 @import './icon_bookmark-marked.css';
+@import './icon_close-black.css';
+@import './icon_close-white.css';
 
 .icon {
   display: inline-block;

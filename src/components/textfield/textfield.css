@@ -1,0 +1,11 @@
+@import './_size/textfield_size.css';
+@import './_brd/textfield_brd.css';
+
+.textfield {
+  outline: none;
+  width: 100%;
+}
+
+.textfield::placeholder {
+  color: #B6BCBF;
+}

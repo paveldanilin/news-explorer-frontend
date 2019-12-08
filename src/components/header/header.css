@@ -1,0 +1,15 @@
+@import './__nav/header__nav.css';
+@import './__title/header__title.css';
+@import './__subtitle/header__subtitle.css';
+@import './__searchbox/header__searchbox.css';
+@import './__menu/header__menu.css';
+@import './__menu-button/header__menu-button.css';
+
+.header {
+  border: 1px solid red;
+  background-image: url(../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 576px;
+}

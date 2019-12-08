@@ -1,0 +1,8 @@
+.dialog__footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 28px;
+}

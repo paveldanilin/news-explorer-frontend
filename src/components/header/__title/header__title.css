@@ -1,0 +1,38 @@
+.header__title {
+  color: var(--secondary-color);
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 60px;
+  line-height: 64px;
+  width: 608px;
+  margin: 120px auto 0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .header__title {
+    color: var(--secondary-color);
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 40px;
+    width: 385px;
+    margin: 80px auto 0;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .header__title {
+    color: var(--secondary-color);
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 40px;
+    width: 425px;
+    margin: 100px auto 0;
+  }
+}

@@ -1,0 +1,27 @@
+.header__searchbox {
+  max-width: 608px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 64px;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .header__searchbox {
+    max-width: 288px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 64px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .header__searchbox {
+    max-width: 448px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 64px;
+  }
+}

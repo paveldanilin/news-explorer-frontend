@@ -1,0 +1,20 @@
+<div class="dialog dialog_style-white dialog_align-center">
+  <div class="dialog__content dialog__content_border-full dialog-width">
+    <div class="dialog__header">
+      <h3>Вход</h3>
+      <i class="dialog__close icon_close-black"></i>
+    </div>
+    <div class="dialog__body">
+      <form class="form">
+        <label for="signin_email">Email</label>
+        <input id="signin_email" type="text" class="textfield textfield_size-s textfield_brd-b" placeholder="Email">
+        <label for="signin_password">Password</label>
+        <input id="signin_password" type="password" class="textfield textfield_size-s textfield_brd-b" placeholder="Password">
+        <button class="btn btn_brd-none btn_style-primary btn_size-s btn_rad-100 full center" onclick="signinHandler(this)">Войти</button>
+      </form>
+    </div>
+    <div class="dialog__footer">
+      <span class="center">или <a href="#" onclick="Dialog.toggle('dialog_signup')">Зарегистрироваться</a></span>
+    </div>
+  </div>
+</div>

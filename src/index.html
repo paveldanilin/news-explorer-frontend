@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Title</title>
 </head>
-<body style="background-color: olivedrab">
+<body>
+  <header class="header">
+    <ul class="nav header__nav transparent">
+      <li class="nav__item logo logo_light">NewsExplorer</li>
+      <li class="nav__item nav__item_pull-right"><a href="#">Главная</a></li>
+      <li class="nav__item"><a href="#">О проекте</a></li>
+      <li class="nav__item">
+        <button class="btn btn_rad-80 btn_brd-1 btn_style-snow btn_size-s transparent" onclick="Dialog.show('dialog_signin')">Авторизоваться</button>
+      </li>
+      <li class="header__menu-button">
+        <button class="btn btn_brd-none transparent btn_size-xxs" onclick="Dialog.show('dialog_menu')">
+          <i class="icon icon_menu_white"></i>
+        </button>
+      </li>
+    </ul>
+
+    <h1 class="header__title">
+      Что в мире <br> творится?
+    </h1>
+
+    <p class="header__subtitle">
+      Находите самые свежие статьи на любую тему и сохраняйте в <br> своём личном кабинете.
+    </p>
+
+    <div class="header__searchbox">
+      <div class="search">
+        <div class="search__textbox">
+          <input type="text" class="textfield textfield_size-m textfield_brd-none" placeholder="Test me!">
+        </div>
+        <div class="search__button">
+          <button class="btn btn_style-primary btn_size-m btn_rad-100 btn_brd-none">Search</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
   <button class="btn">test</button>
   <button class="btn btn_rad-80 btn_brd-none">test</button>
   <button class="btn btn_style-light btn_brd-1">Super test</button>
@@ -22,22 +58,9 @@
     <button class="btn btn_style-light btn_rad-8 btn_size-xxs"><i class="icon icon_bookmark"></i></button>
   </div>
 
-
-  <div style="width: 800px">
-    <div class="search">
-      <div class="search__textbox">
-        <input type="text" class="textbox textbox_size-m textbox_brd-none" placeholder="Test me!">
-      </div>
-      <div class="search__button">
-        <button class="btn btn_style-primary btn_size-m btn_rad-100 btn_brd-none">Search</button>
-      </div>
-    </div>
-  </div>
-
-  <span id="card" data-component-test></span>
-
-  <span id="dialog_signin" data-dialog="./signin-dialog.html"></span>
-  <span id="dialog_signup" data-dialog="./signup-dialog.html"></span>
+  <span id="dialog_signin" data-dialog="templates/signin-dialog.html"></span>
+  <span id="dialog_signup" data-dialog="templates/signup-dialog.html"></span>
+  <span id="dialog_menu" data-dialog="templates/menu-dialog.html"></span>
 
 </body>
 </html>

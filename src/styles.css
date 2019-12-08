@@ -1,0 +1,7 @@
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.dialog-width {
+  width: 420px;
+}

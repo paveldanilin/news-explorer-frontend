@@ -1,5 +1,5 @@
 import './dialog.css';
-import TemplateLoader from '../../template-loader/template-loader';
+import { loadHTML } from '../../loader';
 
 function resolveDialogElement(id) {
   const htmlEl = document.getElementById(id);
@@ -70,14 +70,18 @@ window.addEventListener('keydown', (event) => {
 });
 
 // Load dialog templates
-TemplateLoader.load('data-dialog', (containerEl) => {
-  const closeButtons = containerEl.getElementsByClassName('dialog__close');
-  for (let closeButton of closeButtons) {
-    const dialog = closeButton.closest('.dialog');
-    if (dialog) {
-      closeButton.onclick = () => {
-        dialog.style.display = 'none';
-      };
-    }
-  }
-});
+setTimeout(() => {
+  document.querySelectorAll('[data-dialog]').forEach((el) => {
+    loadHTML(el.getAttribute('data-dialog'), el, null, (container) => {
+      const closeButtons = container.getElementsByClassName('dialog__close');
+      for (let closeButton of closeButtons) {
+        const dialog = closeButton.closest('.dialog');
+        if (dialog) {
+          closeButton.onclick = () => {
+            dialog.style.display = 'none';
+          };
+        }
+      }
+    });
+  });
+}, 0);

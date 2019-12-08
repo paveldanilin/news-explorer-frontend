@@ -5,3 +5,15 @@
 .center {
   margin:0 auto;
 }
+
+.pull-right {
+  float: right !important;
+}
+
+.hidden {
+  display: none;
+}
+
+.full {
+  width: 100%;
+}
