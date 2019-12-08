@@ -114,11 +114,11 @@ export default class HttpRequest {
       HttpRequest.METHOD_PATCH,
       HttpRequest.METHOD_POST,
       HttpRequest.METHOD_PUT,
-      HttpRequest.METHOD_TRACE
+      HttpRequest.METHOD_TRACE,
     ];
 
-    if (! allowed.includes(reqMethod)) {
-      throw new Error('`method` option value must be on of [' + allowed.join(',') + ']');
+    if (!allowed.includes(reqMethod)) {
+      throw new Error(`\`method\` option value must be on of [${allowed.join(',')}]`);
     }
 
     return reqMethod;
@@ -139,8 +139,8 @@ export default class HttpRequest {
 
     const allowed = [HttpRequest.MODE_SAME_ORIGIN, HttpRequest.MODE_CORS, HttpRequest.MODE_NO_CORS];
 
-    if (! allowed.includes(reqMode)) {
-      throw new Error('`mode` option value must be on of [' + allowed.join(',') + ']');
+    if (!allowed.includes(reqMode)) {
+      throw new Error(`\`mode\` option value must be on of [${allowed.join(',')}]`);
     }
 
     return reqMode;
@@ -159,10 +159,14 @@ export default class HttpRequest {
 
     reqCredentials = reqCredentials.toLowerCase();
 
-    const allowed = [HttpRequest.CREDENTIALS_OMIT, HttpRequest.CREDENTIALS_INCLUDE, HttpRequest.CREDENTIALS_SAME_ORIGIN];
+    const allowed = [
+      HttpRequest.CREDENTIALS_OMIT,
+      HttpRequest.CREDENTIALS_INCLUDE,
+      HttpRequest.CREDENTIALS_SAME_ORIGIN,
+    ];
 
-    if (! allowed.includes(reqCredentials)) {
-      throw new Error('`credentials` option value must be on of [' + allowed.join(',') + ']');
+    if (!allowed.includes(reqCredentials)) {
+      throw new Error(`\`credentials\` option value must be on of [${allowed.join(',')}]`);
     }
 
     return reqCredentials;
@@ -187,11 +191,11 @@ export default class HttpRequest {
       HttpRequest.CACHE_NO_CACHE,
       HttpRequest.CACHE_NO_STORE,
       HttpRequest.CACHE_ONLY_IF_CACHED,
-      HttpRequest.CACHE_RELOAD
+      HttpRequest.CACHE_RELOAD,
     ];
 
-    if (! allowed.includes(reqCache)) {
-      throw new Error('`cache` option value must be on of [' + allowed.join(',') + ']');
+    if (!allowed.includes(reqCache)) {
+      throw new Error(`\`cache\` option value must be on of [${allowed.join(',')}]`);
     }
 
     return reqCache;
@@ -212,8 +216,8 @@ export default class HttpRequest {
 
     const allowed = [HttpRequest.REDIRECT_FOLLOW, HttpRequest.REDIRECT_ERROR];
 
-    if (! allowed.includes(reqRedirect)) {
-      throw new Error('`redirect` option value must be on of [' + allowed.join(',') + ']');
+    if (!allowed.includes(reqRedirect)) {
+      throw new Error(`\`redirect\` option value must be on of [${allowed.join(',')}]`);
     }
 
     return reqRedirect;

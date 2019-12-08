@@ -37,4 +37,4 @@ class Search {
   }
 }
 
-export let search = new Search();
+export const search = new Search();

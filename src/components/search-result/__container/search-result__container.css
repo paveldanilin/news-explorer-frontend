@@ -10,3 +10,16 @@
 .search-result__container h2,h3,h4,h5 {
   text-align: left;
 }
+
+
+@media only screen and (max-width: 600px) {
+  .search-result__container {
+    width: 288px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search-result__container {
+    width: 688px;
+  }
+}

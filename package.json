@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "prod": "webpack --config webpack.prod.js",
-    "dev": "webpack --config webpack.dev.js",
-    "local": "npm run-script dev && webpack-dev-server --config webpack.dev.js --progress",
-    "lint": "eslint src"
+    "dev": "webpack-dev-server --config webpack.dev.js --progress",
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint src",
+    "fix": "eslint src --fix"
   },
   "dependencies": {
     "core-js": "3.4.5",

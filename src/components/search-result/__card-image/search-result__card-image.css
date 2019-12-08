@@ -6,3 +6,17 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+@media only screen and (max-width: 600px) {
+  .search-result__card-image {
+    width: 288px;
+    height: 196px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search-result__card-image {
+    width: 224px;
+    height: 150px;
+  }
+}

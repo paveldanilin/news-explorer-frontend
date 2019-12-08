@@ -15,7 +15,7 @@ class SearchResult {
     this.removeAll();
 
     results.forEach((cardModel) => {
-      this.gridHtmlElement.appendChild(this.createCard(cardModel));
+      this.gridHtmlElement.appendChild(SearchResult.createCard(cardModel));
     });
 
     this.endLoading();
@@ -41,22 +41,15 @@ class SearchResult {
     }
   }
 
-  /*
-    <div class="card card_dir-ver">
-      <img src="images/avatar.png" alt="Author avatar">
-      <div class="card__body">
-        <h2>Об авторе</h2>
-        <p>Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.</p>
-        <p>Также можно рассказать о процессе обучения в Практикуме, чему вы тут научились, и чем можете помочь потенциальным заказчикам.</p>
-      </div>
-    </div>
-   */
-  createCard(cardModel) {
-    const { imageLink, createdAt, title, contentText, sourceLink, sourceLabel, cardId } = cardModel;
+  static createCard(cardModel) {
+    const {
+      imageLink, title, contentText, sourceLink, sourceLabel, cardId,
+    } = cardModel;
 
     const cardEl = document.createElement('div');
     cardEl.classList.add('card');
     cardEl.classList.add('card_dir-ver');
+    cardEl.setAttribute('id', cardId);
 
     const img = document.createElement('div');
     img.style.backgroundImage = `url(${imageLink})`;
@@ -73,6 +66,7 @@ class SearchResult {
 
     const source = document.createElement('p');
     source.innerText = sourceLabel;
+    source.href = sourceLink;
     source.classList.add('search-result__card-source');
 
     const body = document.createElement('div');
@@ -89,4 +83,4 @@ class SearchResult {
   }
 }
 
-export let searchResult = new SearchResult();
+export const searchResult = new SearchResult();

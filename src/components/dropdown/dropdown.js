@@ -11,7 +11,7 @@ Array.from(dropdowns).forEach((el) => {
   const btn = el.querySelector(DROPDOWN_BTN_SELECTOR);
   const content = el.querySelector(DROPDOWN_CONTENT_SELECTOR);
 
-  btn.addEventListener('click', (e) => {
+  btn.addEventListener('click', () => {
     content.classList.toggle(DROPDOWN_CONTENT_VISIBLE_CLS);
   });
 });

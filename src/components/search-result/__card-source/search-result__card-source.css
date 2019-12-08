@@ -10,3 +10,7 @@
   text-align: left;
   padding-top: 18px;
 }
+
+.search-result__card-source a {
+  text-align: left;
+}

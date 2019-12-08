@@ -1,15 +1,15 @@
-import HttpClient from "./http-client/http-client";
+import HttpClient from './http-client/http-client';
 
 const httpClient = HttpClient.create({
-  responseFormat: HttpClient.RESPONSE_TEXT
+  responseFormat: HttpClient.RESPONSE_TEXT,
 });
 
-const loadHTML = (url, container, onLoad, onInject)  => {
+const loadHTML = (url, container, onLoad, onInject) => {
   let loadedTemplate = '';
   let containers = !container ? [] : [container];
 
   if (typeof container === 'string') {
-    containers = document.querySelectorAll(selector);
+    containers = document.querySelectorAll(container);
   }
 
   httpClient.fetch(url).then((templateHTML) => {
@@ -20,20 +20,20 @@ const loadHTML = (url, container, onLoad, onInject)  => {
     }
 
     containers.forEach((containerEl) => {
-      containerEl.innerHTML = loadedTemplate;
+      const el = containerEl;
+      el.innerHTML = loadedTemplate;
       if (typeof onInject === 'function') {
-        onInject(containerEl, loadedTemplate);
+        onInject(el, loadedTemplate);
       }
     });
   });
-
 };
 
-const loadJS = (url, onLoad) => {
+const loadJS = (url) => {
   const ref = document.getElementsByTagName('script')[0];
   const script = document.createElement('script');
   script.src = url;
-  ref.parentNode.insertBefore( script, ref );
+  ref.parentNode.insertBefore(script, ref);
 };
 
 export { loadHTML, loadJS };

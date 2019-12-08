@@ -5,3 +5,15 @@
   grid-template-columns: 400px 400px 400px;
   grid-column-gap: 16px;
 }
+
+@media only screen and (max-width: 600px) {
+  .search-result__grid {
+    grid-template-columns: 288px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search-result__grid {
+    grid-template-columns: 288px;
+  }
+}

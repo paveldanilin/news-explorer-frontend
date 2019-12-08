@@ -33,7 +33,8 @@ export default class Dialog {
       dialogEl.style.display = 'none';
       // Clear all inputs
       dialogEl.querySelectorAll('input').forEach((inputEl) => {
-        inputEl.value = '';
+        const input = inputEl;
+        input.value = '';
       });
     }
   }
@@ -49,11 +50,14 @@ export default class Dialog {
 
   static getActiveHTMLElement() {
     const dialogs = document.getElementsByClassName('dialog');
-    for (let dialog of dialogs) {
+
+    for (let i = 0; i < dialogs.length; i += 1) {
+      const dialog = dialogs[i];
       if (dialog.style.display === 'block') {
         return dialog;
       }
     }
+
     return null;
   }
 }
@@ -74,7 +78,9 @@ setTimeout(() => {
   document.querySelectorAll('[data-dialog]').forEach((el) => {
     loadHTML(el.getAttribute('data-dialog'), el, null, (container) => {
       const closeButtons = container.getElementsByClassName('dialog__close');
-      for (let closeButton of closeButtons) {
+
+      for (let i = 0; i < closeButtons.length; i += 1) {
+        const closeButton = closeButtons[i];
         const dialog = closeButton.closest('.dialog');
         if (dialog) {
           closeButton.onclick = () => {
