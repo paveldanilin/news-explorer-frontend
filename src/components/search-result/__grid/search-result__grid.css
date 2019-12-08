@@ -1,0 +1,7 @@
+.search-result__grid {
+  padding-top:64px;
+  padding-bottom: 64px;
+  display: grid;
+  grid-template-columns: 400px 400px 400px;
+  grid-column-gap: 16px;
+}

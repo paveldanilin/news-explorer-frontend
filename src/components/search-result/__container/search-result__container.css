@@ -1,0 +1,12 @@
+.search-result__container {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1232px;
+  text-align: center;
+}
+
+.search-result__container h2,h3,h4,h5 {
+  text-align: left;
+}
