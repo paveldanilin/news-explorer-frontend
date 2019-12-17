@@ -1,7 +1,0 @@
-.dropdown_align-right {
-  float: right;
-}
-
-.dropdown_align-right > .dropdown__content {
-  right: 0;
-}

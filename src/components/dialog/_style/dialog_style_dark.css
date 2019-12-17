@@ -1,8 +1,8 @@
-.dialog_style-dark .dialog__content {
+.dialog_style_dark .dialog__content {
   background-color: #1A1B22;
   color:  #FFFFFF;
 }
 
-.dialog_style-dark .dialog__header {
+.dialog_style_dark .dialog__header {
   box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
 }

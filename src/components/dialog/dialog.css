@@ -1,9 +1,9 @@
-@import 'dialog__body.css';
-@import 'dialog__close.css';
-@import 'dialog__header.css';
-@import 'dialog__footer.css';
-@import '_align/dialog_align.css';
+@import '__body/dialog__body.css';
+@import '__close/dialog__close.css';
+@import '__header/dialog__header.css';
+@import '__footer/dialog__footer.css';
 @import '__content/dialog__content.css';
+@import '_align/dialog_align.css';
 @import '_style/dialog_style.css';
 
 .dialog {
