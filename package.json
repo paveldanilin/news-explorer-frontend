@@ -4,8 +4,8 @@
   "description": "news-explorer-frontend",
   "main": "index.js",
   "scripts": {
-    "prod": "webpack --config webpack.prod.js",
-    "dev": "webpack-dev-server --config webpack.dev.js --progress",
+    "prod": "webpack --mode=production --config webpack.config.js",
+    "dev": "webpack-dev-server --mode=development --config webpack.config.js --progress",
     "deploy": "gh-pages -d dist",
     "lint": "eslint src",
     "fix": "eslint src --fix"
@@ -22,7 +22,6 @@
     "eslint-plugin-import": "2.18.2",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10",
-    "webpack-merge": "4.2.2",
     "webpack-dev-server": "3.9.0",
     "webpack-md5-hash": "0.0.6",
     "copy-webpack-plugin": "5.0.5",
@@ -41,7 +40,8 @@
     "image-webpack-loader": "6.0.0",
     "autoprefixer": "9.7.2",
     "cssnano": "4.1.10",
-    "path": "0.12.7"
+    "path": "0.12.7",
+    "cross-env": "6.0.3"
   },
   "author": "",
   "license": "ISC"
