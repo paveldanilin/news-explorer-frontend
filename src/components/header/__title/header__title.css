@@ -9,30 +9,18 @@
   margin: 120px auto 0;
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+@media (min-width: 320px) and (max-width: 767px) {
   .header__title {
-    color: var(--secondary-color);
-    font-family: Roboto Slab;
-    font-style: normal;
-    font-weight: normal;
+    width: 285px;
     font-size: 36px;
     line-height: 40px;
-    width: 385px;
-    margin: 80px auto 0;
   }
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 768px) {
-  .header__title {
-    color: var(--secondary-color);
-    font-family: Roboto Slab;
-    font-style: normal;
-    font-weight: normal;
+@media (min-width: 768px) and (max-width: 1439px) {
+  .header__title{
+    width: 385px;
     font-size: 36px;
     line-height: 40px;
-    width: 425px;
-    margin: 100px auto 0;
   }
 }

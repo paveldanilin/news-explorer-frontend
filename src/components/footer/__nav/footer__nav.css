@@ -8,8 +8,7 @@
   padding-left: 21px;
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+@media (min-width: 320px) and (max-width: 767px) {
   .footer .nav {
     flex-direction: column;
     align-items: flex-start;

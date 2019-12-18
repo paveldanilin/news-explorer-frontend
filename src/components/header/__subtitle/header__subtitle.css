@@ -9,30 +9,18 @@
   width: 608px;
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+@media (min-width: 320px) and (max-width: 767px) {
   .header__subtitle {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
+    width: 288px;
     font-size: 18px;
     line-height: 24px;
-    color: var(--secondary-color);
-    margin: 16px auto 0;
-    width: 288px;
   }
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 768px) {
-  .header__subtitle {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
+@media (min-width: 768px) and (max-width: 1439px) {
+  .header__subtitle{
+    width: 452px;
     font-size: 18px;
     line-height: 24px;
-    color: var(--secondary-color);
-    margin: 32px auto 0;
-    width: 452px;
   }
 }
