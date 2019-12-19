@@ -5,6 +5,7 @@
 @import '_close/icon_close.css';
 @import '_social/icon_social.css';
 @import '_size/icon_size.css';
+@import '_noresult/icon_noresult.css';
 
 .icon {
   display: inline-block;
