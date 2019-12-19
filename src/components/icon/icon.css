@@ -1,20 +1,13 @@
-@import './icon_logout.css';
-@import './icon_trash.css';
-@import './icon_menu.css';
-@import './icon_menu_white.css';
-@import './icon_bookmark.css';
-@import './icon_bookmark-marked.css';
-@import './icon_close-black.css';
-@import './icon_close-white.css';
-@import './icon_avatar.css';
-@import './icon_github.css';
-@import './icon_fb.css';
+@import '_logout/icon_logout.css';
+@import '_trash/icon_trash.css';
+@import '_menu/icon_menu.css';
+@import '_bookmark/icon_bookmark.css';
+@import '_close/icon_close.css';
+@import '_social/icon_social.css';
+@import '_size/icon_size.css';
 
 .icon {
   display: inline-block;
   vertical-align: middle;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 24px;
-  height: 24px;
+  border: 1px solid red;
 }

@@ -30,6 +30,7 @@
     "@babel/polyfill": "7.7.0",
     "css-loader": "3.2.0",
     "file-loader": "5.0.2",
+    "html-loader": "0.5.5",
     "babel-loader": "8.0.6",
     "postcss": "7.0.23",
     "postcss-loader": "3.0.0",
