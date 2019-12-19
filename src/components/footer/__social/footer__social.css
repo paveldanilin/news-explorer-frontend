@@ -11,8 +11,9 @@
     margin-right: 18px;
   }
 
-  .footer__social .nav {
+  .footer .footer__social {
     flex-direction: row;
+    align-items: self-start;
   }
 }
 

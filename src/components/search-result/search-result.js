@@ -1,5 +1,4 @@
 import './search-result.css';
-import Spinner from '../spinner/spinner';
 
 class SearchResult {
   constructor() {
@@ -22,13 +21,13 @@ class SearchResult {
   }
 
   beginLoading() {
-    Spinner.show('dual-ring');
+    document.getElementById('loading').style.display = 'flex';
     this.htmlElement.style.display = 'none';
     this.removeAll();
   }
 
   endLoading() {
-    Spinner.closeActive();
+    document.getElementById('loading').style.display = 'none';
     this.htmlElement.style.display = 'block';
   }
 

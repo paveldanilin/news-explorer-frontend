@@ -10,7 +10,7 @@
 
 @media (min-width: 320px) and (max-width: 767px) {
   .about__text {
-    width: 288px;
+    max-width: 288px;
     margin-left: auto;
     margin-right: auto;
   }
