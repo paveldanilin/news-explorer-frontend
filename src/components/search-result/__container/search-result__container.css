@@ -5,6 +5,7 @@
   margin-right: auto;
   width: 1232px;
   text-align: center;
+  border: 1px solid red;
 }
 
 .search-result__container h2,h3,h4,h5 {

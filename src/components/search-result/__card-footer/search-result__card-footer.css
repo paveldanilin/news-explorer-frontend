@@ -4,3 +4,9 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search-result__card-footer {
+    margin-bottom: 28px;
+  }
+}
