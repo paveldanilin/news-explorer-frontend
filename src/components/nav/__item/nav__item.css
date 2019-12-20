@@ -1,5 +1,5 @@
-@import '../__item_hoverable/nav__item_hoverable.css';
-@import '../__item_selected/nav__item_selected.css';
+@import '_hoverable/nav__item_hoverable.css';
+@import '_selected/nav__item_selected.css';
 @import './_pull-right/nav__item_pull-right.css';
 
 .nav__item {
@@ -11,7 +11,6 @@
 }
 
 .nav__item a {
-  color: white;
   text-align: center;
   text-decoration: none;
 }

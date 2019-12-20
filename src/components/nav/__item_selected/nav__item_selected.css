@@ -1,8 +1,0 @@
-.nav__item_selected {
-  color: green;
-  letter-spacing: 0.06em;
-}
-
-.nav__item_selected a:hover {
-  cursor: pointer;
-}

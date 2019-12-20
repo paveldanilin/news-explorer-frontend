@@ -2,7 +2,8 @@
   padding-left: 24px;
   padding-right: 24px;
   padding-top:  20px;
-  height: 304px;
+  max-height: 304px;
+  min-height: 204px;
   background-color: white;
 }
 
@@ -14,7 +15,8 @@
 
 @media (min-width: 768px) and (max-width: 1439px) {
   .search-result__card-body {
-    height: 280px;
+    max-height: 280px;
+    min-height: 280px;
     padding-left: 16px;
     padding-right: 16px;
     padding-top:  16px;

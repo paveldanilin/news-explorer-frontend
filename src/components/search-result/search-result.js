@@ -74,7 +74,7 @@ class SearchResult {
     text.innerText = contentText;
     text.classList.add('search-result__card-text');
 
-    const source = document.createElement('p');
+    const source = document.createElement('a');
     source.innerText = sourceLabel;
     source.href = sourceLink;
     source.classList.add('search-result__card-source');
