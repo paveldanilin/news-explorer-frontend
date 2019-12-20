@@ -15,3 +15,4 @@ import './card/card.css';
 import './footer/footer.css';
 import './search-result/search-result';
 import './loading/loading.css';
+import './noresult/noresult.css';

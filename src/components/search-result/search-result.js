@@ -18,9 +18,16 @@ class SearchResult {
     });
 
     this.endLoading();
+
+    if (results.length === 0) {
+      document.getElementById('noresult').style.display = 'flex';
+      document.getElementById('loading').style.display = 'none';
+      this.htmlElement.style.display = 'none';
+    }
   }
 
   beginLoading() {
+    document.getElementById('noresult').style.display = 'none';
     document.getElementById('loading').style.display = 'flex';
     this.htmlElement.style.display = 'none';
     this.removeAll();
@@ -47,7 +54,7 @@ class SearchResult {
 
     const cardEl = document.createElement('div');
     cardEl.classList.add('card');
-    cardEl.classList.add('card_dir-ver');
+    cardEl.classList.add('card_dir_ver');
     cardEl.setAttribute('id', cardId);
 
     const img = document.createElement('div');
@@ -72,14 +79,20 @@ class SearchResult {
     body.classList.add('card__body');
     body.classList.add('search-result__card');
 
+    const footer = document.createElement('div');
+    footer.classList.add('card__footer');
+    footer.classList.add('search-result__card-footer');
+    footer.appendChild(source);
+
     body.appendChild(cardTitle);
     body.appendChild(text);
-    body.appendChild(source);
 
     cardEl.appendChild(body);
+    cardEl.appendChild(footer);
 
     return cardEl;
   }
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export const searchResult = new SearchResult();

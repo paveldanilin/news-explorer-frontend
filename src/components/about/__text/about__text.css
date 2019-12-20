@@ -1,25 +1,46 @@
 .about__text {
   width: 600px;
   margin-left: auto;
+  margin-right: auto;
   padding-top: 51px;
 }
 
 .about__text p {
   padding-bottom: 24px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #1A1B22;
+}
+
+.about__text h2,h3,h4,h5 {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1A1B22;
+  padding-bottom: 24px;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
   .about__text {
-    max-width: 288px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 80%;
+  }
+  .about__text h2,h3,h4,h5 {
+    font-size: 30px;
+    line-height: 40px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1439px) {
   .about__text {
-    width: 424px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 55%;
+  }
+  .about__text h2,h3,h4,h5 {
+    font-size: 30px;
+    line-height: 40px;
   }
 }

@@ -1,4 +1,5 @@
 @import './__body/card__body.css';
+@import './__footer/card__footer.css';
 @import './_dir/card_dir.css';
 
 .card {

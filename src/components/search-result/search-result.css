@@ -1,6 +1,7 @@
 @import './__grid/search-result__grid.css';
 @import './__container/search-result__container.css';
 @import './__card/search-result__card.css';
+@import './__card-footer/search-result__card-footer.css';
 @import './__card-image/search-result__card-image.css';
 @import './__card-title/search-result__card-title.css';
 @import './__card-text/search-result__card-text.css';
@@ -18,4 +19,5 @@
   font-size: 40px;
   line-height: 46px;
   color: #1A1B22;
+  text-align: left;
 }
