@@ -4,10 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+    about: './src/about.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[id].bundle_[chunkhash].js',
     libraryTarget: 'umd',
     umdNamedDefine: true,
     globalObject: 'this',
@@ -30,8 +34,17 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      filename: 'index.html',
       hash: true,
       inject: true,
+      chunks: ['index'],
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/about.html',
+      filename: 'about.html',
+      hash: true,
+      inject: true,
+      chunks: ['about'],
     }),
   ],
 
