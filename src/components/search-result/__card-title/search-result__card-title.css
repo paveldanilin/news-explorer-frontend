@@ -6,6 +6,7 @@
   line-height: 30px;
   color: #1A1B22;
   text-align: left;
+  padding-bottom: 16px;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
@@ -19,5 +20,6 @@
   .search-result__card-title {
     font-size: 22px;
     line-height: 24px;
+    padding-bottom: 10px;
   }
 }

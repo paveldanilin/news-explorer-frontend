@@ -1,19 +1,27 @@
 .search-result__grid {
-  padding-top:64px;
   padding-bottom: 64px;
+  padding-top: 64px;
   display: grid;
   grid-template-columns: 400px 400px 400px;
   grid-column-gap: 16px;
+  grid-row-gap: 32px;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
   .search-result__grid {
     grid-template-columns: 288px;
+    padding-bottom: 24px;
+    padding-top: 32px;
+    grid-row-gap: 1px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1439px) {
   .search-result__grid {
     grid-template-columns: 224px 224px 224px;
+    padding-bottom: 32px;
+    padding-top: 40px;
+    grid-column-gap: 8px;
+    grid-row-gap: 24px;
   }
 }

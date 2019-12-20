@@ -1,6 +1,6 @@
 @import './__grid/search-result__grid.css';
 @import './__container/search-result__container.css';
-@import './__card/search-result__card.css';
+@import './__card-body/search-result__card-body.css';
 @import './__card-footer/search-result__card-footer.css';
 @import './__card-image/search-result__card-image.css';
 @import './__card-title/search-result__card-title.css';

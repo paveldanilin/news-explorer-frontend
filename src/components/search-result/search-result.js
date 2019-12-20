@@ -6,6 +6,10 @@ class SearchResult {
     this.gridHtmlElement = document.querySelector('.search-result__grid');
   }
 
+  append(cardModel) {
+    this.gridHtmlElement.appendChild(SearchResult.createCard(cardModel));
+  }
+
   update(results) {
     if (!this.gridHtmlElement) {
       return;
@@ -14,7 +18,7 @@ class SearchResult {
     this.removeAll();
 
     results.forEach((cardModel) => {
-      this.gridHtmlElement.appendChild(SearchResult.createCard(cardModel));
+      this.append(cardModel);
     });
 
     this.endLoading();
@@ -77,7 +81,7 @@ class SearchResult {
 
     const body = document.createElement('div');
     body.classList.add('card__body');
-    body.classList.add('search-result__card');
+    body.classList.add('search-result__card-body');
 
     const footer = document.createElement('div');
     footer.classList.add('card__footer');

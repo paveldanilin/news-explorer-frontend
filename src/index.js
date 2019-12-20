@@ -47,10 +47,31 @@ search.registerCallback((searchText) => {
         sourceLabel: 'РИА',
         cardId: 10003,
       },
+      {
+        imageLink: 'https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687',
+        createdAt: new Date(),
+        title: '«Первозданная тайга»: новый фотопроект Игоря Шпиленка',
+        contentText: 'Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где...',
+        sourceLink: 'http://source.com/1',
+        sourceLabel: 'РИА',
+        cardId: 10003,
+      },
     ];
 
     searchResult.update(data);
   }, 5000);
 });
 
-export { Dialog, signinHandler };
+function onClickShowMoreNews() {
+  searchResult.append({
+    imageLink: 'https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687',
+    createdAt: new Date(),
+    title: '«Первозданная тайга»: новый фотопроект Игоря Шпиленка',
+    contentText: 'Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где...',
+    sourceLink: 'http://source.com/1',
+    sourceLabel: 'РИА',
+    cardId: Math.floor(Date.now() / 1000),
+  });
+}
+
+export { Dialog, signinHandler, onClickShowMoreNews };
