@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="author" content="Данилин Павел">
+  <meta name="description" content="Поиск новостей!">
+  <title>О проекте</title>
+</head>
+<body>
+<header class="header">
+  <ul class="nav header__nav nav_style_dark header__nav_border_dark">
+    <li class="nav__item logo logo_light nav_style_dark"><a href="index.html">NewsExplorer</a></li>
+    <li class="nav__item nav__item_pull-right nav_style_smoke"><a href="index.html">Главная</a></li>
+    <li class="nav__item nav_style_smoke"><a href="about.html">О проекте</a></li>
+    <li class="nav__item nav__item_selected"><a href="articles.html">Сохраненные статьи</a></li>
+    <li class="nav__item">
+      <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s">Выход<i class="icon icon_size_24 icon_logout"></i></button>
+    </li>
+    <li class="header__menu-button">
+      <button class="btn btn_brd_none btn_size_xxs" onclick="Dialog.show('dialog_menu')">
+        <i class="icon icon_size_24 icon_menu"></i>
+      </button>
+    </li>
+  </ul>
+</header>
+
+<main>
+  <section class="search-result">
+    <div class="search-result__container">
+      <div class="search-result__grid"></div>
+    </div>
+  </section>
+
+  <section id="loading" class="loading">
+    <div class="loading__spinner spinner__dual-ring"></div>
+    <div class="loading__label">Загружаю новости</div>
+  </section>
+
+  <section id="noresult" class="noresult">
+    <i class="icon icon_size_96 icon_noresult"></i>
+    <h2 class="noresult__title">Ничего не найдено</h2>
+    <p class="noresult__subtitle">Сохраненных новостей нет</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <ul class="footer__nav nav nav_style_dark">
+    <li class="nav__item"><a href="index.html">Главная</a></li>
+    <li class="nav__item"><a href="about.html">О проекте</a></li>
+    <li class="nav__item"><a href="https://praktikum.yandex.ru/">Яндекс.Практикум</a></li>
+  </ul>
+
+  <ul class="footer__social nav">
+    <li class="nav__item"><a href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a></li>
+    <li class="nav__item"><a href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a></li>
+  </ul>
+</footer>
+
+<span id="dialog_signin" data-dialog="templates/signin-dialog.html"></span>
+<span id="dialog_signup" data-dialog="templates/signup-dialog.html"></span>
+<span id="dialog_menu" data-dialog="templates/menu-dialog.html"></span>
+
+</body>
+</html>

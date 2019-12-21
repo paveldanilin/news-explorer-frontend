@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     index: './src/index.js',
     about: './src/about.js',
+    articles: './src/articles.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -45,6 +46,13 @@ module.exports = {
       hash: true,
       inject: true,
       chunks: ['about'],
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/articles.html',
+      filename: 'articles.html',
+      hash: true,
+      inject: true,
+      chunks: ['articles'],
     }),
   ],
 
