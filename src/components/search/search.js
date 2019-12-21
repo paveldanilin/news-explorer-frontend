@@ -7,16 +7,13 @@ class Search {
     this.enterListener();
   }
 
-  registerCallback(callback) {
+  onSearch(callback) {
     if (!this.btnHtmlElement || !this.inputHtmlElement) {
       return;
     }
     this.onSearchCallback = callback;
     this.btnHtmlElement.addEventListener('click', () => {
       const searchText = this.inputHtmlElement.value || null;
-      if (searchText === null || searchText.length === 0) {
-        return;
-      }
       this.onSearchCallback(searchText);
     });
   }
@@ -28,9 +25,6 @@ class Search {
     this.inputHtmlElement.addEventListener('keypress', (event) => {
       if (event.keyCode === 13 && this.onSearchCallback) {
         const searchText = this.inputHtmlElement.value || null;
-        if (searchText === null || searchText.length === 0) {
-          return;
-        }
         this.onSearchCallback(searchText);
       }
     });
