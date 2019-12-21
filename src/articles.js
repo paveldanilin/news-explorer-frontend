@@ -5,6 +5,7 @@ import './styles.css';
 import './components/components';
 import Dialog from './components/dialog/dialog';
 import { searchResult } from './components/search-result/search-result';
+import logout from "./user/logout";
 
 searchResult.beginLoading();
 
@@ -49,4 +50,4 @@ const data = [
 
 searchResult.update(data);
 
-export { Dialog };
+export { Dialog, logout };

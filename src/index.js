@@ -4,12 +4,10 @@ import './theme.css';
 import './styles.css';
 import './components/components';
 import Dialog from './components/dialog/dialog';
+import register from "./user/register";
+import login from "./user/login";
 import { search } from './components/search/search';
 import { searchResult } from './components/search-result/search-result';
-
-function signinHandler() {
-  return 1;
-}
 
 const apiLoadNews = (searchText) => searchText;
 
@@ -59,7 +57,7 @@ search.registerCallback((searchText) => {
     ];
 
     searchResult.update(data);
-  }, 5000);
+  }, 2000);
 });
 
 function onClickShowMoreNews() {
@@ -74,4 +72,4 @@ function onClickShowMoreNews() {
   });
 }
 
-export { Dialog, signinHandler, onClickShowMoreNews };
+export { Dialog, onClickShowMoreNews, login, register };

@@ -3,6 +3,7 @@
 .header__nav {
   vertical-align: middle;
   height: 80px;
+  /*background: rgba(0,0,0,0.01) !important;*/
 }
 
 .header__nav > .nav__item {

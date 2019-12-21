@@ -4,10 +4,8 @@ import './theme.css';
 import './styles.css';
 import './components/components';
 import Dialog from './components/dialog/dialog';
+import register from "./user/register";
+import login from "./user/login";
 
-function signinHandler() {
-  return 1;
-}
-
-export { Dialog, signinHandler };
+export { Dialog, login, register };
 

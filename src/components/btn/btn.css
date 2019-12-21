@@ -2,6 +2,7 @@
 @import './_brd/btn_brd.css';
 @import './_size/btn_size.css';
 @import './_style/btn_style.css';
+@import './_transparent/btn_transparent.css';
 
 .btn {
   position: relative;

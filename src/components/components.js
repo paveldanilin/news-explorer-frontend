@@ -1,4 +1,4 @@
-import './utils/utils.css';
+import './text/text.css';
 import './textfield/textfield.css';
 import './search/search.css';
 import './nav/nav';
