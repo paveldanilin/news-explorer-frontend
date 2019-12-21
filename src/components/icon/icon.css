@@ -6,6 +6,7 @@
 @import '_social/icon_social.css';
 @import '_size/icon_size.css';
 @import '_noresult/icon_noresult.css';
+@import '_tech/icon_tech.css';
 
 .icon {
   display: inline-block;

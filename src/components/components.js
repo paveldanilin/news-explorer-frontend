@@ -16,3 +16,6 @@ import './footer/footer.css';
 import './search-result/search-result';
 import './loading/loading.css';
 import './noresult/noresult.css';
+import './tech/tech.css';
+import './flex-container/flex-container.css';
+import './for-clients/for-clients.css';

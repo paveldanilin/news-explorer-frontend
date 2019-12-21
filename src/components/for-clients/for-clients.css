@@ -1,0 +1,54 @@
+.for-clients {
+  padding-bottom: 72px;
+  padding-left: 104px;
+  width: 815px;
+}
+
+.for-clients__title {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1A1B22;
+  padding-bottom: 24px;
+}
+
+
+.for-clients p {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #1A1B22;
+  padding-bottom: 24px;
+}
+
+.for-clients p:last-child {
+  padding-bottom: 0;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .for-clients {
+    width: calc(100vw - 32px);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .for-clients__title {
+    font-size: 30px;
+    line-height: 40px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .for-clients {
+    width: calc(100vw - 80px);
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .for-clients__title {
+    font-size: 30px;
+    line-height: 34px;
+  }
+}

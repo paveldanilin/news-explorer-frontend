@@ -1,0 +1,6 @@
+@import '_direction/flex-container_direction.css';
+@import '_align/flex-container_align.css';
+
+.flex-container {
+  display: flex;
+}

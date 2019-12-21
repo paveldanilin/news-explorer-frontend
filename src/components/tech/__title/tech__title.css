@@ -1,0 +1,26 @@
+.tech__title {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1A1B22;
+  width: 344px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .tech__title {
+    font-size: 30px;
+    line-height: 40px;
+    padding-bottom: 40px;
+    width: 288px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .tech__title {
+    font-size: 30px;
+    line-height: 34px;
+    width: 336px;
+  }
+}

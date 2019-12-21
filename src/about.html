@@ -9,25 +9,52 @@
 </head>
 <body>
 <header class="header">
-  <ul class="nav header__nav transparent">
-    <li class="nav__item logo logo_light nav_style_light"><a href="index.html">NewsExplorer</a></li>
+  <ul class="nav header__nav nav_style_dark header__nav_border_dark">
+    <li class="nav__item logo logo_light nav_style_dark"><a href="index.html">NewsExplorer</a></li>
     <li class="nav__item nav__item_pull-right nav_style_smoke"><a href="index.html">Главная</a></li>
     <li class="nav__item nav__item_selected"><a href="about.html">О проекте</a></li>
     <li class="nav__item">
-      <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s transparent" onclick="Dialog.show('dialog_signin')">Авторизоваться</button>
+      <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s" onclick="Dialog.show('dialog_signin')">Авторизоваться</button>
     </li>
     <li class="header__menu-button">
-      <button class="btn btn_brd_none transparent btn_size_xxs" onclick="Dialog.show('dialog_menu')">
-        <i class="icon icon_size_24 icon_menu_white"></i>
+      <button class="btn btn_brd_none btn_size_xxs" onclick="Dialog.show('dialog_menu')">
+        <i class="icon icon_size_24 icon_menu"></i>
       </button>
     </li>
   </ul>
 </header>
 
 <main>
-  <section>КЛИЕНТАМ</section>
+  <section class="for-clients">
+    <h2 class="for-clients__title">Клиентам</h2>
+    <p>
+      Этот сайт — дипломный проект студента Яндекс.Практикума. Его цель — показать, чему научился студент, какими технологиями владеет.
+    </p>
+    <p>
+      Вёрстка сайта выполнена по методологии БЭМ. Это делает сайт гибким и масштабируемым. Кроме того, добавлять новые страницы и функциональность проще и быстрее, чем в проектах, выполненных по другим методологиям. Также сайт проще и дешевле поддерживать.
+    </p>
+    <p>
+      Студент самостоятельно написал серверный код. В нём реализована функциональность регистрации и входа в систему. Сайт позволяет искать новости за прошедшую неделю и сохранять понравившиеся в личном кабинете. На сервере избранные новости хранятся в базе данных Mongo DB. Студент запрограммировал надёжный сервер: отказоустойчивый и безопасный.
+    </p>
+    <p>
+      При создании проекта была использована сборка технологией Webpack. Это современный подход к разработке сайтов. Код оптимизируется, а значит, сайт работает быстрее. Также сайт работает в старых браузерах. Даже если посетители — пользователи старых операционных систем, у них не будет проблем с отображением. А значит, потенциальная аудитория возрастает.
+    </p>
+    <p>
+      Проект был проверен экспертами Яндекс.Практикума. Если вашему бизнесу нужен сайт, мы рекомендуем обратиться к этому студенту.
+    </p>
+  </section>
 
-  <section>ТЕХНОЛОГИИ</section>
+  <section class="tech">
+    <div class="flex-container flex-container_align_center">
+      <h2 class="tech__title">Используемые технологии</h2>
+      <ul class="tech__list">
+        <li><i class="icon icon_tech_html"></i></li>
+        <li><i class="icon icon_tech_css"></i></li>
+        <li><i class="icon icon_tech_js"></i></li>
+        <li><i class="icon icon_tech_webpack"></i></li>
+      </ul>
+    </div>
+  </section>
 
   <section class="about">
     <div class="card">
