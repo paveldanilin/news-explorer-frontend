@@ -1,5 +1,74 @@
+@import './__title/gh-commits__title.css';
+
 .gh-commits {
   background: #F5F6F7;
   padding-top: 72px;
   padding-bottom: 80px;
+}
+
+
+.gh-commits .ycard {
+  max-width: 400px;
+  max-height: 288px;
+  border-radius: 16px;
+  background-color: white;
+  padding: 24px;
+}
+
+
+.gh-commits .ycard .ycard__body {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #1A1B22;
+  margin-top: 16px;
+}
+
+
+.gh-commits .ycard .ycard__icon {
+  width: 64px;
+  height: 64px;
+  margin-right: 16px;
+  border-radius: 50%;
+}
+
+.gh-commits .ycard .ycard__title {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+  color: #1A1B22;
+}
+
+.gh-commits .ycard .ycard__subtitle {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  color: #1A1B22;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .gh-commits .ycard {
+    max-width: calc(100vw - 32px);
+    max-height: 264px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gh-commits .ycard .ycard__title {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .gh-commits .ycard {
+    max-width: 336px;
+    max-height: 242px;
+  }
 }

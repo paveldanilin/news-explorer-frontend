@@ -1,0 +1,14 @@
+@import './__body/ycard__body.css';
+@import './__icon/ycard__icon.css';
+@import './__title/ycard__title.css';
+@import './__subtitle/ycard__subtitle.css';
+
+.ycard {
+
+}
+
+
+.ycard h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0;
+}
