@@ -5,7 +5,6 @@ import './styles.css';
 import './components/components';
 import Dialog from './components/dialog/dialog';
 
-
 function signinHandler() {
   return 1;
 }

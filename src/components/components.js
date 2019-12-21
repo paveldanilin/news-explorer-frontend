@@ -19,3 +19,4 @@ import './noresult/noresult.css';
 import './tech/tech.css';
 import './flex-container/flex-container.css';
 import './for-clients/for-clients.css';
+import './gh-commits/gh-commits.css';
