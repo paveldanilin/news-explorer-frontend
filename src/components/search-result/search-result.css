@@ -6,6 +6,7 @@
 @import './__card-title/search-result__card-title.css';
 @import './__card-text/search-result__card-text.css';
 @import './__card-source/search-result__card-source.css';
+@import './__btn-more/search-result__btn-more.css';
 
 .search-result {
   display: none;
