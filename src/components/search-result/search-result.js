@@ -61,9 +61,14 @@ class SearchResult {
     cardEl.classList.add('card_dir_ver');
     cardEl.setAttribute('id', cardId);
 
-    const img = document.createElement('div');
-    img.style.backgroundImage = `url(${imageLink})`;
+    // TODO: lazy loading
+    const img = document.createElement('img');
+    img.src = imageLink;
     img.classList.add('search-result__card-image');
+    img.classList.add('search-result__card-image_placeholder');
+    img.onload = () => {
+      img.classList.remove('search-result__card-image_placeholder');
+    };
     cardEl.appendChild(img);
 
     const cardTitle = document.createElement('h4');
