@@ -9,9 +9,10 @@ module.exports = {
     about: './src/about.js',
     articles: './src/articles.js',
   },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: '[name]/[name].bundle.js',
     chunkFilename: '[id].bundle_[chunkhash].js',
     libraryTarget: 'umd',
     umdNamedDefine: true,
@@ -26,33 +27,30 @@ module.exports = {
       },
     ]),
     new MiniCssExtractPlugin({
-      filename: '[name].bundle.css',
+      filename: '[name]/[name].bundle.css',
       chunkFilename: '[id].css',
       ignoreOrder: false,
-      options: {
-        reloadAll: true,
-      },
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
       hash: true,
       inject: true,
-      chunks: ['index'],
+      chunks: ['vendor', 'index'],
     }),
     new HtmlWebpackPlugin({
       template: './src/about.html',
       filename: 'about.html',
       hash: true,
       inject: true,
-      chunks: ['about'],
+      chunks: ['vendor', 'about'],
     }),
     new HtmlWebpackPlugin({
       template: './src/articles.html',
       filename: 'articles.html',
       hash: true,
       inject: true,
-      chunks: ['articles'],
+      chunks: ['vendor', 'articles'],
     }),
   ],
 
@@ -64,7 +62,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: './fonts',
+              outputPath: 'fonts/',
+              publicPath: '../fonts/',
             },
           },
         ],
@@ -74,8 +73,10 @@ module.exports = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: 'images/[name].[ext]',
+            name: '[name].[ext]',
+            outputPath: 'images/',
             esModule: false,
+            publicPath: '../images/',
           },
         },
         ],
@@ -92,6 +93,10 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === 'development',
+              reloadAll: true,
+            }
           },
           {
             loader: 'css-loader',
