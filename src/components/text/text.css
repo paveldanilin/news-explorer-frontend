@@ -1,14 +1,9 @@
 @import '/_center/text_center.css';
 @import '/_weight/text_weight.css';
+@import '_font-family/text_font-family.css';
 
 .text {
-  font-family: Inter;
   font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-
   color: #000000;
 }
 
