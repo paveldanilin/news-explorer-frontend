@@ -52,4 +52,6 @@ const data = [
 
 searchResult.update(data);
 
-export { showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, logout };
+export {
+  showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, logout,
+};

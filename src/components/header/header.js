@@ -53,14 +53,12 @@ const toggleMobileMenu = (inverseColors) => {
         icon.classList.remove('icon_close_white');
       }
     }
+  } else if (isMobileVisible) {
+    icon.classList.add('icon_close_white');
+    icon.classList.remove('icon_menu_white');
   } else {
-    if (isMobileVisible) {
-      icon.classList.add('icon_close_white');
-      icon.classList.remove('icon_menu_white');
-    } else {
-      icon.classList.add('icon_menu_white');
-      icon.classList.remove('icon_close_white');
-    }
+    icon.classList.add('icon_menu_white');
+    icon.classList.remove('icon_close_white');
   }
 };
 

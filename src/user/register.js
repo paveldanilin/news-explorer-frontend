@@ -1,5 +1,5 @@
-function register(form) {
-  console.log(form.elements);
+function register(/* form */) {
+  // console.log(form.elements);
 }
 
 export default register;

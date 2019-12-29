@@ -1,5 +1,5 @@
 function logout() {
-  console.log('logout');
+  // console.log('logout');
   // localStorage.getItem('user');
 }
 

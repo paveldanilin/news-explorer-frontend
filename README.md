@@ -1,6 +1,5 @@
 # news-explorer-frontend
-YP диплом: [Пользовательская часть](https://paveldanilin.github.io/news-explorer-frontend/)
-
+YP диплом. [Нажмите тут чтобы открыть проект на GH pages](https://paveldanilin.github.io/news-explorer-frontend/)
 
 ### Главная страница
 - Если в строку поиска ничего не вводить и нажать ```"Искать"```, 
@@ -14,6 +13,17 @@ YP диплом: [Пользовательская часть](https://paveldani
 - по нажатию на кнопку появляется модальное окно, переходы по ссылкам "Зарегистрироваться" и "Войти" 
 приводят к смене диалогового окна.
 
-### Команды npm
-- npm run dev 
-- npm run prod
+### Установка и запуск
+- Клонировать репозиторий ```git clone https://github.com/paveldanilin/news-explorer-frontend.git```
+- Переключиться на рабочий бранч ```git checkout level-2``` 
+- Установить зависимости ```nmp install```
+- Запустить девелоперскую сборку```npm run dev``` 
+
+
+### Сборка
+- Продакшен ```nmp run prod```
+- Девелоперская ```npm run build```
+
+### Линтер
+- Запуск лиентера ```npm run lint```
+- Запуск автоисправлений ```npm run fix```
