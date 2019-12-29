@@ -1,4 +1,6 @@
 @import './__title/gh-commits__title.css';
+@import './__carousel/gh-commits__carousel.css';
+@import './__carousel-nav/gh-commits__carousel-nav.css';
 
 .gh-commits {
   background: #F5F6F7;

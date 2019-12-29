@@ -1,4 +1,5 @@
 @import '/_center/text_center.css';
+@import '/_weight/text_weight.css';
 
 .text {
   font-family: Inter;
