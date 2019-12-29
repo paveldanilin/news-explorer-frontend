@@ -5,7 +5,7 @@ import './styles.css';
 import './components/components';
 import Glide from '@glidejs/glide';
 import Dialog from './components/dialog/dialog';
-import Header from './components/header/header';
+import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import register from './user/register';
 import login from './user/login';
 
@@ -27,5 +27,5 @@ window.onresize = (event) => {
 };
 
 export {
-  Header, Dialog, login, register,
+  showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, login, register,
 };

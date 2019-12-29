@@ -8,88 +8,87 @@
   <title>Сохранённые статьи</title>
 </head>
 <body>
-<header class="header">
-  <!-- Main menu -->
-  <nav>
-    <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_dark nav">
-      <li class="nav__item nav__item_style_dark logo logo_dark">
-        <a href="index.html">NewsExplorer</a>
-      </li>
-      <li class="nav__item nav__item_style_smoke nav__item_pull-right">
-        <a href="index.html">Главная</a>
-      </li>
-      <li class="nav__item nav__item_style_smoke">
-        <a href="about.html">О проекте</a>
-      </li>
-      <li class="nav__item nav__item_style_dark nav__item_selected">
-        <a href="articles.html">Сохраненные статьи</a>
-      </li>
-      <li class="nav__item">
-        <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s" onclick="Header.getMenu().showSigninDialog()">Авторизоваться</button>
-      </li>
-      <li class="nav__item header__mobile-toggle">
-        <button class="btn btn_brd_none btn_size_xxs btn_transparent" onclick="Header.getMenu().toggleMobileMenu()">
-          <i class="icon icon_size_24 icon_menu"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
+  <header class="header">
+    <!-- Main menu -->
+    <nav>
+      <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_dark nav">
+        <li class="nav__item nav__item_style_dark logo logo_dark">
+          <a href="index.html">NewsExplorer</a>
+        </li>
+        <li class="nav__item nav__item_style_smoke nav__item_pull-right">
+          <a href="index.html">Главная</a>
+        </li>
+        <li class="nav__item nav__item_style_smoke">
+          <a href="about.html">О проекте</a>
+        </li>
+        <li class="nav__item nav__item_style_dark nav__item_selected">
+          <a href="articles.html">Сохраненные статьи</a>
+        </li>
+        <li class="nav__item">
+          <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s" onclick="showSigninDialog()">Авторизоваться</button>
+        </li>
+        <li class="nav__item header__mobile-toggle">
+          <button class="btn btn_brd_none btn_size_xxs btn_transparent" onclick="toggleMobileMenu(true)">
+            <i class="icon icon_size_24 icon_menu_black"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
 
-  <!-- Mobile menu -->
-  <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
-    <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
-    <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
-    <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
-    <span class="nav__item nav__item_style_light">
-          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="Header.getMenu().onSigninHandler()">Вход</button>
-        </span>
-  </nav>
-</header>
+    <!-- Mobile menu -->
+    <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
+      <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
+      <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
+      <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
+      <span class="nav__item nav__item_style_light">
+            <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="onSigninHandler(true)">Вход</button>
+          </span>
+    </nav>
+  </header>
 
-<main>
-  <section class="articles-info">
-    <div class="articles-info__container">
-      <h6>Сохранённые статьи</h6>
-      <h2>Грета, у вас 5 <br/> сохранённых статей</h2>
-      <h5>По ключевым словам: <b>Природа, Тайгаи 2 другим</b></h5>
-    </div>
-  </section>
+  <main>
+    <section class="articles-info">
+      <div class="articles-info__container">
+        <h6>Сохранённые статьи</h6>
+        <h2>Грета, у вас 5 <br/> сохранённых статей</h2>
+        <h5>По ключевым словам: <b>Природа, Тайгаи 2 другим</b></h5>
+      </div>
+    </section>
 
-  <section class="search-result">
-    <h6>&nbsp;</h6>
-    <div class="search-result__container">
-      <div class="search-result__grid"></div>
-    </div>
-  </section>
+    <section class="search-result">
+      <h6>&nbsp;</h6>
+      <div class="search-result__container">
+        <div class="search-result__grid"></div>
+      </div>
+    </section>
 
-  <section id="loading" class="loading">
-    <div class="loading__spinner loading__spinner_dual-ring"></div>
-    <h6 class="loading__label">Загружаю новости</h6>
-  </section>
+    <section id="loading" class="loading">
+      <div class="loading__spinner loading__spinner_dual-ring"></div>
+      <h6 class="loading__label">Загружаю новости</h6>
+    </section>
 
-  <section id="noresult" class="noresult">
-    <i class="icon icon_size_96 icon_noresult"></i>
-    <h2 class="noresult__title">Ничего не найдено</h2>
-    <p class="noresult__subtitle">Сохраненных новостей нет</p>
-  </section>
-</main>
+    <section id="noresult" class="noresult">
+      <i class="icon icon_size_96 icon_noresult"></i>
+      <h2 class="noresult__title">Ничего не найдено</h2>
+      <p class="noresult__subtitle">Сохраненных новостей нет</p>
+    </section>
+  </main>
 
-<footer class="footer">
-  <nav class="nav footer__nav">
-    <a class="nav__item nav__item_style_dark" href="index.html">Главная</a>
-    <a class="nav__item nav__item_style_dark" href="about.html">О проекте</a>
-    <a class="nav__item nav__item_style_dark" href="https://praktikum.yandex.ru/">Яндекс.Практикум</a>
-  </nav>
+  <footer class="footer">
+    <nav class="nav footer__nav">
+      <a class="nav__item nav__item_style_dark" href="index.html">Главная</a>
+      <a class="nav__item nav__item_style_dark" href="about.html">О проекте</a>
+      <a class="nav__item nav__item_style_dark" href="https://praktikum.yandex.ru/">Яндекс.Практикум</a>
+    </nav>
 
-  <nav class="nav footer__social">
-    <a class="nav__item nav__item_style_dark" href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a>
-    <a class="nav__item nav__item_style_dark" href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a>
-  </nav>
-</footer>
+    <nav class="nav footer__social">
+      <a class="nav__item nav__item_style_dark" href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a>
+      <a class="nav__item nav__item_style_dark" href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a>
+    </nav>
+  </footer>
 
-<span id="dialog_signin" data-dialog="templates/signin-dialog.html"></span>
-<span id="dialog_signup" data-dialog="templates/signup-dialog.html"></span>
-<span id="dialog_menu" data-dialog="templates/menu-dialog.html"></span>
+  <span id="dialog_signin" class="dialog-signin" data-dialog="templates/signin-dialog.html"></span>
+  <span id="dialog_signup" class="dialog-signup" data-dialog="templates/signup-dialog.html"></span>
 
 </body>
 </html>

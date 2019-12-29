@@ -25,11 +25,11 @@
           <a href="articles.html">Сохраненные статьи</a>
         </li>
         <li class="nav__item">
-          <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s" onclick="Header.getMenu().showSigninDialog()">Авторизоваться</button>
+          <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s" onclick="showSigninDialog()">Авторизоваться</button>
         </li>
         <li class="nav__item header__mobile-toggle">
-          <button class="btn btn_brd_none btn_size_xxs btn_transparent" onclick="Header.getMenu().toggleMobileMenu(true)">
-            <i class="icon icon_size_24 icon_menu"></i>
+          <button class="btn btn_brd_none btn_size_xxs btn_transparent" onclick="toggleMobileMenu(true)">
+            <i class="icon icon_size_24 icon_menu_black"></i>
           </button>
         </li>
       </ul>
@@ -41,7 +41,7 @@
       <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
       <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
       <span class="nav__item nav__item_style_light">
-          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="Header.getMenu().onSigninHandler()">Вход</button>
+          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="onSigninHandler(true)">Вход</button>
         </span>
     </nav>
   </header>
@@ -156,8 +156,12 @@
     </nav>
 
     <nav class="nav footer__social">
-      <a class="nav__item nav__item_style_dark" href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a>
-      <a class="nav__item nav__item_style_dark" href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a>
+      <a class="nav__item nav__item_style_dark" href="https://github.com/">
+        <i class="icon icon_size_24 icon_social_github"></i>
+      </a>
+      <a class="nav__item nav__item_style_dark" href="https://www.facebook.com/">
+        <i class="icon icon_size_24 icon_social_fb"></i>
+      </a>
     </nav>
   </footer>
 

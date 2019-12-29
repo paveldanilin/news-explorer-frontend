@@ -47,7 +47,6 @@
 }
 
 @media (min-width: 768px) and (max-width: 1439px) {
-
   .header__desktop-menu.header__desktop-menu_bg-color_dark {
     background-color: transparent;
   }

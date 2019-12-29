@@ -3,7 +3,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './theme.css';
 import './styles.css';
 import './components/components';
-import Header from './components/header/header';
+import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import Dialog from './components/dialog/dialog';
 import { searchResult } from './components/search-result/search-result';
 import logout from './user/logout';
@@ -51,4 +51,4 @@ const data = [
 
 searchResult.update(data);
 
-export { Header, Dialog, logout };
+export { showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, logout };

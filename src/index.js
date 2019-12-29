@@ -3,7 +3,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './theme.css';
 import './styles.css';
 import './components/components';
-import Header from './components/header/header';
+import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import register from './user/register';
 import login from './user/login';
 import { search } from './components/search/search';
@@ -77,5 +77,5 @@ function onClickShowMoreNews() {
 }
 
 export {
-  Header, onClickShowMoreNews, login, register,
+  showSigninDialog, onSigninHandler, toggleMobileMenu, onClickShowMoreNews, login, register,
 };
