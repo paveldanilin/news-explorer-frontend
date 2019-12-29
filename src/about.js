@@ -19,13 +19,19 @@ const glide = new Glide('.glide', {
   perView: 3,
 }).mount();
 
-window.onresize = (event) => {
-  if (event.target.innerWidth < 768) {
+const onResize = (innerWidth) => {
+  if (innerWidth < 768) {
     glide.update({ perView: 1 });
   } else {
     glide.update({ perView: 3 });
   }
 };
+
+window.onresize = (event) => {
+  onResize(event.target.innerWidth);
+};
+
+onResize(window.innerWidth);
 
 export {
   showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, login, register,
