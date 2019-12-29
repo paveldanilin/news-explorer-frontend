@@ -1,4 +1,4 @@
-function logout () {
+function logout() {
   console.log('logout');
   // localStorage.getItem('user');
 }

@@ -3,9 +3,9 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './theme.css';
 import './styles.css';
 import './components/components';
-import Dialog from './components/dialog/dialog';
-import register from "./user/register";
-import login from "./user/login";
+import Header from './components/header/header';
+import register from './user/register';
+import login from './user/login';
 import { search } from './components/search/search';
 import { searchResult } from './components/search-result/search-result';
 
@@ -17,7 +17,6 @@ search.onSearch((searchText) => {
   apiLoadNews(searchText);
 
   setTimeout(() => {
-
     if (searchText === null || searchText.length === 0) {
       searchResult.update([]);
     } else {
@@ -77,4 +76,6 @@ function onClickShowMoreNews() {
   });
 }
 
-export { Dialog, onClickShowMoreNews, login, register };
+export {
+  Header, onClickShowMoreNews, login, register,
+};

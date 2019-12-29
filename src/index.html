@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -9,26 +9,46 @@
 </head>
 <body>
   <header class="header header_bg">
-    <ul class="nav header__nav nav_style_light header__nav_border_light">
-      <li class="nav__item logo logo_light nav_style_light"><a href="index.html">NewsExplorer</a></li>
-      <li class="nav__item nav__item_pull-right nav__item_selected"><a href="index.html">Главная</a></li>
-      <li class="nav__item nav_style_smoke"><a href="about.html">О проекте</a></li>
-      <li class="nav__item">
-        <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_transparent" onclick="Dialog.show('dialog_signin')">Авторизоваться</button>
-      </li>
-      <li class="header__menu-button">
-        <button class="btn btn_brd_none btn_transparent btn_size_xxs" onclick="Dialog.show('dialog_menu')">
-          <i class="icon icon_size_24 icon_menu_white"></i>
-        </button>
-      </li>
-    </ul>
+
+    <!-- Main menu -->
+    <nav>
+      <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_light nav">
+        <li class="nav__item nav__item_style_light logo logo_light">
+          <a href="index.html">NewsExplorer</a>
+        </li>
+        <li class="nav__item nav__item_style_light nav__item_pull-right nav__item_selected">
+          <a href="index.html">Главная</a>
+        </li>
+        <li class="nav__item nav__item_style_smoke">
+          <a href="about.html">О проекте</a>
+        </li>
+        <li class="nav__item">
+          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_transparent" onclick="Header.getMenu().showSigninDialog()">Авторизоваться</button>
+        </li>
+        <li class="nav__item header__mobile-toggle">
+          <button class="btn btn_brd_none btn_transparent btn_size_xxs" onclick="Header.getMenu().toggleMobileMenu()">
+            <i class="icon icon_size_24 icon_menu_white"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Mobile menu -->
+    <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
+      <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
+      <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
+      <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
+      <span class="nav__item nav__item_style_light">
+        <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="Header.getMenu().onSigninHandler()">Вход</button>
+      </span>
+    </nav>
 
     <h1 class="header__title">
-      Что в мире <br> творится?
+      Что в мире творится?
     </h1>
 
     <p class="header__subtitle">
-      Находите самые свежие статьи на любую тему и сохраняйте в <br> своём личном кабинете.
+      Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
     </p>
 
     <div class="header__searchbox">
@@ -55,7 +75,7 @@
     </section>
 
     <section id="loading" class="loading">
-      <div class="loading__spinner spinner__dual-ring"></div>
+      <div class="loading__spinner loading__spinner_dual-ring"></div>
       <h6 class="loading__label">Идет поиск новостей...</h6>
     </section>
 
@@ -67,7 +87,7 @@
 
     <section class="about">
       <div class="card">
-        <img src="images/avatar.png" class="about__avatar" alt="Author avatar">
+        <img src="images/avatar.png" class="about__avatar" alt="Аватар пользователя">
         <div class="about__text card__body">
           <h2>Об авторе</h2>
           <p>Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.</p>
@@ -78,21 +98,20 @@
   </main>
 
   <footer class="footer">
-    <ul class="footer__nav nav nav_style_dark">
-      <li class="nav__item"><a href="index.html">Главная</a></li>
-      <li class="nav__item"><a href="about.html">О проекте</a></li>
-      <li class="nav__item"><a href="https://praktikum.yandex.ru/">Яндекс.Практикум</a></li>
-    </ul>
+    <nav class="nav footer__nav">
+      <a class="nav__item nav__item_style_dark" href="index.html">Главная</a>
+      <a class="nav__item nav__item_style_dark" href="about.html">О проекте</a>
+      <a class="nav__item nav__item_style_dark" href="https://praktikum.yandex.ru/">Яндекс.Практикум</a>
+    </nav>
 
-    <ul class="footer__social nav">
-      <li class="nav__item"><a href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a></li>
-      <li class="nav__item"><a href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a></li>
-    </ul>
+    <nav class="nav footer__social">
+      <a class="nav__item nav__item_style_dark" href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a>
+      <a class="nav__item nav__item_style_dark" href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a>
+    </nav>
   </footer>
 
-  <span id="dialog_signin" data-dialog="templates/signin-dialog.html"></span>
-  <span id="dialog_signup" data-dialog="templates/signup-dialog.html"></span>
-  <span id="dialog_menu" data-dialog="templates/menu-dialog.html"></span>
+  <span id="dialog_signin" class="dialog-signin" data-dialog="templates/signin-dialog.html"></span>
+  <span id="dialog_signup" class="dialog-signup" data-dialog="templates/signup-dialog.html"></span>
 
 </body>
 </html>

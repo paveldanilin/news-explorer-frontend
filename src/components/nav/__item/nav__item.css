@@ -1,6 +1,7 @@
-@import '_hoverable/nav__item_hoverable.css';
-@import '_selected/nav__item_selected.css';
+@import './_hoverable/nav__item_hoverable.css';
+@import './_selected/nav__item_selected.css';
 @import './_pull-right/nav__item_pull-right.css';
+@import './_style/nav__item_style.css';
 
 .nav__item {
   font-size: var(--primary-font-size);
@@ -11,6 +12,11 @@
 }
 
 .nav__item a {
+  text-align: center;
+  text-decoration: none;
+}
+
+.nav__item {
   text-align: center;
   text-decoration: none;
 }

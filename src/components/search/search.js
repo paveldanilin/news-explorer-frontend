@@ -31,4 +31,5 @@ class Search {
   }
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export const search = new Search();

@@ -1,3 +1,9 @@
 .dialog_align_center {
   padding-top: calc(100vh / 4);
 }
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .dialog_align_center {
+    padding-top: 56px;
+  }
+}

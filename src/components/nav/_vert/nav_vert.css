@@ -1,0 +1,7 @@
+.nav_vert {
+}
+
+.nav.nav_vert {
+  align-items: flex-start;
+  flex-direction: column;
+}

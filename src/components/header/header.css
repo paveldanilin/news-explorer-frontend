@@ -1,19 +1,14 @@
-@import './__nav/header__nav.css';
-@import './__title/header__title.css';
-@import './__subtitle/header__subtitle.css';
-@import './__searchbox/header__searchbox.css';
-@import './__menu/header__menu.css';
-@import './__menu-button/header__menu-button.css';
+/*@import '__nav/header__nav.css';*/
+@import '__title/header__title.css';
+@import '__subtitle/header__subtitle.css';
+@import '__searchbox/header__searchbox.css';
+@import '__desktop-menu/header__desktop-menu.css';
+@import '__mobile-menu/header__mobile-menu.css';
+@import '__mobile-toggle/header__mobile-toggle.css';
+@import '_bg/header_bg.css';
 
 .header {
   padding-bottom: 80px;
-}
-
-.header_bg {
-  background-image: url(../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {

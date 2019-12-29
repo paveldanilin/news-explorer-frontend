@@ -1,5 +1,7 @@
-@import './__item/nav__item.css';
-@import './_style/nav_style.css';
+@import '__item/nav__item.css';
+@import '_vert/nav_vert.css';
+@import '_visible/nav_visible.css';
+@import '_position/nav_position.css';
 
 .nav {
   list-style-type: none;

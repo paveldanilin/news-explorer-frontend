@@ -1,19 +1,10 @@
+@import './__title/for-client__title.css';
+
 .for-clients {
   padding-bottom: 72px;
   padding-left: 104px;
   width: 815px;
 }
-
-.for-clients__title {
-  font-family: Roboto Slab;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  line-height: 46px;
-  color: #1A1B22;
-  padding-bottom: 24px;
-}
-
 
 .for-clients p {
   font-family: Roboto;

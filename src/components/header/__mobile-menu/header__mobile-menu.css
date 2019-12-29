@@ -1,0 +1,31 @@
+.header__mobile-menu {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 56px;
+  color: #FFFFFF;
+
+  box-sizing: border-box;
+
+  padding-left: 16px;
+  padding-top: 16px;
+  width: 100%;
+  background-color: #1A1B22;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.header__mobile-menu > .nav__item {
+  padding-bottom: 24px;
+}
+
+.header__mobile-menu > .nav__item:last-child {
+  width: 95%;
+}
+
+@media (min-width: 767px) {
+  .header__mobile-menu.nav {
+    visibility: hidden;
+  }
+}
