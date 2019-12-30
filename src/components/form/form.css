@@ -1,12 +1,19 @@
+@import './__invalid-message/form__invalid-message.css';
+
 .form {
 }
 
-.form>.input-group {
-  margin-bottom: 31px;
+.form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form ul li {
+  margin-bottom: 29px;
 }
 
 .form input {
-  margin-bottom: 31px;
   margin-left: auto;
   margin-right: auto;
 }

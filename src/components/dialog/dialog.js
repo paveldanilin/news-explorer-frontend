@@ -13,6 +13,20 @@ function resolveDialogElement(id) {
   return htmlEl.firstElementChild || null;
 }
 
+function bindCloseHandler(container) {
+  const closeButtons = container.getElementsByClassName('dialog__close');
+
+  for (let i = 0; i < closeButtons.length; i += 1) {
+    const closeButton = closeButtons[i];
+    const dialog = closeButton.closest('.dialog');
+    if (dialog) {
+      closeButton.onclick = () => {
+        dialog.style.display = 'none';
+      };
+    }
+  }
+}
+
 export default class Dialog {
   static show(el) {
     let dialogEl = el;
@@ -76,18 +90,12 @@ window.addEventListener('keydown', (event) => {
 // Load dialog templates
 setTimeout(() => {
   document.querySelectorAll('[data-dialog]').forEach((el) => {
-    loadHTML(el.getAttribute('data-dialog'), el, null, (container) => {
-      const closeButtons = container.getElementsByClassName('dialog__close');
-
-      for (let i = 0; i < closeButtons.length; i += 1) {
-        const closeButton = closeButtons[i];
-        const dialog = closeButton.closest('.dialog');
-        if (dialog) {
-          closeButton.onclick = () => {
-            dialog.style.display = 'none';
-          };
-        }
-      }
-    });
+    if (el.getAttribute('data-dialog').length > 0) {
+      loadHTML(el.getAttribute('data-dialog'), el, null, (container) => {
+        bindCloseHandler(container);
+      });
+    } else {
+      bindCloseHandler(el);
+    }
   });
 }, 0);

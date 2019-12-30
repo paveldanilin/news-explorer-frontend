@@ -3,7 +3,7 @@ import './textfield/textfield.css';
 import './search/search.css';
 import './nav/nav';
 import './icon/icon.css';
-import './form/form.css';
+import './form/form';
 import './dialog/dialog';
 import './btn/btn.css';
 import './spinner/spinner';

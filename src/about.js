@@ -5,6 +5,7 @@ import './theme.css';
 import './styles.css';
 import './components/components';
 import Glide from '@glidejs/glide';
+import resetForms from './components/form/form';
 import Dialog from './components/dialog/dialog';
 import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import register from './user/register';
@@ -34,5 +35,5 @@ window.onresize = (event) => {
 onResize(window.innerWidth);
 
 export {
-  showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, login, register,
+  resetForms, showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, login, register,
 };

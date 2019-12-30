@@ -4,6 +4,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './theme.css';
 import './styles.css';
 import './components/components';
+import resetForms from './components/form/form';
 import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import Dialog from './components/dialog/dialog';
 import { searchResult } from './components/search-result/search-result';
@@ -53,5 +54,5 @@ const data = [
 searchResult.update(data);
 
 export {
-  showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, logout,
+  resetForms, showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, logout,
 };

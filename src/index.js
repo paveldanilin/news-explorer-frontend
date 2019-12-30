@@ -4,6 +4,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './theme.css';
 import './styles.css';
 import './components/components';
+import resetForms from './components/form/form';
 import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import Dialog from './components/dialog/dialog';
 import register from './user/register';
@@ -79,5 +80,12 @@ function onClickShowMoreNews() {
 }
 
 export {
-  showSigninDialog, onSigninHandler, toggleMobileMenu, onClickShowMoreNews, login, register, Dialog,
+  resetForms,
+  showSigninDialog,
+  onSigninHandler,
+  toggleMobileMenu,
+  onClickShowMoreNews,
+  login,
+  register,
+  Dialog,
 };
