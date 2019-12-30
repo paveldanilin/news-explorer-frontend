@@ -162,7 +162,7 @@ export default class HttpClient {
     );
     const reqUrl = this.baseUrl.length > 0 ? this.baseUrl + url : url;
 
-    const request = new Request(reqUrl, {
+    const request = new Request(encodeURI(reqUrl), {
       method: HttpRequest.filterOptionMethod(method),
       body,
       headers: reqHeaders,

@@ -63,12 +63,17 @@ class SearchResult {
 
     // TODO: lazy loading
     const img = document.createElement('img');
-    img.src = imageLink;
-    img.classList.add('search-result__card-image');
-    img.classList.add('search-result__card-image_placeholder');
-    img.onload = () => {
-      img.classList.remove('search-result__card-image_placeholder');
-    };
+    if (imageLink) {
+      img.src = imageLink;
+      img.classList.add('search-result__card-image');
+      img.classList.add('search-result__card-image_placeholder');
+      img.onload = () => {
+        img.classList.remove('search-result__card-image_placeholder');
+      };
+    } else {
+      img.classList.add('search-result__card-image');
+      img.classList.add('search-result__card-image_placeholder');
+    }
     cardEl.appendChild(img);
 
     const cardTitle = document.createElement('h4');
@@ -82,6 +87,7 @@ class SearchResult {
     const source = document.createElement('a');
     source.innerText = sourceLabel;
     source.href = sourceLink;
+    source.target = '_blank';
     source.classList.add('search-result__card-source');
 
     const body = document.createElement('div');
