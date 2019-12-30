@@ -5,14 +5,23 @@
       <i class="dialog__close icon icon_size_24 icon_close_black"></i>
     </div>
     <div class="dialog__body">
-      <form class="form" onsubmit="login(this); return false;">
-        <label for="signin_email">Email</label>
-        <input id="signin_email" type="text" class="textfield textfield_size_s textfield_brd_b" placeholder="Email">
+      <form name="signinForm" class="form" onsubmit="login(this); return false;">
+        <ul>
+          <li>
+            <label for="signin_email">Email</label>
+            <input required id="signin_email" type="email" class="textfield textfield_size_s textfield_brd_b" placeholder="Введите почту">
+            <span data-invalid-message="signin_email" class="form__invalid-message">Неправильный формат email</span>
+          </li>
 
-        <label for="signin_password">Password</label>
-        <input id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" placeholder="Password">
+          <li>
+            <label for="signin_password">Пароль</label>
+            <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль">
+          </li>
 
-        <button class="btn btn_brd_none btn_style_primary btn_size_s btn_rad_100 btn_size_full">Войти</button>
+          <li>
+            <button class="btn btn_brd_none btn_style_primary btn_size_s btn_rad_100 btn_size_full">Войти</button>
+          </li>
+        </ul>
       </form>
     </div>
     <div class="dialog__footer">

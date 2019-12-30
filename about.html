@@ -7,7 +7,7 @@
   <meta name="description" content="О проекте!">
   <title>О проекте</title>
   <link rel="icon" type="image/png" href="images/favicon.png" />
-<link href="about/about.bundle.css?16fa77f1dae4ed10fa43" rel="stylesheet"></head>
+<link href="about/about.bundle.css?bf4f6b554f11059556fd" rel="stylesheet"></head>
 <body>
   <header class="header">
     <!-- Main menu -->
@@ -165,8 +165,83 @@
     </nav>
   </footer>
 
-  <span id="dialog_signin" class="dialog-signin" data-dialog="templates/signin-dialog.html"></span>
-  <span id="dialog_signup" class="dialog-signup" data-dialog="templates/signup-dialog.html"></span>
+  <!-- Sign-in dialog -->
+  <span id="dialog_signin" class="dialog-signin" data-dialog>
+    <div class="dialog dialog_style_white dialog_align_center">
+      <div class="dialog__content dialog__content_border_full">
+        <div class="dialog__header">
+          <h3 class="dialog__header-title">Вход</h3>
+          <i class="dialog__close icon icon_size_24 icon_close_black"></i>
+        </div>
+        <div class="dialog__body">
+          <form name="signinForm" class="form" onsubmit="login(this); return false;">
+            <ul>
+              <li>
+                <label for="signin_email">Email</label>
+                <input required id="signin_email" type="email" class="textfield textfield_size_s textfield_brd_b" placeholder="Введите почту">
+                <span data-invalid-message="signin_email" class="form__invalid-message form__invalid-message_visibility_hidden">Неправильный формат email</span>
+              </li>
 
-<script type="text/javascript" src="about/about.bundle.js?16fa77f1dae4ed10fa43"></script></body>
+              <li>
+                <label for="signin_password">Пароль</label>
+                <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signin_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+              </li>
+
+              <li>
+                <button type="submit" class="btn btn_brd_none btn_style_primary btn_size_s btn_rad_100 btn_size_full" disabled>Войти</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="dialog__footer">
+          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signup');resetForms()">Зарегистрироваться</a></span>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <!-- Sign-up dialog -->
+  <span id="dialog_signup" class="dialog-signup" data-dialog>
+    <div class="dialog dialog_style_white dialog_align_center">
+      <div class="dialog__content dialog__content_border_full">
+        <div class="dialog__header">
+          <h3 class="dialog__header-title">Регистрация</h3>
+          <i class="dialog__close icon icon_size_24 icon_close_black"></i>
+        </div>
+        <div class="dialog__body">
+          <form name="signupForm" class="form" onsubmit="register(this); return false;">
+            <ul>
+              <li>
+                <label for="signup_email">Email</label>
+                <input required id="signup_email" type="email" class="textfield textfield_size_s textfield_brd_b" placeholder="Введите почту">
+                <span data-invalid-message="signup_email" class="form__invalid-message form__invalid-message_visibility_hidden">Неправильный формат email</span>
+              </li>
+
+              <li>
+                <label for="signup_password">Пароль</label>
+                <input required id="signup_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signup_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+              </li>
+
+              <li>
+                <label for="signup_name">Имя</label>
+                <input required id="signup_name" type="text" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите свое имя">
+                <span data-invalid-message="signup_name" class="form__invalid-message form__invalid-message_visibility_hidden">Имя должно быть [4-20] символов</span>
+              </li>
+
+              <li>
+                <button type="submit" class="btn btn_brd_none btn_style_primary btn_size_s btn_rad_100 btn_size_full" disabled>Зарегистрироваться</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="dialog__footer">
+          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signin');resetForms()">Войти</a></span>
+        </div>
+      </div>
+    </div>
+  </span>
+
+<script type="text/javascript" src="about/about.bundle.js?bf4f6b554f11059556fd"></script></body>
 </html>
