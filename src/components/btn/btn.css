@@ -8,7 +8,7 @@
   position: relative;
   cursor: pointer;
   text-decoration: none;
-  font-family: Roboto;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
   display: inline-block;
   vertical-align: middle;
   outline: none;

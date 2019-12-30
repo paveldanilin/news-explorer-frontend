@@ -5,6 +5,7 @@ import './theme.css';
 import './styles.css';
 import './components/components';
 import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
+import Dialog from './components/dialog/dialog';
 import register from './user/register';
 import login from './user/login';
 import { search } from './components/search/search';
@@ -78,5 +79,5 @@ function onClickShowMoreNews() {
 }
 
 export {
-  showSigninDialog, onSigninHandler, toggleMobileMenu, onClickShowMoreNews, login, register,
+  showSigninDialog, onSigninHandler, toggleMobileMenu, onClickShowMoreNews, login, register, Dialog,
 };

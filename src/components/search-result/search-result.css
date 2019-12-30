@@ -14,7 +14,7 @@
 }
 
 .search-result h2,h3,h4,h5 {
-  font-family: Roboto Slab;
+  font-family: Roboto Slab, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 40px;

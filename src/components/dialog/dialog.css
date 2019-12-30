@@ -1,6 +1,7 @@
 @import '__body/dialog__body.css';
 @import '__close/dialog__close.css';
 @import '__header/dialog__header.css';
+@import '__header-title/dialog__header-title.css';
 @import '__footer/dialog__footer.css';
 @import '__content/dialog__content.css';
 @import '_align/dialog_align.css';
