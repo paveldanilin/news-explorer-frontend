@@ -13,3 +13,8 @@
   line-height: 28px;
   padding-bottom: 22px;
 }
+
+.dialog-signup .dialog__footer a {
+  text-decoration: none;
+  color: #2F71E5;
+}
