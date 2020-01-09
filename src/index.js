@@ -33,6 +33,8 @@ search.onSearch((searchText) => {
     }, () => {
       // TODO: error handler
     });
+  } else {
+    Dialog.show('dialog_error_nokeyword');
   }
 });
 
