@@ -12,8 +12,9 @@ import login from './user/login';
 import { search } from './components/search/search';
 import { searchResult } from './components/search-result/search-result';
 import NewsApiClient from './news-api-client/news-api-client';
+import Config from './config';
 
-const newsApiClient = new NewsApiClient('43d52ebfb7ed449986028b50cbcee7c7', 'ru');
+const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
 
 search.onSearch((searchText) => {
   if (searchText !== null && searchText !== undefined && searchText.trim().length > 0) {
@@ -31,10 +32,10 @@ search.onSearch((searchText) => {
         searchResult.update(articles);
       }
     }, () => {
-      // TODO: error handler
+      Dialog.show('dialog_error', Config.ERROR_TXT_REQUEST_NOT_COMPLETED);
     });
   } else {
-    Dialog.show('dialog_error_nokeyword');
+    Dialog.show('dialog_error', Config.ERROR_TXT_NO_BLANK_ALLOWED);
   }
 });
 

@@ -28,13 +28,19 @@ function bindCloseHandler(container) {
 }
 
 export default class Dialog {
-  static show(el) {
+  static show(el, content) {
     let dialogEl = el;
     if (typeof dialogEl === 'string' || typeof dialogEl === 'number') {
       dialogEl = resolveDialogElement(dialogEl);
     }
     if (dialogEl) {
       dialogEl.style.display = 'block';
+      if (typeof content === 'string') {
+        const bodyEl = dialogEl.querySelector('.dialog__body');
+        if (bodyEl) {
+          bodyEl.textContent = content;
+        }
+      }
     }
   }
 
