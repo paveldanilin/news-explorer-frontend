@@ -7,6 +7,7 @@
 @import './__card-text/search-result__card-text.css';
 @import './__card-source/search-result__card-source.css';
 @import './__btn-more/search-result__btn-more.css';
+@import './__card-created/search-result__card-created.css';
 
 .search-result {
   display: none;
