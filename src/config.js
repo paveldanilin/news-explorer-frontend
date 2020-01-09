@@ -7,6 +7,18 @@ export default class Config {
     return 'ru';
   }
 
+  static get GH_COMMITS_REPO() {
+    return 'news-explorer-api';
+  }
+
+  static get GH_COMMITS_OWNER() {
+    return 'paveldanilin';
+  }
+
+  static get GH_COMMITS_PREVIEW_COUNT() {
+    return 3;
+  }
+
   static get ERROR_TXT_NO_BLANK_ALLOWED() {
     return 'Нужно ввести ключевое слово';
   }

@@ -8,6 +8,7 @@
 @import '_noresult/icon_noresult.css';
 @import '_tech/icon_tech.css';
 @import '_error/icon_error.css';
+@import '_user/icon_user.css';
 
 .icon {
   display: inline-block;

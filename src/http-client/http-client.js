@@ -61,7 +61,7 @@ export default class HttpClient {
   }
 
   fetch(url, {
-    headers, mode, cache, redirect, credentials, responseFormat,
+    headers, mode, cache, redirect, credentials, responseFormat, queryParams,
   } = {}) {
     return this.sendRequest(
       url,
@@ -73,11 +73,12 @@ export default class HttpClient {
       redirect || undefined,
       credentials || undefined,
       responseFormat || undefined,
+      queryParams || {},
     );
   }
 
   post(url, {
-    headers, body, mode, cache, redirect, credentials, responseFormat,
+    headers, body, mode, cache, redirect, credentials, responseFormat, queryParams,
   } = {}) {
     return this.sendRequest(
       url,
@@ -89,11 +90,12 @@ export default class HttpClient {
       redirect || undefined,
       credentials || undefined,
       responseFormat || undefined,
+      queryParams || {},
     );
   }
 
   patch(url, {
-    headers, body, mode, cache, redirect, credentials, responseFormat,
+    headers, body, mode, cache, redirect, credentials, responseFormat, queryParams,
   } = {}) {
     return this.sendRequest(
       url,
@@ -105,11 +107,12 @@ export default class HttpClient {
       redirect || undefined,
       credentials || undefined,
       responseFormat || undefined,
+      queryParams || {},
     );
   }
 
   put(url, {
-    headers, body, mode, cache, redirect, credentials, responseFormat,
+    headers, body, mode, cache, redirect, credentials, responseFormat, queryParams,
   } = {}) {
     return this.sendRequest(
       url,
@@ -121,11 +124,12 @@ export default class HttpClient {
       redirect || undefined,
       credentials || undefined,
       responseFormat || undefined,
+      queryParams || {},
     );
   }
 
   delete(url, {
-    headers, mode, cache, redirect, credentials, responseFormat,
+    headers, mode, cache, redirect, credentials, responseFormat, queryParams,
   } = {}) {
     return this.sendRequest(
       url,
@@ -137,6 +141,7 @@ export default class HttpClient {
       redirect || undefined,
       credentials || undefined,
       responseFormat || undefined,
+      queryParams || {},
     );
   }
 
@@ -150,6 +155,7 @@ export default class HttpClient {
     redirect,
     credentials,
     responseFormat,
+    params,
   ) {
     const reqHeaders = Object.assign(this.headers, headers || {});
     const reqMode = mode || this.mode;
@@ -160,7 +166,14 @@ export default class HttpClient {
       responseFormat,
       this.responseFormat,
     );
-    const reqUrl = this.baseUrl.length > 0 ? this.baseUrl + url : url;
+    let reqUrl = this.baseUrl.length > 0 ? this.baseUrl + url : url;
+
+    if (params) {
+      const queryParams = HttpClient.toParamsString(params);
+      if (queryParams.length > 0) {
+        reqUrl += `?${queryParams}`;
+      }
+    }
 
     const request = new Request(encodeURI(reqUrl), {
       method: HttpRequest.filterOptionMethod(method),
@@ -199,6 +212,19 @@ export default class HttpClient {
     }
 
     return response;
+  }
+
+  static toParamsString(params) {
+    if (typeof params !== 'object') {
+      return '';
+    }
+    const str = Object
+      .keys(params)
+      .reduce((queryParams, val) => `${queryParams}&${val}=${params[val]}`, '');
+    if (str.length > 0) {
+      return str.substr(1);
+    }
+    return str;
   }
 
   static filterOptionResponseFormat(responseFormat, defaultFormat) {

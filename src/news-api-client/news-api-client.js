@@ -7,7 +7,7 @@ export default class NewsApiClient {
     this.pageSize = pageSize || 100;
     this.language = language;
     this.httpClient = HttpClient.create({
-      baseUrl: 'https://newsapi.org/v2/everything?',
+      baseUrl: 'https://newsapi.org/v2',
       responseFormat: HttpClient.RESPONSE_JSON,
       mode: HttpRequest.MODE_CORS,
     });
@@ -31,19 +31,17 @@ export default class NewsApiClient {
       reqToDate = sysdate;
     }
 
-    const reqLanguage = language || this.language || 'en';
+    const queryParams = {
+      apiKey: this.apiKey,
+      q: searchText,
+      sortBy: 'publishedAt',
+      pageSize: this.pageSize,
+      from: NewsApiClient.formatDate(reqFromDate),
+      to: NewsApiClient.formatDate(reqToDate),
+      language: language || this.language || 'en',
+    };
 
-    const parameters = [
-      `apiKey=${this.apiKey}`,
-      `q=${searchText}`,
-      'sortBy=publishedAt',
-      `pageSize=${this.pageSize}`,
-      `from=${NewsApiClient.formatDate(reqFromDate)}`,
-      `to=${NewsApiClient.formatDate(reqToDate)}`,
-      `language=${reqLanguage}`,
-    ];
-
-    return this.httpClient.fetch(parameters.join('&'));
+    return this.httpClient.fetch('/everything', { queryParams });
   }
 
   static formatDate(date) {
