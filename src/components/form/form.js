@@ -27,10 +27,10 @@ const disableFormSubmitButton = (form) => {
   }
 };
 
-const isAllInputsFilled = (form) => {
+const isFormValid = (form) => {
   let result = true;
-  form.inputElements.forEach((el) => {
-    if (el.value.trim().length === 0) {
+  form.inputElements.forEach((input) => {
+    if (input.willValidate === true && input.validity.valid === false) {
       result = false;
     }
   });
@@ -48,17 +48,18 @@ const bindFormElementValidation = () => {
       if (inputElement) {
         form.inputElements.push(inputElement);
 
-        inputElement.addEventListener('invalid', (event) => {
-          event.preventDefault();
-          msgElement.classList.remove('form__invalid-message_visibility_hidden');
-          msgElement.classList.add('form__invalid-message_visibility_shown');
-        });
-
         inputElement.addEventListener('input', () => {
-          msgElement.classList.add('form__invalid-message_visibility_hidden');
-          msgElement.classList.remove('form__invalid-message_visibility_shown');
+          if (inputElement.validity.valid === false) {
+            // shows invalid message
+            msgElement.classList.remove('form__invalid-message_visibility_hidden');
+            msgElement.classList.add('form__invalid-message_visibility_shown');
+          } else {
+            // hides invalid message
+            msgElement.classList.add('form__invalid-message_visibility_hidden');
+            msgElement.classList.remove('form__invalid-message_visibility_shown');
+          }
 
-          if (isAllInputsFilled(form)) {
+          if (isFormValid(form)) {
             enableFormSubmitButton(form);
           } else {
             disableFormSubmitButton(form);
