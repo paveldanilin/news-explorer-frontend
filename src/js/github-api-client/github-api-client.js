@@ -7,6 +7,7 @@ export default class GithubApiClient {
       baseUrl: 'https://api.github.com',
       responseFormat: HttpClient.RESPONSE_JSON,
       mode: HttpRequest.MODE_CORS,
+      cache: HttpRequest.CACHE_NO_CACHE,
     });
   }
 

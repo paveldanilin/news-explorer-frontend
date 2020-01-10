@@ -1,14 +1,14 @@
 import './images/favicon.png';
 import 'normalize.css';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
-import './theme.css';
-import './styles.css';
+import './components/theme.css';
+import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
 import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import Dialog from './components/dialog/dialog';
 import { searchResult } from './components/search-result/search-result';
-import logout from './user/logout';
+import logout from './js/user/logout';
 
 searchResult.beginLoading();
 

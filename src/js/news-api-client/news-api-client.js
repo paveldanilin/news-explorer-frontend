@@ -10,6 +10,7 @@ export default class NewsApiClient {
       baseUrl: 'https://newsapi.org/v2',
       responseFormat: HttpClient.RESPONSE_JSON,
       mode: HttpRequest.MODE_CORS,
+      cache: HttpRequest.CACHE_NO_CACHE,
     });
   }
 

@@ -1,5 +1,5 @@
 import './dialog.css';
-import { loadHTML } from '../../loader';
+import { loadHTML } from '../../js/loader';
 
 function resolveDialogElement(id) {
   const htmlEl = document.getElementById(id);

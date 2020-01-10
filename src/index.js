@@ -1,18 +1,18 @@
 import './images/favicon.png';
 import 'normalize.css';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
-import './theme.css';
-import './styles.css';
+import './components/theme.css';
+import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
 import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import Dialog from './components/dialog/dialog';
-import register from './user/register';
-import login from './user/login';
+import register from './js/user/register';
+import login from './js/user/login';
 import { search } from './components/search/search';
 import { searchResult } from './components/search-result/search-result';
-import NewsApiClient from './news-api-client/news-api-client';
-import Config from './config';
+import NewsApiClient from './js/news-api-client/news-api-client';
+import Config from './js/config';
 
 const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
 
