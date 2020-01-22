@@ -1,6 +1,6 @@
-import EventBus from './event-bus';
+import Observable from './event-bus';
 
-const eventBus = new EventBus();
+const eventBus = new Observable();
 
 const EVENT_STATE_CHANGE = '$EVENT_STATE_CHANGE';
 

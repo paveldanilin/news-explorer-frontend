@@ -1,5 +1,5 @@
 import BaseComponent from '../base-component/base-component';
-import ListItemComponent from './list-item-component';
+import ListItem from './list-item';
 
 export default class ListComponent extends BaseComponent {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class ListComponent extends BaseComponent {
   }
 
   addItem(item) {
-    if (!(item instanceof ListItemComponent)) {
+    if (!(item instanceof ListItem)) {
       throw new Error('Expected instance of ListItemComponent');
     }
     this.State.items.push(item);

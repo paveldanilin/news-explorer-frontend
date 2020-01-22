@@ -1,6 +1,6 @@
 import BaseComponent from '../base-component/base-component';
 
-export default class ListItemComponent extends BaseComponent {
+export default class ListItem extends BaseComponent {
   constructor(props) {
     super('', props.data || {});
     this.classList = props.classList || [];

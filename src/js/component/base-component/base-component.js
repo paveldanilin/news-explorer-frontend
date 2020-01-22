@@ -126,16 +126,27 @@ export default class BaseComponent {
   }
 
   $render() {
-    if (this.hostHtmlElement === null || !this.$hasMethod('onRender')) {
-      return;
+    if (!this.$hasMethod('onRender')) {
+      return null;
     }
+
     const definition = this.$callMethod('onRender');
+
     if (typeof definition === 'string') {
-      this.hostHtmlElement.innerHTML = definition;
+      if (this.HostHtmlElement) {
+        this.hostHtmlElement.innerHTML = definition;
+      }
     } else if (typeof definition === 'object') {
-      this.hostHtmlElement.innerHTML = '';
-      this.hostHtmlElement.appendChild(Element.create(definition).render().DomElement);
+      if (this.HostHtmlElement) {
+        this.hostHtmlElement.innerHTML = '';
+        this.hostHtmlElement.appendChild(Element.create(definition)
+          .render().DomElement);
+      } else {
+        return Element.create(definition).render().DomElement;
+      }
     }
+
+    return definition;
   }
 
   $update(event) {

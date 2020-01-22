@@ -13,9 +13,7 @@ import { search } from './components/search/search';
 import { searchResult } from './components/search-result/search-result';
 import NewsApiClient from './js/news-api-client/news-api-client';
 import Config from './js/config';
-import ListComponent from './js/component/list-component/list-component';
-import ListItemComponent from './js/component/list-component/list-item-component';
-import BaseComponent from './js/component/base-component/base-component';
+import Component from './component';
 
 const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
 
@@ -46,26 +44,144 @@ function onClickShowMoreNews() {
   searchResult.showNextPage();
 }
 
-const list = new ListComponent({
-  selector: '#list',
-  items: [
-    new ListItemComponent({
-      data: {
-        text: 'Hello',
-      },
-    }),
-  ],
-});
+class Button extends Component {
+  constructor(props) {
+    super(props);
+    this.setText(props.text || '');
+  }
 
-setTimeout(() => list.addItem(new ListItemComponent({
-  data: {
-    text: '234',
+  getText() {
+    return this.text;
+  }
+
+  setText(text) {
+    this.text = text;
+  }
+
+  render() {
+    return `<button>${this.text}</button>`;
+  }
+}
+
+class List extends Component {
+  constructor(props) {
+    super(props);
+    this.setItems(props.items || []);
+    this.selected = null;
+    this.renderer = props.renderer || null;
+
+    this.on('click', (event) => {
+      if (event.domEvent.target.tagName.toLowerCase() === 'li') {
+        if (this.selected) {
+          this.selected.style.backgroundColor = 'white';
+        }
+        this.selected = event.domEvent.target;
+        this.selected.style.backgroundColor = 'red';
+      }
+    });
+
+    this.on('render', () => {
+      if (this.selected) {
+        this.selected = document.getElementById(this.selected.getAttribute('id'));
+        if (this.selected) {
+          this.selected.style.backgroundColor = 'red';
+        }
+      }
+    });
+  }
+
+  setItems(items) {
+    this.items = items;
+  }
+
+  getItems() {
+    return this.items;
+  }
+
+  addItem(item) {
+    this.items.push(item);
+    this.fireEvent('additem', {
+      component: this,
+      newItem: item,
+    });
+    this.refresh();
+  }
+
+  removeItem(id) {
+    this.selected = null;
+    this.items.splice(Number(id), 1);
+    this.refresh();
+  }
+
+  getSelected() {
+    return this.selected;
+  }
+
+  getSelectedId() {
+    if (!this.selected) {
+      return null;
+    }
+    return this
+      .selected
+      .getAttribute('id')
+      .replace(`${this.getId()}-`, '');
+  }
+
+  renderItem(index, item) {
+    if (this.renderer) {
+      return `<li id="${this.getId()}-${index}">${this.renderer(item, index)}</li>`;
+    }
+    return `<li id="${this.getId()}-${index}">${item}</li>`;
+  }
+
+  render() {
+    return `<ul>${this.getItems().map((item, index) => this.renderItem(index, item)).join('')}</ul>`;
+  }
+}
+
+const btn = new Button({
+  text: 'Add',
+  classList: ['btn', 'btn_size_s'],
+  listeners: {
+    click: () => {
+      const lstCmp = Component.getCmp('lst');
+      lstCmp.addItem(lstCmp.getItems().length + 1);
+    },
+    render: (event) => console.log('render', event.component),
+    mount: (event) => console.log('mount', event),
   },
-})), 3000);
+});
+btn.mountTo();
 
-BaseComponent.mount([
-  () => list,
-]);
+(new Button({
+  text: 'Del',
+  classList: ['btn', 'btn_size_s'],
+  listeners: {
+    click: () => {
+      const lstCmp = Component.getCmp('lst');
+      if (lstCmp.getSelected()) {
+        lstCmp.removeItem(lstCmp.getSelectedId());
+      }
+    },
+  },
+})).mountTo();
+
+const lst = new List({
+  id: 'lst',
+  items: [
+    { link: 'http://1', text: 'CCC' },
+    { link: 'http://2', text: 'BBB' },
+    { link: 'http://3', text: 'AAA' },
+    ],
+  listeners: {
+    click: (event) => console.log(event.component.getSelected()),
+  },
+  renderer: (item) => `<a href="${item.link}">${item.text}</a>`,
+});
+lst.mountTo();
+
+
+setTimeout(() => console.log(Component.getCmp('lst').getSelected()), 10);
 
 export {
   resetForms,
