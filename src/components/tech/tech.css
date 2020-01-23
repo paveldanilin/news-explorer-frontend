@@ -1,0 +1,24 @@
+@import './__title/tech__title.css';
+@import './__list/tech__list.css';
+
+.tech {
+  background: #F5F6F7;
+  padding-top: 80px;
+  padding-bottom: 87px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .tech {
+    padding-top: 32px;
+    padding-bottom: 40px;
+  }
+  .tech > .flex-container {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .tech > .flex-container {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,20 @@
+.header__searchbox {
+  max-width: 608px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 64px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .header__searchbox {
+    max-width: 288px;
+    margin-top: 64px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .header__searchbox {
+    max-width: 448px;
+    margin-top: 64px;
+  }
+}

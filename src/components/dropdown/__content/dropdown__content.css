@@ -1,0 +1,16 @@
+@import './_visible/dropdown__content_visible.css';
+
+.dropdown__content {
+  display: none;
+  padding: 12px 16px;
+  z-index: 10;
+  position: absolute;
+  min-width: 200px;
+}
+
+.dropdown__content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}

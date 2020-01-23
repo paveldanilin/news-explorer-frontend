@@ -1,0 +1,12 @@
+.gh-commits__carousel-nav {
+}
+
+
+.gh-commits__carousel-nav .glide__bullet--active {
+  background-color: black;
+}
+
+
+.gh-commits__carousel-nav.glide__bullets {
+  bottom: unset;
+}

@@ -1,0 +1,16 @@
+.search-result__card-source {
+  font-family: Roboto Slab, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #B6BCBF;
+  text-align: left;
+  padding-top: 18px;
+}
+
+.search-result__card-source a {
+  text-align: left;
+}

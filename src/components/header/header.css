@@ -1,0 +1,23 @@
+@import '__title/header__title.css';
+@import '__subtitle/header__subtitle.css';
+@import '__searchbox/header__searchbox.css';
+@import '__desktop-menu/header__desktop-menu.css';
+@import '__mobile-menu/header__mobile-menu.css';
+@import '__mobile-toggle/header__mobile-toggle.css';
+@import '_bg/header_bg.css';
+
+.header {
+  padding-bottom: 80px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .header {
+    padding-bottom: 32px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .header {
+    padding-bottom: 40px;
+  }
+}

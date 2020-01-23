@@ -1,0 +1,16 @@
+@import '_logout/icon_logout.css';
+@import '_trash/icon_trash.css';
+@import '_menu/icon_menu.css';
+@import '_bookmark/icon_bookmark.css';
+@import '_close/icon_close.css';
+@import '_social/icon_social.css';
+@import '_size/icon_size.css';
+@import '_noresult/icon_noresult.css';
+@import '_tech/icon_tech.css';
+@import '_error/icon_error.css';
+@import '_user/icon_user.css';
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}

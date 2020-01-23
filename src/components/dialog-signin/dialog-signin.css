@@ -1,0 +1,20 @@
+.dialog-signin {
+}
+
+.dialog-signin .dialog__content {
+  max-width: 430px;
+}
+
+.dialog-signin .dialog__header-title {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  padding-bottom: 22px;
+}
+
+
+.dialog-signin .dialog__footer a {
+  text-decoration: none;
+  color: #2F71E5;
+}

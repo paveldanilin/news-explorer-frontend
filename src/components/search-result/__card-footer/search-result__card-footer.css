@@ -1,0 +1,26 @@
+.search-result__card-footer {
+  height: 40px;
+  padding: 18px 20px 24px;
+  background-color: white;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  text-align: left;
+}
+
+.search-result__card-footer a {
+  text-decoration: none;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search-result__card-footer {
+    margin-bottom: 28px;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .search-result__card-footer {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}

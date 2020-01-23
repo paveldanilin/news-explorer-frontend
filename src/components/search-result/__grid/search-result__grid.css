@@ -1,0 +1,21 @@
+.search-result__grid {
+  display: grid;
+  grid-template-columns: 400px 400px 400px;
+  grid-column-gap: 16px;
+  grid-row-gap: 32px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search-result__grid {
+    grid-template-columns: 288px;
+    grid-row-gap: 1px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .search-result__grid {
+    grid-template-columns: 224px 224px 224px;
+    grid-column-gap: 8px;
+    grid-row-gap: 24px;
+  }
+}

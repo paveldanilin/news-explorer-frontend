@@ -1,0 +1,11 @@
+.textfield_size_m {
+  font-style: normal;
+  font-weight: normal;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+
+  /*padding: 18px 24px 21px;*/
+  padding-top: 18px;
+  padding-bottom: 21px;
+}

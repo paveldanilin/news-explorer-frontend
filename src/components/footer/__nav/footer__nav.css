@@ -1,0 +1,27 @@
+.footer__nav {
+  width: 390px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer__nav .nav__item {
+  padding-left: 21px;
+}
+
+@media (min-width: 767px) {
+  .footer__nav:first-child {
+    padding-left: calc(100vw / 5.5);
+  }
+}
+
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .footer .footer__nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer .nav .nav__item {
+    padding-bottom: 12px;
+  }
+}

@@ -1,0 +1,13 @@
+:root {
+  --primary-color: #1A1B22;
+  --primary-bg-color: #FFFFFF;
+
+  --secondary-color: #FFFFFF;
+  --secondary-bg-color: #F5F6F7;
+
+  --primary-font-family: Roboto;
+  --primary-font-style: normal;
+  --primary-font-weight: normal;
+  --primary-font-size: 18px;
+  --primary-line-height: 24px;
+}

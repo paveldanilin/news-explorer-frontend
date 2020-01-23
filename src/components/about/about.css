@@ -1,0 +1,22 @@
+@import './__text/about__text.css';
+@import './__avatar/about__avatar.css';
+
+.about {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  padding-bottom: 60px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .about .card {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .about .card {
+    flex-direction: row;
+  }
+}

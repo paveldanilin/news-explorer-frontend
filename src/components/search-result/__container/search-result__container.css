@@ -1,0 +1,31 @@
+.search-result__container {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1232px;
+  text-align: center;
+}
+
+.search-result__container h2,h3,h4,h5 {
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search-result__container {
+    width: 288px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .search-result__container {
+    width: 688px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}

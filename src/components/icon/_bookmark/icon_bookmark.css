@@ -1,0 +1,9 @@
+@import './icon_bookmark_marked.css';
+
+.icon_bookmark {
+  background: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3822 15.7137L6 19.9425V4L18 4V19.9425L12.6178 15.7137L12 15.2283L11.3822 15.7137Z' stroke='%23B6BCBF' stroke-width='2'/%3E%3C/svg%3E") center center no-repeat;
+}
+
+.icon_bookmark:hover {
+  background: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3822 15.7137L6 19.9425V4L18 4V19.9425L12.6178 15.7137L12 15.2283L11.3822 15.7137Z' stroke='%231A1B22' stroke-width='2'/%3E%3C/svg%3E") center center no-repeat;
+}

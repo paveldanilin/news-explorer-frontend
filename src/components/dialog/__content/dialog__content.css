@@ -1,0 +1,16 @@
+@import './_border/dialog__content_border.css';
+
+.dialog__content {
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 32px;
+  padding-left: 32px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .dialog__content {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}

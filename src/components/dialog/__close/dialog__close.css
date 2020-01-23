@@ -1,0 +1,6 @@
+.dialog__close {
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}

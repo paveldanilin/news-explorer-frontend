@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="author" content="Человек паук">
+  <meta name="description" content="Диплом яндекс">
+  <title>Главная</title>
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+</head>
+<body>
+  <header class="header header_bg">
+    <!-- Main menu -->
+    <nav>
+      <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_light nav">
+        <li class="nav__item nav__item_style_light logo logo_light">
+          <a href="index.html">NewsExplorer</a>
+        </li>
+        <li class="nav__item nav__item_style_light nav__item_pull-right nav__item_selected">
+          <a href="index.html">Главная</a>
+        </li>
+        <li class="nav__item nav__item_style_smoke">
+          <a href="about.html">О проекте</a>
+        </li>
+        <li class="nav__item">
+          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_transparent" onclick="showSigninDialog()">Авторизоваться</button>
+        </li>
+        <li class="nav__item header__mobile-toggle">
+          <button class="btn btn_brd_none btn_transparent btn_size_xxs" onclick="toggleMobileMenu()">
+            <i class="icon icon_size_24 icon_menu_white"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Mobile menu -->
+    <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
+      <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
+      <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
+      <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
+      <span class="nav__item nav__item_style_light">
+        <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="onSigninHandler()">Вход</button>
+      </span>
+    </nav>
+
+    <h1 class="header__title">
+      Что в мире творится?
+    </h1>
+
+    <p class="header__subtitle">
+      Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
+    </p>
+
+    <div class="header__searchbox">
+      <div class="search">
+        <div class="search__textbox">
+          <input type="text" class="textfield textfield_size_m textfield_brd_none" placeholder="Введите тему новости">
+        </div>
+        <div class="search__button">
+          <button class="btn btn_style_primary btn_size_m btn_rad_100 btn_brd_none">Искать</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="search-result">
+      <div class="search-result__container">
+        <h3>Результаты поиска</h3>
+        <div class="search-result__grid"></div>
+        <button class="btn btn_style_light btn_size_m btn_rad_100 btn_brd_none search-result__btn-more" onclick="onClickShowMoreNews(this)">
+          Показать еще
+        </button>
+      </div>
+    </section>
+
+    <section id="loading" class="loading">
+      <div class="loading__spinner loading__spinner_dual-ring"></div>
+      <h6 class="loading__label">Идет поиск новостей...</h6>
+    </section>
+
+    <section id="noresult" class="noresult">
+      <i class="icon icon_size_96 icon_noresult"></i>
+      <h2 class="noresult__title">Ничего не найдено</h2>
+      <p class="noresult__subtitle">К сожалению по вашему запросу ничего не найдено.</p>
+    </section>
+
+    <section class="about">
+      <div class="card">
+        <img src="images/avatar.png" class="about__avatar" alt="Аватар пользователя">
+        <div class="about__text card__body">
+          <h2>Об авторе</h2>
+          <p>Это блок с описанием автора проекта. Здесь следует указать, как вас зовут, чем вы занимаетесь, какими технологиями разработки владеете.</p>
+          <p>Также можно рассказать о процессе обучения в Практикуме, чему вы тут научились, и чем можете помочь потенциальным заказчикам.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <nav class="nav footer__nav">
+      <a class="nav__item nav__item_style_dark" href="index.html">Главная</a>
+      <a class="nav__item nav__item_style_dark" href="about.html">О проекте</a>
+      <a class="nav__item nav__item_style_dark" href="https://praktikum.yandex.ru/">Яндекс.Практикум</a>
+    </nav>
+
+    <nav class="nav footer__social">
+      <a class="nav__item nav__item_style_dark" href="https://github.com/"><i class="icon icon_size_24 icon_social_github"></i></a>
+      <a class="nav__item nav__item_style_dark" href="https://www.facebook.com/"><i class="icon icon_size_24 icon_social_fb"></i></a>
+    </nav>
+  </footer>
+
+  <!-- Sign-in dialog -->
+  <span id="dialog_signin" class="dialog-signin" data-dialog>
+    <div class="dialog dialog_style_white dialog_align_center">
+      <div class="dialog__content dialog__content_border_full">
+        <div class="dialog__header">
+          <h3 class="dialog__header-title">Вход</h3>
+          <i class="dialog__close icon icon_size_24 icon_close_black"></i>
+        </div>
+        <div class="dialog__body">
+          <form name="signinForm" class="form" onsubmit="login(this); return false;">
+            <ul>
+              <li>
+                <label for="signin_email">Email</label>
+                <input required id="signin_email" type="email" class="textfield textfield_size_s textfield_brd_b" placeholder="Введите почту">
+                <span data-invalid-message="signin_email" class="form__invalid-message form__invalid-message_visibility_hidden">Неправильный формат email</span>
+              </li>
+
+              <li>
+                <label for="signin_password">Пароль</label>
+                <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signin_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+              </li>
+
+              <li>
+                <button type="submit" class="btn btn_brd_none btn_style_primary btn_size_s btn_rad_100 btn_size_full" disabled>Войти</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="dialog__footer">
+          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signup');resetForms()">Зарегистрироваться</a></span>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <!-- Sign-up dialog -->
+  <span id="dialog_signup" class="dialog-signup" data-dialog>
+    <div class="dialog dialog_style_white dialog_align_center">
+      <div class="dialog__content dialog__content_border_full">
+        <div class="dialog__header">
+          <h3 class="dialog__header-title">Регистрация</h3>
+          <i class="dialog__close icon icon_size_24 icon_close_black"></i>
+        </div>
+        <div class="dialog__body">
+          <form name="signupForm" class="form" onsubmit="register(this); return false;">
+            <ul>
+              <li>
+                <label for="signup_email">Email</label>
+                <input required id="signup_email" type="email" class="textfield textfield_size_s textfield_brd_b" placeholder="Введите почту">
+                <span data-invalid-message="signup_email" class="form__invalid-message form__invalid-message_visibility_hidden">Неправильный формат email</span>
+              </li>
+
+              <li>
+                <label for="signup_password">Пароль</label>
+                <input required id="signup_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signup_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+              </li>
+
+              <li>
+                <label for="signup_name">Имя</label>
+                <input required id="signup_name" type="text" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите свое имя">
+                <span data-invalid-message="signup_name" class="form__invalid-message form__invalid-message_visibility_hidden">Имя должно быть [4-20] символов</span>
+              </li>
+
+              <li>
+                <button type="submit" class="btn btn_brd_none btn_style_primary btn_size_s btn_rad_100 btn_size_full" disabled>Зарегистрироваться</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="dialog__footer">
+          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signin');resetForms()">Войти</a></span>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <!-- Empty keyword dialog -->
+  <span id="dialog_error" class="dialog-error" data-dialog>
+    <div class="dialog dialog_style_white dialog_align_center">
+      <div class="dialog__content dialog__content_border_full">
+        <div class="dialog__header">
+          <i class="icon icon_error icon_size_32"></i>
+          <h3 class="dialog__header-title">Ошибка</h3>
+          <i class="dialog__close icon icon_size_24 icon_close_black"></i>
+        </div>
+        <div class="dialog__body"></div>
+      </div>
+    </div>
+  </span>
+
+  <span id="list"></span>
+
+</body>
+</html>

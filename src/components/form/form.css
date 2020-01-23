@@ -1,0 +1,36 @@
+@import './__invalid-message/form__invalid-message.css';
+
+.form {
+}
+
+.form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form ul li {
+  margin-bottom: 29px;
+}
+
+.form input {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form input:focus {
+  border-bottom: 1px solid black;
+}
+
+.form label {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+
+  color: #2F71E5;
+
+  display: inline-block;
+  padding-bottom: 9px;
+}

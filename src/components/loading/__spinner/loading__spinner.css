@@ -1,0 +1,10 @@
+@import './_dual-ring/loading__spinner_dual-ring.css';
+
+.loading__spinner {
+  width: 74px;
+  height: 74px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+}

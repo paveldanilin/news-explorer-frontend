@@ -1,0 +1,20 @@
+@import './__button/search__button.css';
+@import './__textbox/search__textbox.css';
+
+.search {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .search {
+    flex-direction: row;
+  }
+}

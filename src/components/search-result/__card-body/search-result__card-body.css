@@ -1,0 +1,24 @@
+.search-result__card-body {
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top:  20px;
+  height: 304px;
+  background-color: white;
+  overflow: hidden;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search-result__card-body {
+    height: 244px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+  .search-result__card-body {
+    max-height: 280px;
+    min-height: 280px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top:  16px;
+  }
+}

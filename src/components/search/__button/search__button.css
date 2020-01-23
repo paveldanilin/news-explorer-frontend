@@ -1,0 +1,14 @@
+.search__button {
+  width: 168px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .search__button {
+    width: 100%;
+    padding-top: 16px;
+  }
+
+  .search__button .btn {
+    width: 100%;
+  }
+}

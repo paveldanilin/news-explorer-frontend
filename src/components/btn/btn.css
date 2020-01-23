@@ -1,0 +1,35 @@
+@import './_rad/btn_rad.css';
+@import './_brd/btn_brd.css';
+@import './_size/btn_size.css';
+@import './_style/btn_style.css';
+@import './_transparent/btn_transparent.css';
+
+.btn {
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  display: inline-block;
+  vertical-align: middle;
+  outline: none;
+}
+
+.btn button, input[type="submit"], input[type="button"] {
+  margin: 0;
+  padding: 0;
+}
+
+.btn:active {
+  cursor: pointer;
+}
+
+.btn:focus {
+  cursor: pointer;
+  outline: none;
+}
+
+.btn:disabled {
+  background-color: #E6E8EB;
+  color: #B6BCBF;
+  cursor: default;
+}

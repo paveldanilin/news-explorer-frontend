@@ -1,0 +1,11 @@
+@import '_visibility/form__invalid-message_visibility.css';
+
+.form__invalid-message {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  display: inline-block;
+}
