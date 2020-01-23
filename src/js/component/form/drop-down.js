@@ -1,8 +1,13 @@
 import StorableComponent from '../storable-component';
 
 export default class DropDown extends StorableComponent {
-  constructor(props, valueField, descriptionField) {
+  constructor(props) {
     super(props);
+
+    const {
+      valueField, descriptionField,
+    } = props;
+
     this.valueField = valueField;
     this.descriptionField = descriptionField;
 
@@ -16,10 +21,7 @@ export default class DropDown extends StorableComponent {
   }
 
   static create(props) {
-    const {
-      valueField, descriptionField,
-    } = props;
-    return new DropDown(props, valueField, descriptionField);
+    return new DropDown(props);
   }
 
   getSelectedIndex() {

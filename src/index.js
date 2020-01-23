@@ -16,6 +16,7 @@ import Config from './js/config';
 import Component from './js/component/component';
 import DropDown from './js/component/form/drop-down';
 import Button from './js/component/form/button';
+import Menu from './js/component/menu/menu';
 
 const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
 
@@ -205,6 +206,47 @@ DropDown.create({
     },
   },
 }).mount('#myToolbar');
+
+Button.create({
+  text: 'Secret toggle',
+  listeners: {
+    click: () => {
+      console.log(12313132);
+      if (Component.getCmp('myMenu').get(2).isHidden()) {
+        Component.getCmp('myMenu').get(2).show();
+      } else {
+        Component.getCmp('myMenu').get(2).hide();
+      }
+      Component.getCmp('myMenu').refresh();
+    },
+  },
+}).mount();
+
+
+Menu.create({
+  id: 'myMenu',
+  classList: ['header__desktop-menu', 'header__desktop-menu_separator_light', 'nav'],
+  itemSelectedClass: 'nav__item_selected',
+  itemClassList: ['nav__item'],
+  items: [
+    { link: 'http://a.com', text: 'Go!', classList: ['nav__item_style_light'] },
+    { link: 'http://b.com', text: 'Fly!', classList: ['nav__item_style_light', 'nav__item_pull-right'] },
+    {
+      link: 'http://hidden.com',
+      text: 'Secret!',
+      classList: ['nav__item_style_light'],
+      hidden: true,
+    },
+    {
+      renderer: () => Button.create({
+        text: 'This is test button!',
+        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
+        listeners: { click: () => Dialog.show('dialog_error', 'TEST BUTTON!') },
+      }),
+    },
+  ],
+}).mount('#myMenuContainer');
+
 
 export {
   resetForms,

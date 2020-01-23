@@ -1,14 +1,16 @@
 import Component from '../component';
 
 export default class Button extends Component {
-  constructor(props, text) {
+  constructor(props) {
     super(props);
+
+    const { text, image } = props;
     this.setText(text || '');
+    this.setImage(image || null);
   }
 
   static create(props) {
-    const { text } = props;
-    return new Button(props, text);
+    return new Button(props);
   }
 
   getText() {
@@ -19,7 +21,18 @@ export default class Button extends Component {
     this.text = text;
   }
 
+  getImage() {
+    return this.image;
+  }
+
+  setImage(image) {
+    this.image = image;
+  }
+
   render() {
-    return `<button>${this.text}</button>`;
+    if (this.image) {
+      return `<input type="image" src="${this.getImage()}">`;
+    }
+    return `<button>${this.getText()}</button>`;
   }
 }

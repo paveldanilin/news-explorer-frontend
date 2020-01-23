@@ -12,7 +12,6 @@ export default class Component extends Observable {
     this.classList = props.classList || [];
     this.listeners = props.listeners || {};
     this.domEvents = ['click', 'mouseover', 'mouseout', 'keyup', 'keydown', 'change', 'blur', 'dblclick', 'focus'];
-    this.mounted = false;
   }
 
   get Id() {
@@ -33,15 +32,15 @@ export default class Component extends Observable {
   }
 
   mount(container) {
-    if (this.mounted) {
-      throw new Error('Component already mounted');
-    }
 
     setTimeout(() => {
       const containerSelector = container || 'body';
       let containerElement = null;
       if (typeof containerSelector === 'string') {
         containerElement = document.querySelector(containerSelector);
+      }
+      if (container instanceof Component) {
+        containerElement = container.HtmlElement;
       }
       if (containerElement instanceof HTMLElement) {
         this.htmlElement = this.$render();
@@ -52,8 +51,6 @@ export default class Component extends Observable {
         Object
           .keys(this.listeners)
           .forEach((eventName) => this.on(eventName, this.listeners[eventName]));
-
-        this.mounted = true;
 
         this.fireEvent('mount', {
           component: this,
