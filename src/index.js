@@ -13,7 +13,9 @@ import { search } from './components/search/search';
 import { searchResult } from './components/search-result/search-result';
 import NewsApiClient from './js/news-api-client/news-api-client';
 import Config from './js/config';
-import Component from './component';
+import Component from './js/component/component';
+import DropDown from './js/component/form/drop-down';
+import Button from './js/component/form/button';
 
 const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
 
@@ -42,25 +44,6 @@ search.onSearch((searchText) => {
 
 function onClickShowMoreNews() {
   searchResult.showNextPage();
-}
-
-class Button extends Component {
-  constructor(props) {
-    super(props);
-    this.setText(props.text || '');
-  }
-
-  getText() {
-    return this.text;
-  }
-
-  setText(text) {
-    this.text = text;
-  }
-
-  render() {
-    return `<button>${this.text}</button>`;
-  }
 }
 
 class List extends Component {
@@ -124,14 +107,14 @@ class List extends Component {
     return this
       .selected
       .getAttribute('id')
-      .replace(`${this.getId()}-`, '');
+      .replace(`${this.Id}-`, '');
   }
 
   renderItem(index, item) {
     if (this.renderer) {
-      return `<li id="${this.getId()}-${index}">${this.renderer(item, index)}</li>`;
+      return `<li id="${this.Id}-${index}">${this.renderer(item, index)}</li>`;
     }
-    return `<li id="${this.getId()}-${index}">${item}</li>`;
+    return `<li id="${this.Id}-${index}">${item}</li>`;
   }
 
   render() {
@@ -139,21 +122,22 @@ class List extends Component {
   }
 }
 
-const btn = new Button({
+(Button.create({
   text: 'Add',
   classList: ['btn', 'btn_size_s'],
   listeners: {
     click: () => {
-      const lstCmp = Component.getCmp('lst');
-      lstCmp.addItem(lstCmp.getItems().length + 1);
+      const selected = Component.getCmp('myDropDown').getSelected();
+      if (selected) {
+        Component
+          .getCmp('lst')
+          .addItem({ link: selected.record.get('url'), text: selected.record.get('title') });
+      }
     },
-    render: (event) => console.log('render', event.component),
-    mount: (event) => console.log('mount', event),
   },
-});
-btn.mountTo();
+})).mount('#myToolbar');
 
-(new Button({
+(Button.create({
   text: 'Del',
   classList: ['btn', 'btn_size_s'],
   listeners: {
@@ -164,24 +148,63 @@ btn.mountTo();
       }
     },
   },
-})).mountTo();
+})).mount('#myToolbar');
 
-const lst = new List({
+(new List({
   id: 'lst',
   items: [
     { link: 'http://1', text: 'CCC' },
     { link: 'http://2', text: 'BBB' },
     { link: 'http://3', text: 'AAA' },
-    ],
+  ],
   listeners: {
     click: (event) => console.log(event.component.getSelected()),
   },
   renderer: (item) => `<a href="${item.link}">${item.text}</a>`,
-});
-lst.mountTo();
+})).mount('#myList');
 
 
-setTimeout(() => console.log(Component.getCmp('lst').getSelected()), 10);
+DropDown.create({
+  id: 'myDropDown',
+  store: {
+    recordDefinition: [
+      { name: 'albumId' },
+      { name: 'id' },
+      { name: 'title' },
+      { name: 'url' },
+      { name: 'thumb', mapping: 'thumbnailUrl' },
+    ],
+    dataProxy: {
+      url: 'https://jsonplaceholder.typicode.com/photos',
+    },
+    autoload: true,
+  },
+  valueField: 'id',
+  descriptionField: 'url',
+  listeners: {
+    change: (event) => {
+      console.log('change', event.component.getSelected());
+    },
+  },
+}).mount('#myToolbar');
+
+DropDown.create({
+  id: 'testDropDown',
+  store: {
+    recordDefinition: [{ name: 'id' }, { name: 'text' }],
+  },
+  valueField: 'id',
+  descriptionField: 'text',
+  listeners: {
+    mount: (event) => {
+      event.component.Store.setRecords([
+        { id: 1, text: 'test' },
+        { id: 2, text: 'boom' },
+      ]);
+      event.component.refresh();
+    },
+  },
+}).mount('#myToolbar');
 
 export {
   resetForms,

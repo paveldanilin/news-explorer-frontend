@@ -1,5 +1,6 @@
-import Element from './js/component/base-component/element';
-import Observable from './js/component/base-component/observable';
+import Element from './element';
+import Observable from './observable';
+import UuidGenerator from '../util/uuid-generator';
 
 export default class Component extends Observable {
   constructor(props) {
@@ -7,18 +8,22 @@ export default class Component extends Observable {
 
     this.htmlElement = null;
     this.name = props.name || null;
-    this.id = props.id || Component.genId();
+    this.id = props.id || UuidGenerator.generate();
     this.classList = props.classList || [];
     this.listeners = props.listeners || {};
-    this.domEvents = ['click', 'mouseover', 'mouseout', 'keyup', 'keydown'];
+    this.domEvents = ['click', 'mouseover', 'mouseout', 'keyup', 'keydown', 'change', 'blur', 'dblclick', 'focus'];
     this.mounted = false;
   }
 
-  getId() {
+  get Id() {
     return this.id;
   }
 
-  getHtmlElement() {
+  get Name() {
+    return this.name;
+  }
+
+  get HtmlElement() {
     return this.htmlElement;
   }
 
@@ -27,7 +32,7 @@ export default class Component extends Observable {
     throw new Error('You must implement render function');
   }
 
-  mountTo(container) {
+  mount(container) {
     if (this.mounted) {
       throw new Error('Component already mounted');
     }
@@ -42,7 +47,7 @@ export default class Component extends Observable {
         this.htmlElement = this.$render();
         containerElement.appendChild(this.htmlElement);
 
-        Component.instances[this.getId()] = this;
+        Component.instances[this.Id] = this;
 
         Object
           .keys(this.listeners)
@@ -65,15 +70,15 @@ export default class Component extends Observable {
       return;
     }
     this.htmlElement.parentNode.replaceChild(this.$render(), this.htmlElement);
-    this.htmlElement = document.getElementById(this.getId());
+    this.htmlElement = document.getElementById(this.Id);
   }
 
   $render() {
     const el = Element.create(this.render());
 
-    el.setAttribute('id', this.id);
-    if (this.name) {
-      el.setAttribute('name', this.name);
+    el.setAttribute('id', this.Id);
+    if (this.Name) {
+      el.setAttribute('name', this.Name);
     }
 
     Object
@@ -94,14 +99,6 @@ export default class Component extends Observable {
     setTimeout(() => this.fireEvent('render', { component: this }), 0);
 
     return el;
-  }
-
-  static genId() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      // eslint-disable-next-line no-mixed-operators,no-bitwise
-      const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
   }
 
   static getCmp(id) {
