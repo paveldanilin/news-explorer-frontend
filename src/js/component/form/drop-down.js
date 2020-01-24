@@ -20,10 +20,6 @@ export default class DropDown extends StorableComponent {
     }
   }
 
-  static create(props) {
-    return new DropDown(props);
-  }
-
   getSelectedIndex() {
     return this.HtmlElement.selectedIndex || -1;
   }

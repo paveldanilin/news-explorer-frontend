@@ -15,8 +15,10 @@ import NewsApiClient from './js/news-api-client/news-api-client';
 import Config from './js/config';
 import Component from './js/component/component';
 import DropDown from './js/component/form/drop-down';
-import Button from './js/component/form/button';
+import Button from './js/component/form/button/button';
 import Menu from './js/component/menu/menu';
+import IconButton from './js/component/form/button/icon-button';
+import ImageButton from './js/component/form/button/image-button';
 
 const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
 
@@ -47,126 +49,10 @@ function onClickShowMoreNews() {
   searchResult.showNextPage();
 }
 
-class List extends Component {
-  constructor(props) {
-    super(props);
-    this.setItems(props.items || []);
-    this.selected = null;
-    this.renderer = props.renderer || null;
-
-    this.on('click', (event) => {
-      if (event.domEvent.target.tagName.toLowerCase() === 'li') {
-        if (this.selected) {
-          this.selected.style.backgroundColor = 'white';
-        }
-        this.selected = event.domEvent.target;
-        this.selected.style.backgroundColor = 'red';
-      }
-    });
-
-    this.on('render', () => {
-      if (this.selected) {
-        this.selected = document.getElementById(this.selected.getAttribute('id'));
-        if (this.selected) {
-          this.selected.style.backgroundColor = 'red';
-        }
-      }
-    });
-  }
-
-  setItems(items) {
-    this.items = items;
-  }
-
-  getItems() {
-    return this.items;
-  }
-
-  addItem(item) {
-    this.items.push(item);
-    this.fireEvent('additem', {
-      component: this,
-      newItem: item,
-    });
-    this.refresh();
-  }
-
-  removeItem(id) {
-    this.selected = null;
-    this.items.splice(Number(id), 1);
-    this.refresh();
-  }
-
-  getSelected() {
-    return this.selected;
-  }
-
-  getSelectedId() {
-    if (!this.selected) {
-      return null;
-    }
-    return this
-      .selected
-      .getAttribute('id')
-      .replace(`${this.Id}-`, '');
-  }
-
-  renderItem(index, item) {
-    if (this.renderer) {
-      return `<li id="${this.Id}-${index}">${this.renderer(item, index)}</li>`;
-    }
-    return `<li id="${this.Id}-${index}">${item}</li>`;
-  }
-
-  render() {
-    return `<ul>${this.getItems().map((item, index) => this.renderItem(index, item)).join('')}</ul>`;
-  }
-}
-
-(Button.create({
-  text: 'Add',
-  classList: ['btn', 'btn_size_s'],
-  listeners: {
-    click: () => {
-      const selected = Component.getCmp('myDropDown').getSelected();
-      if (selected) {
-        Component
-          .getCmp('lst')
-          .addItem({ link: selected.record.get('url'), text: selected.record.get('title') });
-      }
-    },
-  },
-})).mount('#myToolbar');
-
-(Button.create({
-  text: 'Del',
-  classList: ['btn', 'btn_size_s'],
-  listeners: {
-    click: () => {
-      const lstCmp = Component.getCmp('lst');
-      if (lstCmp.getSelected()) {
-        lstCmp.removeItem(lstCmp.getSelectedId());
-      }
-    },
-  },
-})).mount('#myToolbar');
-
-(new List({
-  id: 'lst',
-  items: [
-    { link: 'http://1', text: 'CCC' },
-    { link: 'http://2', text: 'BBB' },
-    { link: 'http://3', text: 'AAA' },
-  ],
-  listeners: {
-    click: (event) => console.log(event.component.getSelected()),
-  },
-  renderer: (item) => `<a href="${item.link}">${item.text}</a>`,
-})).mount('#myList');
-
 
 DropDown.create({
   id: 'myDropDown',
+  container: '#myToolbar',
   store: {
     recordDefinition: [
       { name: 'albumId' },
@@ -187,10 +73,11 @@ DropDown.create({
       console.log('change', event.component.getSelected());
     },
   },
-}).mount('#myToolbar');
+});
 
 DropDown.create({
   id: 'testDropDown',
+  container: '#myToolbar',
   store: {
     recordDefinition: [{ name: 'id' }, { name: 'text' }],
   },
@@ -205,48 +92,115 @@ DropDown.create({
       event.component.refresh();
     },
   },
-}).mount('#myToolbar');
+});
 
 Button.create({
+  container: '#myToolbar',
   text: 'Secret toggle',
   listeners: {
     click: () => {
-      console.log(12313132);
-      if (Component.getCmp('myMenu').get(2).isHidden()) {
-        Component.getCmp('myMenu').get(2).show();
+      if (Component.getCmp('myMenu').findById('articlesMenuItem').isHidden()) {
+        Component.getCmp('myMenu').findById('articlesMenuItem').show();
       } else {
-        Component.getCmp('myMenu').get(2).hide();
+        Component.getCmp('myMenu').findById('articlesMenuItem').hide();
       }
-      Component.getCmp('myMenu').refresh();
+
+      if (Component.getCmp('loginMenuItem').isHidden()) {
+        Component.getCmp('loginMenuItem').show();
+      } else {
+        Component.getCmp('loginMenuItem').hide();
+      }
+
+      if (Component.getCmp('logoutMenuItem').isHidden()) {
+        Component.getCmp('logoutMenuItem').show();
+      } else {
+        Component.getCmp('logoutMenuItem').hide();
+      }
     },
   },
-}).mount();
+});
 
 
 Menu.create({
   id: 'myMenu',
+  container: '#mainMenuDesktop',
   classList: ['header__desktop-menu', 'header__desktop-menu_separator_light', 'nav'],
   itemSelectedClass: 'nav__item_selected',
   itemClassList: ['nav__item'],
   items: [
-    { link: 'http://a.com', text: 'Go!', classList: ['nav__item_style_light'] },
-    { link: 'http://b.com', text: 'Fly!', classList: ['nav__item_style_light', 'nav__item_pull-right'] },
     {
-      link: 'http://hidden.com',
-      text: 'Secret!',
+      link: 'index.html',
+      text: 'NewsExplorer',
+      classList: ['nav__item_style_light', 'logo', 'logo_light'],
+    },
+    {
+      link: 'index.html',
+      text: 'Главная',
+      selected: true,
+      classList: ['nav__item_style_light', 'nav__item_pull-right'],
+    },
+    {
+      link: 'about.html',
+      text: 'О проекте',
+      classList: ['nav__item_style_smoke'],
+    },
+    {
+      id: 'articlesMenuItem',
+      link: 'articles.html',
+      text: 'Сохраненные статьи',
       classList: ['nav__item_style_light'],
       hidden: true,
     },
     {
+      id: 'loginMenuItem',
       renderer: () => Button.create({
-        text: 'This is test button!',
+        text: 'Авторизоваться',
         classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
-        listeners: { click: () => Dialog.show('dialog_error', 'TEST BUTTON!') },
+        listeners: { click: () => Dialog.show('dialog_signin') },
+      }),
+    },
+    {
+      id: 'logoutMenuItem',
+      hidden: true,
+      renderer: () => Button.create({
+        text: 'Выход',
+        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
+        listeners: { click: () => console.log('LOGOUT!') },
       }),
     },
   ],
-}).mount('#myMenuContainer');
+});
 
+IconButton.create({
+  container: '#myToolbar',
+  text: 'Ba!',
+  classList: ['btn', 'btn_brd_none', 'btn_transparent', 'btn_size_xxs'],
+  iconClassList: ['icon', 'icon_size_24', 'icon_menu_black'],
+  listeners: {
+    click: (event) => console.log('Ba!', event),
+  },
+});
+
+IconButton.create({
+  container: '#myToolbar',
+  text: 'Bo!',
+  textAlign: 'left',
+  classList: ['btn', 'btn_brd_none', 'btn_transparent', 'btn_size_xxs'],
+  iconClassList: ['icon', 'icon_size_24', 'icon_menu_black'],
+  listeners: {
+    click: (event) => console.log('Bo!', event),
+  },
+});
+
+ImageButton.create({
+  id: 'imageButton',
+  container: '#myToolbar',
+  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPP_8oD-jbBJVuXuv4eUVOvy7gMqP67uTWrF3wPRKk1fZyFFftUw&s',
+  hoverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIUa-kL6Q5Vfw7cOlg6tsA_tP2ZY8MX5Y37cbjjI7vXuSgzraGXw&s',
+  listeners: {
+    click: () => console.log('IMAGE!'),
+  },
+});
 
 export {
   resetForms,

@@ -115,4 +115,18 @@ export default class Element {
     tmp.innerHTML = html;
     return tmp.firstChild;
   }
+
+  static isDomEvent(eventName) {
+    return [
+      'click',
+      'mouseover',
+      'mouseout',
+      'keyup',
+      'keydown',
+      'change',
+      'blur',
+      'dblclick',
+      'focus',
+    ].includes(eventName);
+  }
 }

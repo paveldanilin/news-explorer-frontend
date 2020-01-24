@@ -11,27 +11,7 @@
 <body>
   <header class="header header_bg">
     <!-- Main menu -->
-    <nav>
-      <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_light nav">
-        <li class="nav__item nav__item_style_light logo logo_light">
-          <a href="index.html">NewsExplorer</a>
-        </li>
-        <li class="nav__item nav__item_style_light nav__item_pull-right nav__item_selected">
-          <a href="index.html">Главная</a>
-        </li>
-        <li class="nav__item nav__item_style_smoke">
-          <a href="about.html">О проекте</a>
-        </li>
-        <li class="nav__item">
-          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_transparent" onclick="showSigninDialog()">Авторизоваться</button>
-        </li>
-        <li class="nav__item header__mobile-toggle">
-          <button class="btn btn_brd_none btn_transparent btn_size_xxs" onclick="toggleMobileMenu()">
-            <i class="icon icon_size_24 icon_menu_white"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
+    <nav id="mainMenuDesktop"></nav>
 
     <!-- Mobile menu -->
     <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
@@ -208,8 +188,10 @@
     <div id="myList"></div>
   </div>
 
+  <!--
   <nav id="myMenuContainer" class="header header_bg">
   </nav>
+  -->
 
 </body>
 </html>

@@ -3,40 +3,40 @@ export default class Observable {
     this.subscriptions = {};
   }
 
-  on(eventName, handler) {
-    if (!this.subscriptions[eventName]) {
-      this.subscriptions[eventName] = {
+  on(eventType, handler) {
+    if (!this.subscriptions[eventType]) {
+      this.subscriptions[eventType] = {
         seq: 0,
         subjects: {},
       };
     }
 
-    const id = this.subscriptions[eventName].seq;
-    this.subscriptions[eventName].seq += 1;
-    this.subscriptions[eventName].subjects[id] = handler;
+    const id = this.subscriptions[eventType].seq;
+    this.subscriptions[eventType].seq += 1;
+    this.subscriptions[eventType].subjects[id] = handler;
 
     return {
       unsubscribe: () => {
-        delete this.subscriptions[eventName].subjects[id];
-        if (Object.keys(this.subscriptions[eventName].subjects).length === 0) {
-          delete this.subscriptions[eventName];
+        delete this.subscriptions[eventType].subjects[id];
+        if (Object.keys(this.subscriptions[eventType].subjects).length === 0) {
+          delete this.subscriptions[eventType];
         }
       },
     };
   }
 
-  fireEvent(eventName, props) {
-    if (this.subscriptions[eventName] === undefined) {
+  fireEvent(eventType, props) {
+    if (this.subscriptions[eventType] === undefined) {
       return;
     }
     Object
-      .keys(this.subscriptions[eventName].subjects)
+      .keys(this.subscriptions[eventType].subjects)
       .forEach((key) => {
-        this.subscriptions[eventName].subjects[key](props);
+        this.subscriptions[eventType].subjects[key](props);
       });
   }
 
-  clear() {
+  unsubscribe() {
     this.subscriptions = {};
   }
 }
