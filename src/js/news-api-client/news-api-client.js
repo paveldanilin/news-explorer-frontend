@@ -14,6 +14,11 @@ export default class NewsApiClient {
     });
   }
 
+  static create(props) {
+    const { apiKey, language, pageSize } = props;
+    return new NewsApiClient(apiKey, language, pageSize);
+  }
+
   static get RESULT_STATUS_OK() {
     return 'ok';
   }

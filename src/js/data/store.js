@@ -4,18 +4,28 @@ import UuidGenerator from '../util/uuid-generator';
 import RecordDefinition from './record-definition';
 import Observable from '../component/observable';
 import DataProxy from './data-proxy';
+import Paginator from './paginator';
 
 export default class Store extends Observable {
-  constructor(data, recordDefinition, dataProxy, listeners, autoload) {
+  constructor(
+    data, recordDefinition, dataProxy, listeners, autoload, dataRoot, pageSize, pageMode,
+  ) {
     super();
     if (!(recordDefinition instanceof RecordDefinition)) {
       throw new Error('Expected instance of RecordDefinition');
     }
 
     this.recordDefinition = recordDefinition;
+    this.dataRoot = dataRoot || null;
     this.records = [];
     this.setRecords(data || []);
     this.dataProxy = dataProxy || null;
+    if (pageSize === undefined || pageSize === null) {
+      this.paginator = null;
+    } else {
+      this.paginator = Paginator.create({ pageSize, mode: pageMode });
+    }
+    this.pageNumber = 1;
 
     const eventListeners = listeners || [];
     Object
@@ -40,7 +50,7 @@ export default class Store extends Observable {
 
   static create(pros) {
     const {
-      data, listeners, autoload,
+      data, listeners, autoload, dataRoot, pageSize, pageMode,
     } = pros;
     let { recordDefinition } = pros;
     let { dataProxy } = pros;
@@ -53,7 +63,16 @@ export default class Store extends Observable {
       dataProxy = DataProxy.create(dataProxy);
     }
 
-    return new Store(data || [], recordDefinition, dataProxy, listeners, autoload);
+    return new Store(
+      data || [],
+      recordDefinition,
+      dataProxy,
+      listeners,
+      autoload,
+      dataRoot,
+      pageSize,
+      pageMode,
+    );
   }
 
   /**
@@ -71,17 +90,79 @@ export default class Store extends Observable {
   }
 
   /**
+   * Returns array of paginated records (if pagination is enabled) or all records
    * @returns {Array.<Record>}
    */
   get Records() {
+    if (this.paginator) {
+      return this.paginator.paginate(this.records, this.pageNumber);
+    }
     return this.records;
   }
 
+  /**
+   * Returns all records
+   * @returns {Array.<Record>}
+   */
+  get All() {
+    return this.records;
+  }
+
+  /**
+   * @returns {Array.<Record>}
+   */
+  get CurrentPageRecords() {
+    if (this.paginator) {
+      return this.paginator.paginate(this.records, this.pageNumber, Paginator.MODE_PAGE);
+    }
+    return this.records;
+  }
+
+  /**
+   * @returns {null|Paginator}
+   */
+  get Paginator() {
+    return this.paginator;
+  }
+
+  getPageCount() {
+    if (this.paginator) {
+      return this.paginator.getPageCount(this.records);
+    }
+    return 1;
+  }
+
+  nextPage() {
+    if (this.pageNumber + 1 <= this.getPageCount()) {
+      this.pageNumber += 1;
+    }
+    return this.pageNumber;
+  }
+
+  prevPage() {
+    if (this.pageNumber - 1 !== 0) {
+      this.pageNumber -= 1;
+    }
+    return this.pageNumber;
+  }
+
+  getCurrentPage() {
+    return this.pageNumber;
+  }
+
+  count() {
+    return this.records.length;
+  }
+
   setRecords(records) {
-    if (!Array.isArray(records)) {
+    let inRecords = records;
+    if (this.dataRoot !== null && this.dataRoot !== undefined && ObjectHelper.isPlain(inRecords)) {
+      inRecords = ObjectHelper.find(inRecords, this.dataRoot, '.');
+    }
+    if (!Array.isArray(inRecords)) {
       throw new Error('Expected array of records');
     }
-    this.records = records.map((item, index) => {
+    this.records = inRecords.map((item, index) => {
       if (item instanceof Record) {
         return item;
       }
@@ -90,6 +171,9 @@ export default class Store extends Observable {
       }
       throw new Error(`Expected plain object or instance of Record. index=${index}`);
     });
+    if (this.paginator) {
+      this.pageNumber = 1;
+    }
   }
 
   add(data) {
@@ -128,9 +212,9 @@ export default class Store extends Observable {
     return this.records.filter((record) => predicate(record.get(fieldName)));
   }
 
-  reload() {
+  reload(url, queryParams) {
     if (this.DataProxy) {
-      this.DataProxy.load();
+      this.DataProxy.load(url, queryParams);
     }
   }
 }

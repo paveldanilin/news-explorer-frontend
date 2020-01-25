@@ -1,4 +1,4 @@
-import StorableComponent from '../storable-component';
+import StorableComponent from '../../storable-component';
 
 export default class DropDown extends StorableComponent {
   constructor(props) {

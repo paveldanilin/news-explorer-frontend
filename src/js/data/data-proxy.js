@@ -5,13 +5,18 @@ import HttpRequest from '../http-client/http-request';
 export default class DataProxy extends Observable {
   constructor(props) {
     super();
-    this.url = props.url || null;
-    this.method = (props.method || 'GET').toUpperCase();
-    this.headers = props.headers || null;
-    this.queryParams = props.queryParams || null;
+
+    const {
+      url, method, headers, queryParams, listeners,
+    } = props;
+
+    this.url = url || null;
+    this.method = (method || 'GET').toUpperCase();
+    this.headers = headers || null;
+    this.queryParams = queryParams || null;
     this.httpClient = null;
 
-    const eventListeners = props.listeners || [];
+    const eventListeners = listeners || [];
     Object
       .keys(eventListeners)
       .forEach((eventName) => this.on(eventName, eventListeners[eventName]));
@@ -21,12 +26,15 @@ export default class DataProxy extends Observable {
     return new DataProxy(props);
   }
 
-  load() {
-    this.fireEvent('beforeload', { url: this.url, method: this.method, queryParams: this.queryParams });
+  load(url, queryParams) {
+    this.fireEvent('beforeload', { url: url || this.url, method: this.method, queryParams: queryParams || this.queryParams });
     switch (this.method) {
       case 'GET':
         this.getHttpClient()
-          .fetch(this.url, { headers: this.headers, queryParams: this.queryParams })
+          .fetch(
+            url || this.url,
+            { headers: this.headers, queryParams: queryParams || this.queryParams },
+          )
           .then((response) => {
             this.fireEvent('load', response);
           }).catch((error) => {
@@ -36,7 +44,10 @@ export default class DataProxy extends Observable {
 
       case 'POST':
         this.getHttpClient()
-          .post(this.url, { headers: this.headers, queryParams: this.queryParams })
+          .post(
+            url || this.url,
+            { headers: this.headers, queryParams: queryParams || this.queryParams },
+          )
           .then((response) => {
             this.fireEvent('load', response);
           }).catch((error) => {

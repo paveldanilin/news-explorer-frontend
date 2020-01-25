@@ -1,7 +1,7 @@
 import './text/text.css';
 import './textfield/textfield.css';
 import './search/search.css';
-import './nav/nav';
+import './nav/nav.css';
 import './icon/icon.css';
 import './form/form';
 import './dialog/dialog';
@@ -13,7 +13,7 @@ import './header/header';
 import './about/about.css';
 import './card/card.css';
 import './footer/footer.css';
-import './search-result/search-result';
+import './search-result/search-result.css';
 import './loading/loading.css';
 import './noresult/noresult.css';
 import './tech/tech.css';

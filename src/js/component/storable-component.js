@@ -29,4 +29,9 @@ export default class StorableComponent extends Component {
   get Store() {
     return this.store;
   }
+
+  removeAll() {
+    this.Store.setRecords([]);
+    return super.removeAll();
+  }
 }

@@ -1,4 +1,28 @@
 export default class Element {
+  constructor(htmlElement) {
+    this.htmlElement = htmlElement;
+    this.oldStyleDisplay = null;
+  }
+
+  hide() {
+    if (this.htmlElement && this.htmlElement.style.display !== 'none') {
+      this.oldStyleDisplay = this.htmlElement.style.display;
+      this.htmlElement.style.display = 'none';
+    }
+    return this;
+  }
+
+  show() {
+    if (this.htmlElement && (this.htmlElement.style.display === null || this.htmlElement.style.display === 'none')) {
+      this.htmlElement.style.display = this.oldStyleDisplay;
+    }
+    return this;
+  }
+
+  static attach(selector) {
+    return new this(document.querySelector(selector));
+  }
+
   static $(selector) {
     return document.querySelectorAll(selector);
   }
@@ -123,10 +147,13 @@ export default class Element {
       'mouseout',
       'keyup',
       'keydown',
+      'keypress',
       'change',
       'blur',
       'dblclick',
       'focus',
+      'onload',
+      'onerror',
     ].includes(eventName);
   }
 }

@@ -16,11 +16,12 @@ export default class Component extends Observable {
     this.listeners = props.listeners || {};
     this.parentComponent = null;
 
-    Object
-      .keys(this.listeners)
-      .forEach((eventType) => {
-        this.on(eventType, this.listeners[eventType]);
-      });
+    this.attachListeners(this.listeners);
+
+    if (Component.instances[this.id]) {
+      throw new Error(`Could create component [${this.constructor.name}.<${this.Id}>].
+        Component with the same Id already exists ${Component.instances[this.Id].constructor.name}`);
+    }
   }
 
   static create(props) {
@@ -74,8 +75,8 @@ export default class Component extends Observable {
       return this;
     }
     this.hidden = false;
-    this.htmlElement = this.$render();
-    this.containerHtmlElement.replaceChild(this.htmlElement, document.getElementById(this.Id));
+    this.replaceElement(this.$render());
+    setTimeout(() => this.fireEvent('show'), 0);
     return this;
   }
 
@@ -84,13 +85,44 @@ export default class Component extends Observable {
       return this;
     }
     this.hidden = true;
-    this.containerHtmlElement
-      .replaceChild(this.$createPlaceholder(), this.htmlElement);
+    this.replaceElement(this.$createPlaceholder());
+    setTimeout(() => this.fireEvent('hide'), 0);
+    return this;
+  }
+
+  replaceElement(newHtmlElement, copyClassList) {
+    const clone = document.getElementById(this.Id).cloneNode(true);
+    this.htmlElement = newHtmlElement;
+    this.containerHtmlElement.replaceChild(this.htmlElement, document.getElementById(this.Id));
+    this.htmlElement.setAttribute('id', this.Id);
+    if (copyClassList === true) {
+      clone.classList.forEach((cssClass) => this.htmlElement.classList.add(cssClass));
+    }
+    return this;
+  }
+
+  removeAll() {
+    if (!this.HtmlElement) {
+      return this;
+    }
+    const node = this.HtmlElement;
+    while (node.firstChild) {
+      node.removeChild(node.firstChild);
+    }
     return this;
   }
 
   isHidden() {
     return this.hidden;
+  }
+
+  toggle() {
+    if (this.isHidden()) {
+      this.show();
+    } else {
+      this.hide();
+    }
+    return this;
   }
 
   on(eventType, handler) {
@@ -103,6 +135,16 @@ export default class Component extends Observable {
     } else {
       super.on(eventType, handler);
     }
+    return this;
+  }
+
+  attachListeners(listeners) {
+    Object
+      .keys(listeners)
+      .forEach((eventType) => {
+        this.on(eventType, listeners[eventType]);
+      });
+    return this;
   }
 
   fireEvent(eventType, props) {
@@ -111,18 +153,20 @@ export default class Component extends Observable {
     } else {
       super.fireEvent(eventType, { ...props, ...{ component: this } });
     }
+    return this;
   }
 
-  mount(container) {
-    setTimeout(() => this.$mount(container), 0);
+  mount(container, mode) {
+    setTimeout(() => this.$mount(container, mode || 'append'), 0);
+    return this;
   }
 
   refresh() {
     if (!this.HtmlElement) {
-      return;
+      return this;
     }
-    this.ContainerHtmlElement.replaceChild(this.$render(), this.htmlElement);
-    this.htmlElement = document.getElementById(this.Id);
+    this.replaceElement(this.$render());
+    return this;
   }
 
   $render() {
@@ -145,7 +189,7 @@ export default class Component extends Observable {
     return newElement;
   }
 
-  $mount(container) {
+  $mount(container, mode) {
     const containerSelector = container || 'body';
     this.containerHtmlElement = null;
 
@@ -160,26 +204,34 @@ export default class Component extends Observable {
 
     if (this.containerHtmlElement instanceof HTMLElement) {
       this.htmlElement = this.$render();
-      this.containerHtmlElement.appendChild(this.htmlElement);
-      if (Component.instances[this.id]) {
-        throw new Error(`Could create component [${this.constructor.name}.<${this.Id}>].
-        Component with the same Id already exists ${Component.instances[this.Id].constructor.name}`);
+      if (mode === 'append') {
+        this.containerHtmlElement
+          .appendChild(this.htmlElement);
+      } else if (mode === 'first') {
+        this.containerHtmlElement
+          .insertBefore(this.htmlElement, this.containerHtmlElement.firstChild);
+      } else {
+        throw new Error(`Unknown mount mode "${mode}"`);
       }
       Component.instances[this.Id] = this;
       this.fireEvent('mount');
       return;
     }
 
-    throw new Error(`Could not render component [${this.constructor.name}.<${this.Id}>] to unresolved container`);
+    throw new Error(`Could not mount component [${this.constructor.name}.<${this.Id}>] to unresolved container`);
   }
 
   $createPlaceholder() {
     return Element.create({ tag: 'span', attributes: { id: this.Id, style: 'width:0px;height:0px;' } });
   }
 
-  static getCmp(id) {
+  static get(id) {
     return Component.instances[id] || null;
+  }
+
+  static has(id) {
+    return Component.instances[id] !== undefined;
   }
 }
 
-Component.instances = [];
+Component.instances = {};

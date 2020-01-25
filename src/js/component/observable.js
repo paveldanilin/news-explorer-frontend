@@ -36,7 +36,7 @@ export default class Observable {
       });
   }
 
-  unsubscribe() {
+  unsubscribeAll() {
     this.subscriptions = {};
   }
 }

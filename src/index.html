@@ -10,18 +10,8 @@
 </head>
 <body>
   <header class="header header_bg">
-    <!-- Main menu -->
     <nav id="mainMenuDesktop"></nav>
-
-    <!-- Mobile menu -->
-    <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
-      <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
-      <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
-      <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
-      <span class="nav__item nav__item_style_light">
-        <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="onSigninHandler()">Вход</button>
-      </span>
-    </nav>
+    <nav id="mainMenuMobile"></nav>
 
     <h1 class="header__title">
       Что в мире творится?
@@ -34,23 +24,18 @@
     <div class="header__searchbox">
       <div class="search">
         <div class="search__textbox">
-          <input type="text" class="textfield textfield_size_m textfield_brd_none" placeholder="Введите тему новости">
         </div>
         <div class="search__button">
-          <button class="btn btn_style_primary btn_size_m btn_rad_100 btn_brd_none">Искать</button>
         </div>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="search-result">
+    <section id="searchResult" class="search-result">
       <div class="search-result__container">
         <h3>Результаты поиска</h3>
-        <div class="search-result__grid"></div>
-        <button class="btn btn_style_light btn_size_m btn_rad_100 btn_brd_none search-result__btn-more" onclick="onClickShowMoreNews(this)">
-          Показать еще
-        </button>
+        <div id="cardsGrid"></div>
       </div>
     </section>
 
@@ -181,17 +166,6 @@
       </div>
     </div>
   </span>
-
-
-  <div>
-    <div id="myToolbar"></div>
-    <div id="myList"></div>
-  </div>
-
-  <!--
-  <nav id="myMenuContainer" class="header header_bg">
-  </nav>
-  -->
 
 </body>
 </html>

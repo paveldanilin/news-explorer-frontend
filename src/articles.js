@@ -5,12 +5,9 @@ import './components/theme.css';
 import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
-import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
 import Dialog from './components/dialog/dialog';
-import { searchResult } from './components/search-result/search-result';
 import logout from './js/user/logout';
 
-searchResult.beginLoading();
 
 const data = [
   {
@@ -51,8 +48,6 @@ const data = [
   },
 ];
 
-searchResult.update(data);
-
 export {
-  resetForms, showSigninDialog, onSigninHandler, toggleMobileMenu, Dialog, logout,
+  resetForms, Dialog, logout,
 };
