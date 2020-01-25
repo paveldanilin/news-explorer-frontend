@@ -25,6 +25,10 @@ export default class Menu extends Component {
     this.items = items.map((item) => this.processItem(item));
   }
 
+  getItems() {
+    return this.items;
+  }
+
   findById(id) {
     return this.items.find((menuItem) => menuItem.Id === id) || null;
   }

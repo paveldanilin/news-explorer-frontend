@@ -17,6 +17,7 @@ export default class Record {
     }
 
     const validationErrors = this.definition.validate(this.data);
+
     if (validationErrors.length > 0) {
       throw new Error(
         `Record validation errors: [${validationErrors.join(',')}].

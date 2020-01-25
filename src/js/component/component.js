@@ -15,6 +15,7 @@ export default class Component extends Observable {
     this.classList = props.classList || [];
     this.listeners = props.listeners || {};
     this.parentComponent = null;
+    this.placeholderTag = props.placeholderTag || 'span';
 
     this.attachListeners(this.listeners);
 
@@ -243,7 +244,7 @@ export default class Component extends Observable {
 
   $createPlaceholder() {
     return Element.create({
-      tag: 'span',
+      tag: this.placeholderTag,
       attributes: { id: this.Id, style: 'width:0px;height:0px;' },
     });
   }

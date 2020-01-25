@@ -10,15 +10,12 @@ import Dialog from './components/dialog/dialog';
 import NewsApiClient from './js/news-api-client/news-api-client';
 import Config from './js/config';
 import Button from './js/component/form/button/button';
-import Menu from './js/component/menu/menu';
 import Component from './js/component/component';
-import IconButton from './js/component/form/button/icon-button';
 import ListView from './js/component/list-view/list-view';
 import NewsCard from './js/component/news-card/news-card';
 import TextField from './js/component/form/text-field/text-field';
 import Element from './js/component/element';
-import { watch } from './js/component/event-bus';
-import MsgBox from './js/component/msg-box/msg-box';
+import './js/menu';
 
 /**
  * @type {NewsApiClient}
@@ -109,134 +106,6 @@ function searchNews(text) {
 }
 
 /**
- * Desktop menu
- */
-Menu.create({
-  id: 'desktopMenu',
-  container: '#mainMenuDesktop',
-  classList: ['header__desktop-menu', 'header__desktop-menu_separator_light', 'nav'],
-  itemSelectedClass: 'nav__item_selected',
-  itemClassList: ['nav__item'],
-  items: [
-    {
-      link: 'index.html',
-      text: 'NewsExplorer',
-      classList: ['nav__item_style_light', 'logo', 'logo_light'],
-    },
-    {
-      link: 'index.html',
-      text: 'Главная',
-      selected: true,
-      classList: ['nav__item_style_light', 'nav__item_pull-right'],
-    },
-    {
-      link: 'about.html',
-      text: 'О проекте',
-      classList: ['nav__item_style_smoke'],
-    },
-    {
-      id: 'articlesMenuItem',
-      link: 'articles.html',
-      text: 'Сохраненные статьи',
-      classList: ['nav__item_style_smoke'],
-      hidden: true,
-    },
-    {
-      id: 'loginMenuItem',
-      renderer: () => Button.create({
-        text: 'Авторизоваться',
-        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
-        listeners: { click: () => Dialog.show('dialog_signin') },
-      }),
-    },
-    {
-      id: 'logoutMenuItem',
-      hidden: true,
-      renderer: () => IconButton.create({
-        id: 'logoutButton',
-        text: 'Выход',
-        textAlign: IconButton.TEXT_ALIGN_LEFT,
-        iconClassList: ['icon', 'icon_size_24', 'icon_logout'],
-        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
-        listeners: {
-          click: () => User.logout(),
-          afterrender: (event) => {
-            event.component.setText(window.localStorage.getItem('user.name'));
-          },
-        },
-      }),
-    },
-    {
-      id: 'menuToggleButton',
-      classList: ['header__mobile-toggle'],
-      renderer: () => IconButton.create({
-        iconClassList: ['icon', 'icon_size_24', 'icon_menu_white'],
-        listeners: {
-          click: () => {
-            Component.get('mobileMenu').toggle();
-            Component.get('desktopMenu')
-              .HtmlElement.classList.toggle('header__desktop-menu_bg-color_dark');
-          },
-        },
-      }),
-    },
-  ],
-});
-
-/**
- * Mobile menu
- */
-Menu.create({
-  id: 'mobileMenu',
-  container: '#mainMenuMobile',
-  hidden: true,
-  classList: ['header__mobile-menu', 'nav', 'nav_vert', 'nav_position_absolute'],
-  itemClassList: ['nav__item', 'nav__item_style_light'],
-  items: [
-    {
-      link: 'index.html',
-      text: 'Главная',
-      selected: true,
-    },
-    {
-      link: 'about.html',
-      text: 'О проекте',
-    },
-    {
-      id: 'mobileMenu_articlesMenuItem',
-      link: 'articles.html',
-      text: 'Сохраненные статьи',
-      hidden: true,
-    },
-    {
-      id: 'mobileMenu_loginMenuItem',
-      renderer: () => Button.create({
-        text: 'Авторизоваться',
-        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
-        listeners: { click: () => Dialog.show('dialog_signin') },
-      }),
-    },
-    {
-      id: 'mobileMenu_logoutMenuItem',
-      hidden: true,
-      renderer: () => Button.create({
-        text: 'Выход',
-        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
-        listeners: { click: () => console.log('LOGOUT!') },
-      }),
-    },
-  ],
-});
-
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) {
-    Component.get('mobileMenu').hide();
-    Component.get('desktopMenu')
-      .HtmlElement.classList.remove('header__desktop-menu_bg-color_dark');
-  }
-});
-
-/**
  * Search button
  */
 Button.create({
@@ -265,25 +134,6 @@ TextField.create({
       }
     },
   },
-});
-
-
-watch('USER_SIGNIN', () => {
-  // Articles
-  Component.get('desktopMenu').getItem(3).show();
-  // Authorize
-  Component.get('desktopMenu').getItem(4).hide();
-  // Exit
-  Component.get('desktopMenu').getItem(5).show();
-});
-
-watch('USER_LOGOUT', () => {
-  // Articles
-  Component.get('desktopMenu').getItem(3).hide();
-  // Authorize
-  Component.get('desktopMenu').getItem(4).show();
-  // Exit
-  Component.get('desktopMenu').getItem(5).hide();
 });
 
 export {

@@ -20,7 +20,9 @@ export default class StorableComponent extends Component {
       throw new Error('Expected instance of Store or object store definition');
     }
 
-    this.store.on('load', () => this.refresh());
+    this.store.on('load', () => {
+      this.refresh();
+    });
   }
 
   /**

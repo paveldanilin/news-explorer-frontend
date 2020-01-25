@@ -6,7 +6,6 @@ import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
 import Dialog from './components/dialog/dialog';
-import logout from './js/user/logout';
 
 
 const data = [
@@ -49,5 +48,5 @@ const data = [
 ];
 
 export {
-  resetForms, Dialog, logout,
+  resetForms, Dialog,
 };

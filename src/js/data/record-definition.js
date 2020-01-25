@@ -70,8 +70,8 @@ export default class RecordDefinition {
     const errors = [];
     this.definition.forEach((def) => {
       const field = ObjectHelper.find(data, def.Mapping);
-      if (field === undefined) {
-        errors.push(`Not found field with name "${def.Name}" in raw data`);
+      if (field === undefined && def.Mandatory === true) {
+        errors.push(`Not found field with name "${def.Name}<${def.Mapping}>" in raw data`);
       }
     });
     return errors;

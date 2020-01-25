@@ -15,6 +15,10 @@ export default class ObjectHelper {
         return undefined;
       }
 
+      if (node[propertyName] === null && chunkPos < chunks.length) {
+        return undefined;
+      }
+
       if (chunkPos + 1 === chunks.length) {
         return node[propertyName];
       }

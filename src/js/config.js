@@ -12,7 +12,7 @@ export default class Config {
   }
 
   static get GH_COMMITS_REPO() {
-    return 'news-explorer-api';
+    return 'news-explorer-frontend';
   }
 
   static get GH_COMMITS_OWNER() {
