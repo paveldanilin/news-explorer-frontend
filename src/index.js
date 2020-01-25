@@ -5,9 +5,8 @@ import './components/theme.css';
 import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
+import User from './js/user/user';
 import Dialog from './components/dialog/dialog';
-import register from './js/user/register';
-import login from './js/user/login';
 import NewsApiClient from './js/news-api-client/news-api-client';
 import Config from './js/config';
 import Button from './js/component/form/button/button';
@@ -18,6 +17,8 @@ import ListView from './js/component/list-view/list-view';
 import NewsCard from './js/component/news-card/news-card';
 import TextField from './js/component/form/text-field/text-field';
 import Element from './js/component/element';
+import { watch } from './js/component/event-bus';
+import MsgBox from './js/component/msg-box/msg-box';
 
 /**
  * @type {NewsApiClient}
@@ -137,7 +138,7 @@ Menu.create({
       id: 'articlesMenuItem',
       link: 'articles.html',
       text: 'Сохраненные статьи',
-      classList: ['nav__item_style_light'],
+      classList: ['nav__item_style_smoke'],
       hidden: true,
     },
     {
@@ -151,10 +152,18 @@ Menu.create({
     {
       id: 'logoutMenuItem',
       hidden: true,
-      renderer: () => Button.create({
+      renderer: () => IconButton.create({
+        id: 'logoutButton',
         text: 'Выход',
+        textAlign: IconButton.TEXT_ALIGN_LEFT,
+        iconClassList: ['icon', 'icon_size_24', 'icon_logout'],
         classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
-        listeners: { click: () => console.log('LOGOUT!') },
+        listeners: {
+          click: () => User.logout(),
+          afterrender: (event) => {
+            event.component.setText(window.localStorage.getItem('user.name'));
+          },
+        },
       }),
     },
     {
@@ -258,9 +267,27 @@ TextField.create({
   },
 });
 
+
+watch('USER_SIGNIN', () => {
+  // Articles
+  Component.get('desktopMenu').getItem(3).show();
+  // Authorize
+  Component.get('desktopMenu').getItem(4).hide();
+  // Exit
+  Component.get('desktopMenu').getItem(5).show();
+});
+
+watch('USER_LOGOUT', () => {
+  // Articles
+  Component.get('desktopMenu').getItem(3).hide();
+  // Authorize
+  Component.get('desktopMenu').getItem(4).show();
+  // Exit
+  Component.get('desktopMenu').getItem(5).hide();
+});
+
 export {
   resetForms,
-  login,
-  register,
+  User,
   Dialog,
 };

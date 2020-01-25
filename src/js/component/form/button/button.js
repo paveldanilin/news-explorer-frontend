@@ -12,6 +12,10 @@ export default class Button extends Component {
 
   setText(text) {
     this.text = text;
+    if (this.HtmlElement) {
+      this.HtmlElement.textContent = text;
+    }
+    return this;
   }
 
   render() {

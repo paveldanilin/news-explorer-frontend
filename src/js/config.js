@@ -1,4 +1,8 @@
 export default class Config {
+  static get BACKEND_API_HOST() {
+    return '84.201.131.193';
+  }
+
   static get NEWS_API_TOKEN() {
     return '43d52ebfb7ed449986028b50cbcee7c7';
   }

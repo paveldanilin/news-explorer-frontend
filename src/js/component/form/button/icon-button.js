@@ -35,10 +35,24 @@ export default class IconButton extends Button {
     return this.textAlign;
   }
 
+  setText(text) {
+    this.text = text;
+    if (this.HtmlElement) {
+      this.HtmlElement.querySelector('span[name="icon-button-text"]').textContent = text;
+    }
+    return this;
+  }
+
   render() {
     if (this.getTextAlign() === IconButton.TEXT_ALIGN_LEFT) {
-      return `<button>${this.getText()}<i class="${this.getIconClassList().join(' ')}"></i></button>`;
+      return `<button>
+                <span name="icon-button-text">${this.getText()}</span>
+                <i class="${this.getIconClassList().join(' ')}"></i>
+             </button>`;
     }
-    return `<button><i class="${this.getIconClassList().join(' ')}"></i>${this.getText()}</button>`;
+    return `<button>
+                <i class="${this.getIconClassList().join(' ')}"></i>
+                <span name="icon-button-text">${this.getText()}</span>
+            </button>`;
   }
 }

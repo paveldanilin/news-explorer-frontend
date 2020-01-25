@@ -18,10 +18,14 @@ export default class Component extends Observable {
 
     this.attachListeners(this.listeners);
 
+    /*
     if (Component.instances[this.id]) {
-      throw new Error(`Could create component [${this.constructor.name}.<${this.Id}>].
-        Component with the same Id already exists ${Component.instances[this.Id].constructor.name}`);
+      throw new Error(`
+        Could create component [${this.constructor.name}.<${this.Id}>].
+        Component with the same Id already exists ${Component.instances[this.Id].constructor.name}`
+      );
     }
+     */
   }
 
   static create(props) {
@@ -112,6 +116,18 @@ export default class Component extends Observable {
     return this;
   }
 
+  destroy() {
+    if (!this.HtmlElement) {
+      return false;
+    }
+    this.containerHtmlElement.removeChild(this.HtmlElement);
+    this.htmlElement = null;
+    this.containerHtmlElement = null;
+    this.parentComponent = null;
+    delete Component.instances[this.Id];
+    return true;
+  }
+
   isHidden() {
     return this.hidden;
   }
@@ -186,6 +202,8 @@ export default class Component extends Observable {
 
     this.fireEvent('render', { element: newElement });
 
+    setTimeout(() => this.fireEvent('afterrender'), 0);
+
     return newElement;
   }
 
@@ -218,11 +236,16 @@ export default class Component extends Observable {
       return;
     }
 
-    throw new Error(`Could not mount component [${this.constructor.name}.<${this.Id}>] to unresolved container`);
+    throw new Error(
+      `Could not mount component [${this.constructor.name}.<${this.Id}>] to unresolved container`,
+    );
   }
 
   $createPlaceholder() {
-    return Element.create({ tag: 'span', attributes: { id: this.Id, style: 'width:0px;height:0px;' } });
+    return Element.create({
+      tag: 'span',
+      attributes: { id: this.Id, style: 'width:0px;height:0px;' },
+    });
   }
 
   static get(id) {
