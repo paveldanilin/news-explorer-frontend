@@ -132,6 +132,7 @@ Menu.create({
               case 'index.html':
                 btn.HtmlElement.classList.add('btn_style_snow');
                 break;
+              case 'articles.html':
               case 'about.html':
                 btn.HtmlElement.classList.add('btn_style_light');
                 break;
@@ -159,6 +160,7 @@ Menu.create({
               case 'index.html':
                 btn.HtmlElement.classList.add('btn_style_snow');
                 break;
+              case 'articles.html':
               case 'about.html':
                 btn.HtmlElement.classList.add('btn_style_light');
                 break;
@@ -185,6 +187,7 @@ Menu.create({
               case 'index.html':
                 btn.HtmlElement.classList.add('icon_menu_white');
                 break;
+              case 'articles.html':
               case 'about.html':
                 btn.HtmlElement.classList.add('icon_menu_black');
                 break;
@@ -204,12 +207,18 @@ Menu.create({
           menu.findById('logoMenuItem').HtmlElement.classList.add('nav__item_style_light');
           menu.findById('homeMenuItem').HtmlElement.classList.add('nav__item_style_light');
           break;
-        case 'articles.html':
         case 'about.html':
           menu.HtmlElement.classList.add('header__desktop-menu_separator_dark');
           menu.findById('logoMenuItem').HtmlElement.classList.add('nav__item_style_dark');
           menu.findById('homeMenuItem').HtmlElement.classList.add('nav__item_style_smoke');
           menu.findById('aboutMenuItem').HtmlElement.classList.add('nav__item_style_dark');
+          break;
+        case 'articles.html':
+          menu.HtmlElement.classList.add('header__desktop-menu_separator_dark');
+          menu.findById('logoMenuItem').HtmlElement.classList.add('nav__item_style_dark');
+          menu.findById('homeMenuItem').HtmlElement.classList.add('nav__item_style_smoke');
+          menu.findById('aboutMenuItem').HtmlElement.classList.add('nav__item_style_smoke');
+          menu.findById('articlesMenuItem').HtmlElement.classList.add('nav__item_style_dark');
           break;
       }
     },

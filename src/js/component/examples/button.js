@@ -1,7 +1,7 @@
-import Button from '../component/form/button/button';
-import Component from '../component/component';
-import IconButton from '../component/form/button/icon-button';
-import ImageButton from '../component/form/button/image-button';
+import Button from '../form/button/button';
+import Component from '../component';
+import IconButton from '../form/button/icon-button';
+import ImageButton from '../form/button/image-button';
 
 Button.create({
   container: '#myToolbar',
@@ -34,9 +34,6 @@ IconButton.create({
   text: 'Ba!',
   classList: ['btn', 'btn_brd_none', 'btn_transparent', 'btn_size_xxs'],
   iconClassList: ['icon', 'icon_size_24', 'icon_menu_black'],
-  listeners: {
-    click: (event) => console.log('Ba!', event),
-  },
 });
 
 IconButton.create({
@@ -45,9 +42,6 @@ IconButton.create({
   textAlign: 'left',
   classList: ['btn', 'btn_brd_none', 'btn_transparent', 'btn_size_xxs'],
   iconClassList: ['icon', 'icon_size_24', 'icon_menu_black'],
-  listeners: {
-    click: (event) => console.log('Bo!', event),
-  },
 });
 
 ImageButton.create({
@@ -55,7 +49,4 @@ ImageButton.create({
   container: '#myToolbar',
   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPP_8oD-jbBJVuXuv4eUVOvy7gMqP67uTWrF3wPRKk1fZyFFftUw&s',
   hoverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIUa-kL6Q5Vfw7cOlg6tsA_tP2ZY8MX5Y37cbjjI7vXuSgzraGXw&s',
-  listeners: {
-    click: () => console.log('IMAGE!'),
-  },
 });

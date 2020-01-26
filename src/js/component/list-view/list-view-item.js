@@ -1,6 +1,7 @@
 import Component from '../component';
 
 export default class ListViewItem extends Component {
+  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
   }

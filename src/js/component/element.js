@@ -76,6 +76,9 @@ export default class Element {
   }
 
   text(text) {
+    if (text === undefined && this.htmlElement) {
+      return this.htmlElement.textContent;
+    }
     if (this.htmlElement) {
       this.htmlElement.textContent = text;
     }

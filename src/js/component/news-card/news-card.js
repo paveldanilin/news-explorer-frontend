@@ -14,15 +14,26 @@ export default class NewsCard extends Component {
     super(props);
 
     const {
-      imageLink, createdAt, title, contentText, sourceLabel, sourceLink,
+      articleId,
+      keyword,
+      imageLink,
+      createdAt,
+      title,
+      contentText,
+      sourceLabel,
+      sourceLink,
+      toolbar,
     } = props;
 
+    this.articleId = articleId || null;
     this.imageLink = imageLink;
     this.createdAt = createdAt;
     this.title = title;
+    this.keyword = keyword || '';
     this.contentText = contentText;
     this.sourceLabel = sourceLabel;
     this.sourceLink = sourceLink;
+    this.toolbar = toolbar || [];
 
     this.on('render', (event) => this.onRender(event.element));
   }
@@ -49,13 +60,51 @@ export default class NewsCard extends Component {
                         ${this.sourceLabel}
                     </a>
                 </div>
-                <span style="position: relative">
-                    <i name="save-btn" class="icon icon_size_40 icon_save_normal"></i>
-                </span>
+                ${this.renderToolbar()}
             </div>`;
   }
 
   onRender(element) {
+    if (this.articleId) {
+      element.setAttribute('news-card', this.articleId);
+    }
+    this.onRenderSaveBtn(element);
+    this.onRenderDeleteBtn(element);
+    this.onRenderKeywordLabel(element);
+  }
+
+  onRenderDeleteBtn(element) {
+    const delBtn = Element.wrap(element.querySelector('[name="delete-btn"]'));
+    if (!delBtn) {
+      return;
+    }
+
+    delBtn.posStyle('absolute').pos(NewsCard.getOffset().x, NewsCard.getOffset().y);
+
+    delBtn.on('mouseover', () => {
+      delBtn.ClassList.remove('icon_delete_normal');
+      delBtn.ClassList.add('icon_delete_hover');
+    });
+    delBtn.on('mouseout', () => {
+      delBtn.ClassList.add('icon_delete_normal');
+      delBtn.ClassList.remove('icon_delete_hover');
+    });
+    delBtn.on('click', () => {
+      backendApiClient
+        .removeArticle(this.HtmlElement.getAttribute('news-card'), User.getToken())
+        .then(() => {
+          this.destroy();
+          this.fireEvent('deleteitem');
+        })
+        .catch((error) => {
+          error.Response.json().then((errorBody) => {
+            MsgBox.error('Ошибка при удалении  статьи', errorBody.message.replace(/&quot;/g, '"'));
+          });
+        });
+    });
+  }
+
+  onRenderSaveBtn(element) {
     const saveBtn = Element.wrap(element.querySelector('[name="save-btn"]'));
     if (!saveBtn) {
       return;
@@ -110,6 +159,7 @@ export default class NewsCard extends Component {
             saveBtn.ClassList.remove('icon_save_hover');
             saveBtn.ClassList.remove('icon_save_marked');
             this.HtmlElement.removeAttribute('news-card');
+            this.fireEvent('deleteitem');
           })
           .catch((error) => {
             error.Response.json().then((errorBody) => {
@@ -119,7 +169,7 @@ export default class NewsCard extends Component {
       } else {
         backendApiClient
           .createArticle({
-            keyword: 'test',
+            keyword: this.keyword,
             title: this.title,
             text: this.contentText,
             date: this.createdAt,
@@ -133,6 +183,7 @@ export default class NewsCard extends Component {
             saveBtn.ClassList.remove('icon_save_hover');
             saveBtn.ClassList.add('icon_save_marked');
             this.HtmlElement.setAttribute('news-card', response.id);
+            this.fireEvent('saveitem');
           })
           .catch((error) => {
             error.Response.json().then((errorBody) => {
@@ -143,15 +194,48 @@ export default class NewsCard extends Component {
     });
   }
 
-  static recordDefinition() {
-    return [
-      { name: 'imageLink', mapping: 'urlToImage' },
-      { name: 'createdAt', mapping: 'publishedAt' },
-      { name: 'title' },
-      { name: 'contentText', mapping: 'description' },
-      { name: 'sourceLabel', mapping: 'source.name' },
-      { name: 'sourceLink', mapping: 'url' },
-    ];
+  // eslint-disable-next-line class-methods-use-this
+  onRenderKeywordLabel(element) {
+    const label = Element.wrap(element.querySelector('[name="keyword-label"]'));
+    if (!label) {
+      return;
+    }
+    let labelX = NewsCard.getOffset().x;
+    if (window.innerWidth < 1440) {
+      labelX -= 160;
+      if (window.innerWidth < 768) {
+        labelX -= 60;
+      }
+    } else if (window.innerWidth >= 1440) {
+      labelX -= 320;
+    }
+    label.posStyle('absolute').pos(labelX, NewsCard.getOffset().y);
+  }
+
+  renderToolbar() {
+    if (this.toolbar.length === 0) {
+      return '';
+    }
+    return `<span style="position: relative">
+                ${this.toolbar.map((tbb) => this.renderToolbarButton(tbb)).join(' ')}
+            </span>`;
+  }
+
+  renderToolbarButton(btn) {
+    switch (btn) {
+      case 'save':
+        return '<i name="save-btn" class="icon icon_size_40 icon_save_normal"></i>';
+      case 'delete':
+        return '<i name="delete-btn" class="icon icon_size_40 icon_delete_normal"></i>';
+      case 'keyword':
+        return `
+                  <a name="keyword-label" class="tooltip" href="https://www.google.com/search?q=${this.keyword}" target="_blank">
+                    ${this.keyword}
+                  </a>
+                `;
+      default:
+        return '';
+    }
   }
 
   static decodeMonth(month, language) {
@@ -201,6 +285,23 @@ export default class NewsCard extends Component {
     document.querySelectorAll('[name="save-btn"]').forEach((el) => {
       const wrapper = Element.wrap(el);
       wrapper.posStyle('absolute').pos(NewsCard.getOffset().x, NewsCard.getOffset().y);
+    });
+    document.querySelectorAll('[name="delete-btn"]').forEach((el) => {
+      const wrapper = Element.wrap(el);
+      wrapper.posStyle('absolute').pos(NewsCard.getOffset().x, NewsCard.getOffset().y);
+    });
+    document.querySelectorAll('[name="keyword-label"]').forEach((el) => {
+      const wrapper = Element.wrap(el);
+      let labelX = NewsCard.getOffset().x;
+      if (window.innerWidth < 1440) {
+        labelX -= 160;
+        if (window.innerWidth < 768) {
+          labelX -= 60;
+        }
+      } else if (window.innerWidth >= 1440) {
+        labelX -= 320;
+      }
+      wrapper.posStyle('absolute').pos(labelX, NewsCard.getOffset().y);
     });
   }
 }

@@ -41,8 +41,7 @@ export default class User {
 
     backendApiClient
       .signup(inputName.value, inputEmail.value, inputPassword.value)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         Dialog.close('dialog_signup');
         MsgBox.msg('Пользователь успешно заркгистрирован');
       })

@@ -1,4 +1,4 @@
-import DropDown from '../component/form/drop-down/drop-down';
+import DropDown from '../form/drop-down/drop-down';
 
 DropDown.create({
   id: 'myDropDown',
@@ -18,9 +18,4 @@ DropDown.create({
   },
   valueField: 'id',
   descriptionField: 'url',
-  listeners: {
-    change: (event) => {
-      console.log('change', event.component.getSelected());
-    },
-  },
 });

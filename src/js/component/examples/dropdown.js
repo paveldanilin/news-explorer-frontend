@@ -1,4 +1,4 @@
-import DropDown from '../component/form/drop-down/drop-down';
+import DropDown from '../form/drop-down/drop-down';
 
 DropDown.create({
   id: 'testDropDown',

@@ -6,46 +6,127 @@ import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
 import Dialog from './components/dialog/dialog';
+import User from './js/user/user';
+import ListView from './js/component/list-view/list-view';
+import NewsCard from './js/component/news-card/news-card';
+import { watch } from './js/component/event-bus';
+import BackendApiClient from './js/backend-api-client/backend-api-client';
+import Config from './js/config';
+import MsgBox from './js/component/msg-box/msg-box';
+import Page from './js/util/page';
+import Component from './js/component/component';
+import Element from './js/component/element';
+import './js/menu';
+import Text from './js/util/text';
 
+const backendApiClient = new BackendApiClient(Config.BACKEND_API_HOST);
+const noResultSection = Element.wrap('#noresult').hide();
+const resultSection = Element.wrap('#result').show();
+const welcomeLabel = Element.wrap('#welcome');
+const welcomeLabelTemplate = welcomeLabel.text();
+const articleStatLabel = Element.wrap('#articleStat');
+const articleStatTemplate = articleStatLabel.text();
+const keywordLabel = Element.wrap('#keyword').hide();
 
-const data = [
-  {
-    imageLink: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUjrHyXxWOTj8I-IpnDMSfliiMKI80o4i3-wkD7TSUjEygVuQggw&s',
-    createdAt: new Date(),
-    title: 'Национальное достояние – парки',
-    contentText: 'В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.',
-    sourceLink: 'http://source.com/1',
-    sourceLabel: 'Лента.ру',
-    cardId: 10001,
+function refreshWelcomeText(articleCount) {
+  welcomeLabel.text(Text.interpolate(welcomeLabelTemplate, {
+    user: User.getName(),
+    articleCount,
+  }));
+}
+
+function refreshArticleStatText(firstTwoKeywords, keywordCount) {
+  articleStatLabel.text(Text.interpolate(articleStatTemplate, {
+    firstTwoKeywords,
+    keywordCount,
+  }));
+}
+
+function refreshGrid() {
+  const keywordsList = [];
+
+  backendApiClient
+    .getArticles(User.getToken())
+    .then((articles) => {
+      const grid = Component.get('cards');
+      grid.removeAll();
+      grid.Store.setRecords(articles);
+      grid.refresh();
+
+      if (articles.length === 0) {
+        resultSection.hide();
+        noResultSection.show();
+        keywordLabel.hide();
+      } else {
+        resultSection.show();
+        noResultSection.hide();
+        keywordLabel.show();
+      }
+
+      articles.forEach((article) => {
+        if (!keywordsList.includes(article.keyword)) {
+          keywordsList.push(article.keyword);
+        }
+      });
+
+      refreshWelcomeText(articles.length);
+      refreshArticleStatText(keywordsList.slice(0, 2), keywordsList.length);
+    })
+    .catch(() => {
+      MsgBox.error('Ошибка!', 'Не смогли загрузить список статей!');
+    });
+}
+
+/**
+ * Cards grid
+ */
+ListView.create({
+  id: 'cards',
+  container: '#cardsGrid',
+  classList: ['search-result__grid'],
+  store: {
+    recordDefinition: [
+      { name: 'imageLink', mapping: 'image' },
+      { name: 'createdAt', mapping: 'date' },
+      { name: 'title' },
+      { name: 'keyword' },
+      { name: 'contentText', mapping: 'text' },
+      { name: 'sourceLabel', mapping: 'source' },
+      { name: 'sourceLink', mapping: 'link' },
+      { name: 'articleId', mapping: '_id' },
+    ],
+    dataRoot: 'articles',
   },
-  {
-    imageLink: 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-    createdAt: new Date(),
-    title: 'Лесные огоньки: история одной фотографии',
-    contentText: 'Фотограф отвлеклась от освещения суровой политической реальности Мексики, чтобы запечатлеть ускользающую красоту одного из местных чудес природы.',
-    sourceLink: 'http://source.com/1',
-    sourceLabel: 'Медуза',
-    cardId: 10002,
-  },
-  {
-    imageLink: 'https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687',
-    createdAt: new Date(),
-    title: '«Первозданная тайга»: новый фотопроект Игоря Шпиленка',
-    contentText: 'Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где...',
-    sourceLink: 'http://source.com/1',
-    sourceLabel: 'РИА',
-    cardId: 10003,
-  },
-  {
-    imageLink: 'https://s.ftcdn.net/v2013/pics/all/curated/RKyaEDwp8J7JKeZWQPuOVWvkUjGQfpCx_cover_580.jpg?r=1a0fc22192d0c808b8bb2b9bcfbf4a45b1793687',
-    createdAt: new Date(),
-    title: '«Первозданная тайга»: новый фотопроект Игоря Шпиленка',
-    contentText: 'Знаменитый фотограф снимает первозданные леса России, чтобы рассказать о необходимости их сохранения. В этот раз он отправился в Двинско-Пинежскую тайгу, где...',
-    sourceLink: 'http://source.com/1',
-    sourceLabel: 'РИА',
-    cardId: 10003,
-  },
-];
+  itemRenderer: (record) => NewsCard.create({
+    articleId: record.get('articleId'),
+    imageLink: record.get('imageLink'),
+    createdAt: record.get('createdAt'),
+    title: record.get('title'),
+    contentText: record.get('contentText'),
+    sourceLabel: record.get('sourceLabel'),
+    sourceLink: record.get('sourceLink'),
+    keyword: record.get('keyword'),
+    toolbar: ['delete', 'keyword'],
+    listeners: {
+      deleteitem: () => {
+        refreshGrid();
+      },
+    },
+  }),
+});
+
+if (User.getName() === null) {
+  // Redirect to start page
+  Page.redirect('index.html');
+}
+
+refreshWelcomeText('N');
+refreshArticleStatText('', 0);
+refreshGrid();
+
+watch('USER_LOGOUT', () => {
+  Page.redirect('index.html');
+});
 
 export {
   resetForms, Dialog,

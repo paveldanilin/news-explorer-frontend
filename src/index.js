@@ -15,6 +15,8 @@ import ListView from './js/component/list-view/list-view';
 import NewsCard from './js/component/news-card/news-card';
 import TextField from './js/component/form/text-field/text-field';
 import Element from './js/component/element';
+import Record from './js/data/record';
+import UuidGenerator from './js/util/uuid-generator';
 import './js/menu';
 
 /**
@@ -30,7 +32,15 @@ ListView.create({
   container: '#cardsGrid',
   classList: ['search-result__grid'],
   store: {
-    recordDefinition: NewsCard.recordDefinition(),
+    recordDefinition: [
+      { name: 'imageLink', mapping: 'urlToImage' },
+      { name: 'createdAt', mapping: 'publishedAt' },
+      { name: 'title' },
+      { name: 'keyword' },
+      { name: 'contentText', mapping: 'description' },
+      { name: 'sourceLabel', mapping: 'source.name' },
+      { name: 'sourceLink', mapping: 'url' },
+    ],
     dataRoot: 'articles',
     pageSize: 3,
     pageMode: 'append',
@@ -42,6 +52,8 @@ ListView.create({
     contentText: record.get('contentText'),
     sourceLabel: record.get('sourceLabel'),
     sourceLink: record.get('sourceLink'),
+    keyword: record.get('keyword'),
+    toolbar: ['save'],
   }),
 });
 
@@ -97,7 +109,12 @@ function searchNews(text) {
       } else {
         resultSection.show();
       }
-      cards.Store.setRecords(response);
+      cards.Store.setRecords(response, (article) => Record
+        .create(
+          cards.Store.RecordDefinition,
+          { ...article, ...{ keyword: text } },
+          UuidGenerator.generate(),
+        ));
       cards.refresh();
     }
   }, () => {

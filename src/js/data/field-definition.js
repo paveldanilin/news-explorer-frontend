@@ -31,7 +31,9 @@ export default class FieldDefinition {
   }
 
   static create(definition) {
-    const { name, mapping, type, mandatory } = definition;
+    const {
+      name, mapping, type, mandatory,
+    } = definition;
     return new FieldDefinition(name, mapping, type, mandatory);
   }
 

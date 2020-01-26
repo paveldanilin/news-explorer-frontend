@@ -29,6 +29,10 @@ export default class Component extends Observable {
      */
   }
 
+  /**
+   * @param props
+   * @returns {Component|StorableComponent}
+   */
   static create(props) {
     const component = new this(props);
     const { container } = props;
@@ -249,6 +253,10 @@ export default class Component extends Observable {
     });
   }
 
+  /**
+   * @param id
+   * @returns {Component|StorableComponent|null}
+   */
   static get(id) {
     return Component.instances[id] || null;
   }

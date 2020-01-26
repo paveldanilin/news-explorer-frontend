@@ -125,6 +125,9 @@ export default class Store extends Observable {
     return this.paginator;
   }
 
+  /**
+   * @returns {number}
+   */
   getPageCount() {
     if (this.paginator) {
       return this.paginator.getPageCount(this.records);
@@ -146,6 +149,9 @@ export default class Store extends Observable {
     return this.pageNumber;
   }
 
+  /**
+   * @returns {number}
+   */
   getCurrentPage() {
     return this.pageNumber;
   }
@@ -154,7 +160,7 @@ export default class Store extends Observable {
     return this.records.length;
   }
 
-  setRecords(records) {
+  setRecords(records, mapper) {
     let inRecords = records;
     if (this.dataRoot !== null && this.dataRoot !== undefined && ObjectHelper.isPlain(inRecords)) {
       inRecords = ObjectHelper.find(inRecords, this.dataRoot, '.');
@@ -163,6 +169,9 @@ export default class Store extends Observable {
       throw new Error('Expected array of records');
     }
     this.records = inRecords.map((item, index) => {
+      if (typeof mapper === 'function') {
+        return mapper(item, index);
+      }
       if (item instanceof Record) {
         return item;
       }

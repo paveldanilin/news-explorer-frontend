@@ -10,6 +10,7 @@
 @import '_error/icon_error.css';
 @import '_user/icon_user.css';
 @import '_save/icon_save.css';
+@import '_delete/icon_delete.css';
 
 .icon {
   display: inline-block;
