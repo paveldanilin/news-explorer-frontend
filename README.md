@@ -11,7 +11,7 @@ YP диплом. [Нажмите тут чтобы открыть проект �
 - Запустить девелоперскую сборку```npm run dev``` 
 
 ### Конфигурация клиента "/js/config.js"
-- BACKEND_API_HOST - host backend API
+- BACKEND_API_HOST - host backend API (news explorer API) [server](https://breakingnews-explorer.ml)
 - NEWS_API_TOKEN - токен для доступа к NewsAPI
 - GH_COMMITS_REPO - имя репозитория для чтения коммитов
 - GH_COMMITS_OWNER - владелец реаозитория для чтения коммитов

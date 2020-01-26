@@ -41,7 +41,7 @@ export default class NewsCard extends Component {
   render() {
     Picture.create({
       src: this.imageLink,
-      placeholder: '/images/placeholder.png',
+      placeholder: 'images/placeholder.png',
       classList: ['search-result__card-image'],
       alt: this.title,
     }).mount(this, 'first');

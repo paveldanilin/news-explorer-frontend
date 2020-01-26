@@ -1,6 +1,6 @@
 export default class Config {
   static get BACKEND_API_HOST() {
-    return '84.201.131.193';
+    return 'https://breakingnews-explorer.ml';
   }
 
   static get NEWS_API_TOKEN() {

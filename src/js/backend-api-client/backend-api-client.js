@@ -4,7 +4,7 @@ import HttpRequest from '../http-client/http-request';
 export default class BackendApiClient {
   constructor(host) {
     this.httpClient = HttpClient.create({
-      baseUrl: `http://${host}`,
+      baseUrl: `${host}`,
       responseFormat: HttpClient.RESPONSE_JSON,
       mode: HttpRequest.MODE_CORS,
       cache: HttpRequest.CACHE_NO_CACHE,
