@@ -68,9 +68,9 @@ Button.create({
 /**
  * Sections: loading, noResult, result
  */
-const loadingSection = Element.attach('#loading').hide();
-const noresultSection = Element.attach('#noresult').hide();
-const resultSection = Element.attach('#searchResult').hide();
+const loadingSection = Element.wrap('#loading').hide();
+const noresultSection = Element.wrap('#noresult').hide();
+const resultSection = Element.wrap('#searchResult').hide();
 
 /**
  * Handles search action

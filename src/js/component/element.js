@@ -4,6 +4,17 @@ export default class Element {
     this.oldStyleDisplay = null;
   }
 
+  get ClassList() {
+    if (this.htmlElement) {
+      return this.htmlElement.classList;
+    }
+    return new NodeList();
+  }
+
+  get HtmlElement() {
+    return this.htmlElement;
+  }
+
   hide() {
     if (this.htmlElement && this.htmlElement.style.display !== 'none') {
       this.oldStyleDisplay = this.htmlElement.style.display;
@@ -19,19 +30,93 @@ export default class Element {
     return this;
   }
 
-  static attach(selector) {
-    return new this(document.querySelector(selector));
+  isVisible() {
+    if (this.htmlElement) {
+      return this.htmlElement.style.display !== 'none'
+        && this.htmlElement.style.display !== undefined
+        && this.htmlElement.style.display !== null;
+    }
+    return false;
+  }
+
+  pos(x, y) {
+    if (this.htmlElement) {
+      if (typeof x === 'number') {
+        this.htmlElement.style.left = `${x}px`;
+      } else {
+        this.htmlElement.style.left = x;
+      }
+      if (typeof y === 'number') {
+        this.htmlElement.style.top = `${y}px`;
+      } else {
+        this.htmlElement.style.top = y;
+      }
+    }
+    return this;
+  }
+
+  posStyle(style) {
+    if (this.htmlElement) {
+      this.htmlElement.style.position = style;
+    }
+    return this;
+  }
+
+  mount(hostHtmlElement) {
+    let host;
+    if (typeof hostHtmlElement === 'string') {
+      host = document.querySelector(hostHtmlElement);
+    } else if (hostHtmlElement instanceof HTMLElement) {
+      host = hostHtmlElement;
+    } else {
+      throw new Error('Host element must be an instance of HTMLElement');
+    }
+    host.appendChild(this.htmlElement);
+    return this;
+  }
+
+  text(text) {
+    if (this.htmlElement) {
+      this.htmlElement.textContent = text;
+    }
+    return this;
+  }
+
+  on(eventType, handler) {
+    if (this.htmlElement) {
+      this.htmlElement.addEventListener(eventType, (event) => handler(event));
+    }
+    return this;
+  }
+
+  static wrap(selector) {
+    let el;
+    if (typeof selector === 'string') {
+      el = document.querySelector(selector);
+    } else {
+      el = selector;
+    }
+    if (!el) {
+      return null;
+    }
+    return new this(el);
   }
 
   static $(selector) {
     return document.querySelectorAll(selector);
   }
 
-  static create(def) {
+  static create(def, wrap) {
+    let el;
     if (typeof def === 'string') {
-      return Element.createFromHtml(def);
+      el = Element.createFromHtml(def);
+    } else {
+      el = Element.createFromDef(def);
     }
-    return Element.createFromDef(def);
+    if (wrap === true) {
+      el = new this(el);
+    }
+    return el;
   }
 
   static createFromDef(def) {
@@ -138,6 +223,19 @@ export default class Element {
     const tmp = document.createElement('span');
     tmp.innerHTML = html;
     return tmp.firstChild;
+  }
+
+  static offset(el) {
+    let targetEl;
+    if (el instanceof Element) {
+      targetEl = el.HtmlElement;
+    } else {
+      targetEl = el;
+    }
+    const rect = targetEl.getBoundingClientRect();
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
   }
 
   static isDomEvent(eventName) {

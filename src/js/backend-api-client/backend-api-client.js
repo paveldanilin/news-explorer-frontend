@@ -38,6 +38,33 @@ export default class BackendApiClient {
     });
   }
 
+  createArticle({
+    keyword, title, text, date, source, link, image,
+  }, token) {
+    return this.httpClient.post('/articles', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        keyword,
+        title,
+        text,
+        date,
+        source,
+        link,
+        image,
+      }),
+    });
+  }
+
+  removeArticle(id, token) {
+    return this.httpClient.delete(`/articles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   getArticles(token) {
     return this.httpClient.fetch('/articles', {
       headers: {

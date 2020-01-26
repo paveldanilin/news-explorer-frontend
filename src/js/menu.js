@@ -7,10 +7,10 @@ import Component from './component/component';
 import Page from './util/page';
 import { watch } from './component/event-bus';
 
-let userName = window.localStorage.getItem('user.name');
+let userName = User.getName();
 
 function onUserLogged() {
-  userName = window.localStorage.getItem('user.name');
+  userName = User.getName();
 
   if (Component.get('desktopMenu').isHidden() === false) {
     // Articles

@@ -9,6 +9,7 @@
 @import '_tech/icon_tech.css';
 @import '_error/icon_error.css';
 @import '_user/icon_user.css';
+@import '_save/icon_save.css';
 
 .icon {
   display: inline-block;

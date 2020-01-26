@@ -25,3 +25,4 @@ import './dialog-signin/dialog-signin.css';
 import './dialog-signup/dialog-signup.css';
 import './dialog-error/dialog-error.css';
 import './gh-commits/gh-commits.css';
+import './tooltip/tooltip.css';

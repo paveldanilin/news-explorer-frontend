@@ -59,4 +59,16 @@ export default class User {
     window.localStorage.removeItem('user.email');
     notify('USER_LOGOUT');
   }
+
+  static getName() {
+    return window.localStorage.getItem('user.name');
+  }
+
+  static getEmail() {
+    return window.localStorage.getItem('user.email');
+  }
+
+  static getToken() {
+    return window.localStorage.getItem('user.token');
+  }
 }
