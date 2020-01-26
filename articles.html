@@ -7,65 +7,33 @@
   <meta name="description" content="Поиск новостей!">
   <title>Сохранённые статьи</title>
   <link rel="icon" type="image/png" href="images/favicon.png" />
-<link href="articles/articles.bundle.css?f793ff837642e79d61ec" rel="stylesheet"></head>
+<link href="articles/articles.bundle.css?279844bfc226ad450825" rel="stylesheet"></head>
 <body>
   <header class="header">
-    <!-- Main menu -->
-    <nav>
-      <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_dark nav">
-        <li class="nav__item nav__item_style_dark logo logo_dark">
-          <a href="index.html">NewsExplorer</a>
-        </li>
-        <li class="nav__item nav__item_style_smoke nav__item_pull-right">
-          <a href="index.html">Главная</a>
-        </li>
-        <li class="nav__item nav__item_style_smoke">
-          <a href="about.html">О проекте</a>
-        </li>
-        <li class="nav__item nav__item_style_dark nav__item_selected">
-          <a href="articles.html">Сохраненные статьи</a>
-        </li>
-        <li class="nav__item">
-          <button class="btn btn_rad_80 btn_brd_1 btn_style_light btn_size_s" onclick="showSigninDialog()">Авторизоваться</button>
-        </li>
-        <li class="nav__item header__mobile-toggle">
-          <button class="btn btn_brd_none btn_size_xxs btn_transparent" onclick="toggleMobileMenu(true)">
-            <i class="icon icon_size_24 icon_menu_black"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Mobile menu -->
-    <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
-      <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
-      <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
-      <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
-      <span class="nav__item nav__item_style_light">
-        <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="onSigninHandler(true)">Вход</button>
-      </span>
-    </nav>
+    <nav id="mainMenuDesktop"></nav>
+    <nav id="mainMenuMobile"></nav>
   </header>
 
   <main>
     <section class="articles-info">
       <div class="articles-info__container">
         <h6>Сохранённые статьи</h6>
-        <h2 class="text text_font-family_roboto-slab">Грета, у вас 5 сохранённых статей</h2>
-        <h3 class="text text_font-family_roboto">По ключевым словам: <span class="text text_font-family_roboto text_weight_bold">Природа, Тайгаи 2 другим</span></h3>
+        <h2 id="welcome" class="text text_font-family_roboto-slab">
+          {{user}}, у вас {{articleCount}} сохранённых статей
+        </h2>
+        <h3 id="keyword" class="text text_font-family_roboto">По ключевым словам:
+          <span id="articleStat" class="text text_font-family_roboto text_weight_bold">
+            {{firstTwoKeywords}} и {{keywordCount}} другим
+          </span>
+        </h3>
       </div>
     </section>
 
-    <section class="search-result">
+    <section id="result" class="search-result">
       <h6>&nbsp;</h6>
       <div class="search-result__container">
-        <div class="search-result__grid"></div>
+        <div id="cardsGrid"></div>
       </div>
-    </section>
-
-    <section id="loading" class="loading">
-      <div class="loading__spinner loading__spinner_dual-ring"></div>
-      <h6 class="loading__label">Загружаю новости</h6>
     </section>
 
     <section id="noresult" class="noresult">
@@ -97,7 +65,7 @@
           <i class="dialog__close icon icon_size_24 icon_close_black"></i>
         </div>
         <div class="dialog__body">
-          <form name="signinForm" class="form" onsubmit="login(this); return false;">
+          <form name="signinForm" class="form" onsubmit="User.signInForm(this); return false;">
             <ul>
               <li>
                 <label for="signin_email">Email</label>
@@ -107,8 +75,8 @@
 
               <li>
                 <label for="signin_password">Пароль</label>
-                <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
-                <span data-invalid-message="signin_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+                <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="7" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signin_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [7-20] символов</span>
               </li>
 
               <li>
@@ -133,7 +101,7 @@
           <i class="dialog__close icon icon_size_24 icon_close_black"></i>
         </div>
         <div class="dialog__body">
-          <form name="signupForm" class="form" onsubmit="register(this); return false;">
+          <form name="signupForm" class="form" onsubmit="User.signUpForm(this); return false;">
             <ul>
               <li>
                 <label for="signup_email">Email</label>
@@ -143,8 +111,8 @@
 
               <li>
                 <label for="signup_password">Пароль</label>
-                <input required id="signup_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
-                <span data-invalid-message="signup_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+                <input required id="signup_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="7" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signup_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [7-20] символов</span>
               </li>
 
               <li>
@@ -166,5 +134,18 @@
     </div>
   </span>
 
-<script type="text/javascript" src="articles/articles.bundle.js?f793ff837642e79d61ec"></script></body>
+  <span id="dialog_error" class="dialog-error" data-dialog>
+    <div class="dialog dialog_style_white dialog_align_center">
+      <div class="dialog__content dialog__content_border_full">
+        <div class="dialog__header">
+          <i class="icon icon_error icon_size_32"></i>
+          <h3 class="dialog__header-title">Ошибка</h3>
+          <i class="dialog__close icon icon_size_24 icon_close_black"></i>
+        </div>
+        <div class="dialog__body"></div>
+      </div>
+    </div>
+  </span>
+
+<script type="text/javascript" src="articles/articles.bundle.js?279844bfc226ad450825"></script></body>
 </html>
