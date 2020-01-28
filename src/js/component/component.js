@@ -121,9 +121,12 @@ export default class Component extends Observable {
     return this;
   }
 
-  destroy() {
+  destroy(removeContainer) {
     if (!this.HtmlElement) {
       return false;
+    }
+    if (removeContainer === true) {
+      this._containerHtmlElement.remove();
     }
     this._containerHtmlElement.removeChild(this.HtmlElement);
     this._htmlElement = null;

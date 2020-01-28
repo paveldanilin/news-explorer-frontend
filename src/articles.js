@@ -113,7 +113,10 @@ ListView.create({
     toolbar: ['delete', 'keyword'],
     listeners: {
       deleteitem: () => {
-        refreshGrid();
+        Component.get('cards').Store.delete('articleId', record.get('articleId'));
+        refreshWelcomeText(Component.get('cards').Store.All.length);
+        const keywordsList = Component.get('cards').Store.All.map((storedRecord) => storedRecord.get('keyword'));
+        refreshArticleStatText(keywordsList.slice(0, 2), keywordsList.length);
       },
     },
   }),

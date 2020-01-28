@@ -5,6 +5,7 @@ import { notify } from '../component/event-bus';
 import MsgBox from '../component/msg-box/msg-box';
 import HttpClient from '../http-client/http-client';
 import HttpRequestError from '../http-client/http-request-error';
+import Element from '../component/element';
 
 /**
  * @type {BackendApiClient}
@@ -16,18 +17,29 @@ const backendApiClient = new BackendApiClient({
 
 export default class User {
   static signInForm(form) {
-    const inputEmail = form.querySelector('#signin_email');
-    const inputPassword = form.querySelector('#signin_password');
+    const inputEmail = Element.wrap(form.querySelector('#signin_email'));
+    const inputPassword = Element.wrap(form.querySelector('#signin_password'));
+    const submitBtn = Element.wrap(form.querySelector('[type="submit"]'));
+
+    inputPassword.disable();
+    inputEmail.disable();
+    submitBtn.disable();
 
     backendApiClient
-      .signin(inputEmail.value, inputPassword.value)
+      .signin(inputEmail.getValue(), inputPassword.getValue())
       .then((response) => {
         backendApiClient.getUserInfo(response.token).then((userInfo) => {
+          inputPassword.enable();
+          inputEmail.enable();
+          submitBtn.enable();
           User.login({ ...userInfo, token: response.token });
           Dialog.close('dialog_signin');
         });
       })
       .catch((error) => {
+        inputPassword.enable();
+        inputEmail.enable();
+        submitBtn.enable();
         if (error instanceof HttpRequestError) {
           MsgBox.error('Ошибка авторизации');
         } else {
@@ -39,17 +51,31 @@ export default class User {
   }
 
   static signUpForm(form) {
-    const inputEmail = form.querySelector('#signup_email');
-    const inputPassword = form.querySelector('#signup_password');
-    const inputName = form.querySelector('#signup_name');
+    const inputEmail = Element.wrap(form.querySelector('#signup_email'));
+    const inputPassword = Element.wrap(form.querySelector('#signup_password'));
+    const inputName = Element.wrap(form.querySelector('#signup_name'));
+    const submitBtn = Element.wrap(form.querySelector('[type="submit"]'));
+
+    inputPassword.disable();
+    inputEmail.disable();
+    inputName.disable();
+    submitBtn.disable();
 
     backendApiClient
-      .signup(inputName.value, inputEmail.value, inputPassword.value)
+      .signup(inputName.getValue(), inputEmail.getValue(), inputPassword.getValue())
       .then(() => {
+        inputPassword.enable();
+        inputEmail.enable();
+        inputName.enable();
+        submitBtn.enable();
         Dialog.close('dialog_signup');
         MsgBox.msg('Пользователь успешно зарегистрирован');
       })
       .catch((error) => {
+        inputPassword.enable();
+        inputEmail.enable();
+        inputName.enable();
+        submitBtn.enable();
         if (error instanceof HttpRequestError) {
           MsgBox.error('Ошибка регистрации');
         } else {

@@ -97,7 +97,7 @@ export default class NewsCard extends Component {
       backendApiClient
         .removeArticle(this.HtmlElement.getAttribute('news-card'), User.getToken())
         .then(() => {
-          this.destroy();
+          this.destroy(true);
           this.fireEvent('deleteitem');
         })
         .catch((error) => {

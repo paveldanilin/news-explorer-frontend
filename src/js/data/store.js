@@ -211,9 +211,28 @@ export default class Store extends Observable {
       return [];
     }
     if (typeof predicate === 'function') {
-      throw new Error('Predicate must be pure JS function');
+      return this._records.filter(predicate);
     }
-    return this._records.filter((record) => predicate(record.get(fieldName)));
+    return this._records.filter((record) => record.get(fieldName) === predicate);
+  }
+
+  delete(fieldName, predicate) {
+    const index = this.findIndexBy(fieldName, predicate);
+    if (index === -1) {
+      return false;
+    }
+    this._records.splice(index, 1);
+    return true;
+  }
+
+  findIndexBy(fieldName, predicate) {
+    if (this.RecordDefinition.has(fieldName) === false) {
+      return -1;
+    }
+    if (typeof predicate === 'function') {
+      return this._records.findIndex(predicate);
+    }
+    return this._records.findIndex((record) => record.get(fieldName) === predicate);
   }
 
   reload(url, queryParams) {

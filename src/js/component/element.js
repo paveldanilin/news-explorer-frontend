@@ -39,17 +39,69 @@ export default class Element {
     return false;
   }
 
-  pos(x, y) {
+  disable() {
     if (this._htmlElement) {
-      if (typeof x === 'number') {
-        this._htmlElement.style.left = `${x}px`;
-      } else {
-        this._htmlElement.style.left = x;
+      this._htmlElement.disabled = true;
+    }
+    return this;
+  }
+
+  enable() {
+    if (this._htmlElement) {
+      this._htmlElement.disabled = false;
+    }
+    return this;
+  }
+
+  getValue() {
+    if (this._htmlElement) {
+      return this._htmlElement.value || null;
+    }
+    return null;
+  }
+
+  pos(left, top) {
+    if (this._htmlElement) {
+      if (typeof left === 'number') {
+        this._htmlElement.style.left = `${left}px`;
+      } else if (left !== undefined) {
+        this._htmlElement.style.left = left;
       }
-      if (typeof y === 'number') {
-        this._htmlElement.style.top = `${y}px`;
-      } else {
-        this._htmlElement.style.top = y;
+      if (typeof top === 'number') {
+        this._htmlElement.style.top = `${top}px`;
+      } else if (top !== undefined) {
+        this._htmlElement.style.top = top;
+      }
+    }
+    return this;
+  }
+
+  getRect() {
+    if (!this._htmlElement) {
+      return {
+        top: -1, left: -1, width: -1, height: -1,
+      };
+    }
+    return {
+      top: this._htmlElement.offsetTop,
+      left: this._htmlElement.offsetLeft,
+      width: this._htmlElement.offsetWidth,
+      height: this._htmlElement.offsetHeight,
+    };
+  }
+
+
+  size(width, height) {
+    if (this._htmlElement) {
+      if (typeof width === 'number') {
+        this._htmlElement.style.width = `${width}px`;
+      } else if (width !== undefined) {
+        this._htmlElement.style.width = width;
+      }
+      if (typeof height === 'number') {
+        this._htmlElement.style.height = `${height}px`;
+      } else if (height !== undefined) {
+        this._htmlElement.style.height = height;
       }
     }
     return this;
@@ -251,7 +303,6 @@ export default class Element {
       throw new Error('Expected string');
     }
     const tmp = document.createElement('span');
-    // tmp.innerHTML = html;
     tmp.insertAdjacentHTML('afterbegin', html);
     return tmp.firstChild;
   }

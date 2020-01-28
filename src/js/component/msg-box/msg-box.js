@@ -1,4 +1,5 @@
 import Component from '../component';
+import Text from '../../util/text';
 
 export default class MsgBox extends Component {
   constructor(props) {
@@ -14,8 +15,8 @@ export default class MsgBox extends Component {
       closeIconClassList,
       iconClassList,
     } = props;
-    this._title = title || '';
-    this._message = message || '';
+    this._title = Text.escape(title || '');
+    this._message = Text.escape(message || '');
     this._headerClassList = headerClassList || [];
     this._titleClassList = titleClassList || [];
     this._bodyClassList = bodyClassList || [];
@@ -23,6 +24,14 @@ export default class MsgBox extends Component {
     this._outerClassList = outerClassList || [];
     this._closeIconClassList = closeIconClassList || [];
     this._iconClassList = iconClassList || [];
+
+    this.on('afterrender', () => {
+      this.HtmlElement.addEventListener('click', (event) => {
+        if (event.target.classList.contains('dialog2')) {
+          this.destroy();
+        }
+      });
+    });
   }
 
   static error(title, message, container) {
@@ -61,14 +70,6 @@ export default class MsgBox extends Component {
         },
       },
     });
-  }
-
-  get Message() {
-    return this._message;
-  }
-
-  get Title() {
-    return this._title;
   }
 
   render() {

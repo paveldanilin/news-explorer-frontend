@@ -2,7 +2,7 @@ import './dialog.css';
 import { loadHTML } from '../../js/loader';
 
 function resolveDialogElement(id) {
-  const htmlEl = document.querySelector(`#${id}`);
+  const htmlEl = document.querySelector(`[id="${id}"]`);
   if (!htmlEl) {
     return null;
   }
@@ -80,6 +80,13 @@ export default class Dialog {
 
     return null;
   }
+
+  static closeActiveDialog() {
+    const dialog = Dialog.getActiveHTMLElement();
+    if (dialog && dialog.parentNode) {
+      Dialog.close(dialog.parentNode.id);
+    }
+  }
 }
 
 // Register 'Escape' handler
@@ -87,21 +94,23 @@ window.addEventListener('keydown', (event) => {
   if (event.code !== 'Escape') {
     return;
   }
-  const dialog = Dialog.getActiveHTMLElement();
-  if (dialog && dialog.parentNode) {
-    Dialog.close(dialog.parentNode.id);
-  }
+  Dialog.closeActiveDialog();
 });
 
 // Load dialog templates
 setTimeout(() => {
-  document.querySelectorAll('[data-dialog]').forEach((el) => {
+  Array.from(document.querySelectorAll('[data-dialog]')).forEach((el) => {
     if (el.getAttribute('data-dialog').length > 0) {
       loadHTML(el.getAttribute('data-dialog'), el, null, (container) => {
         bindCloseHandler(container);
       });
     } else {
       bindCloseHandler(el);
+      el.querySelector('.dialog').addEventListener('click', (event) => {
+        if (event.target && event.target.classList.contains('dialog')) {
+          Dialog.closeActiveDialog();
+        }
+      });
     }
   });
 }, 0);

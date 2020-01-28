@@ -105,6 +105,8 @@ function searchNews(text) {
     return;
   }
 
+  Element.wrap(Component.get('newsSearchButton').HtmlElement).disable();
+
   const cards = Component.get('cards');
   cards.removeAll();
   loadingSection.show();
@@ -127,8 +129,10 @@ function searchNews(text) {
         ));
       cards.refresh();
     }
+    Element.wrap(Component.get('newsSearchButton').HtmlElement).enable();
   }, () => {
     Dialog.show('dialog_error', Config.ERROR_TXT_REQUEST_NOT_COMPLETED);
+    Element.wrap(Component.get('newsSearchButton').HtmlElement).enable();
   });
 }
 
@@ -136,6 +140,7 @@ function searchNews(text) {
  * Search button
  */
 Button.create({
+  id: 'newsSearchButton',
   container: '.search__button',
   text: 'Искать',
   classList: ['btn', 'btn_style_primary', 'btn_size_m', 'btn_rad_100', 'btn_brd_none'],
