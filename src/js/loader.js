@@ -31,7 +31,7 @@ const loadHTML = (url, container, onLoad, onInject) => {
 };
 
 const loadJS = (url) => {
-  const ref = document.getElementsByTagName('script')[0];
+  const ref = document.querySelectorAll('script')[0];
   const script = document.createElement('script');
   script.src = url;
   ref.parentNode.insertBefore(script, ref);

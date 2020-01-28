@@ -21,8 +21,6 @@ import HttpClient from './js/http-client/http-client';
 import Text from './js/util/text';
 import './js/menu';
 
-console.log(Text.escape('Test <a hred="http://1.com">ABC</a> End'))
-
 /**
  * @type {NewsApiClient}
  */

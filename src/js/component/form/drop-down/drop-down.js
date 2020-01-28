@@ -41,7 +41,7 @@ export default class DropDown extends StorableComponent {
       return null;
     }
     return {
-      htmlElement: document.getElementById(selectedRecord.Id),
+      htmlElement: document.querySelector(`#${selectedRecord.Id}`),
       record: selectedRecord,
       index: this.getSelectedIndex(),
     };

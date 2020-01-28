@@ -98,9 +98,9 @@ export default class Component extends Observable {
   }
 
   replaceElement(newHtmlElement, copyClassList) {
-    const clone = document.getElementById(this.Id).cloneNode(true);
+    const clone = document.querySelector(`[id="${this.Id}"]`).cloneNode(true);
     this._htmlElement = newHtmlElement;
-    this._containerHtmlElement.replaceChild(this._htmlElement, document.getElementById(this.Id));
+    this._containerHtmlElement.replaceChild(this._htmlElement, document.querySelector(`[id="${this.Id}"]`));
     this._htmlElement.setAttribute('id', this.Id);
     if (copyClassList === true) {
       clone.classList.forEach((cssClass) => this._htmlElement.classList.add(cssClass));
