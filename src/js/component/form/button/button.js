@@ -7,11 +7,11 @@ export default class Button extends Component {
   }
 
   getText() {
-    return this.text;
+    return this._text;
   }
 
   setText(text) {
-    this.text = text;
+    this._text = text;
     if (this.HtmlElement) {
       this.HtmlElement.textContent = text;
     }

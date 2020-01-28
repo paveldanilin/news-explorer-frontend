@@ -6,8 +6,12 @@ import User from '../../user/user';
 import BackendApiClient from '../../backend-api-client/backend-api-client';
 import Config from '../../config';
 import MsgBox from '../msg-box/msg-box';
+import HttpClient from '../../http-client/http-client';
 
-const backendApiClient = new BackendApiClient(Config.BACKEND_API_HOST);
+const backendApiClient = new BackendApiClient({
+  host: Config.BACKEND_API_HOST,
+  httpClient: HttpClient.create(),
+});
 
 export default class NewsCard extends Component {
   constructor(props) {
@@ -25,39 +29,39 @@ export default class NewsCard extends Component {
       toolbar,
     } = props;
 
-    this.articleId = articleId || null;
-    this.imageLink = imageLink;
-    this.createdAt = createdAt;
-    this.title = title;
-    this.keyword = keyword || '';
-    this.contentText = contentText;
-    this.sourceLabel = sourceLabel;
-    this.sourceLink = sourceLink;
-    this.toolbar = toolbar || [];
+    this._articleId = articleId || null;
+    this._imageLink = imageLink;
+    this._createdAt = createdAt;
+    this._title = title;
+    this._keyword = keyword || '';
+    this._contentText = contentText;
+    this._sourceLabel = sourceLabel;
+    this._sourceLink = sourceLink;
+    this._toolbar = toolbar || [];
 
     this.on('render', (event) => this.onRender(event.element));
   }
 
   render() {
     Picture.create({
-      src: this.imageLink,
+      src: this._imageLink,
       placeholder: 'images/placeholder.png',
       classList: ['search-result__card-image'],
-      alt: this.title,
+      alt: this._title,
     }).mount(this, 'first');
 
     return `<div class="card card_grow card_dir_ver">
                 <!-- Picture -->
                 <div class="card__body search-result__card-body">
                     <div class="search-result__card-created">
-                        ${NewsCard.formatDate(this.createdAt)}
+                        ${NewsCard.formatDate(this._createdAt)}
                     </div>
-                    <h4 class="search-result__card-title">${this.title}</h4>
-                    <p class="search-result__card-text">${this.contentText}</p>
+                    <h4 class="search-result__card-title">${this._title}</h4>
+                    <p class="search-result__card-text">${this._contentText}</p>
                 </div>
                 <div class="card__footer search-result__card-footer">
-                    <a href="${this.sourceLink}" target="_blank" class="search-result__card-source">
-                        ${this.sourceLabel}
+                    <a href="${this._sourceLink}" target="_blank" class="search-result__card-source">
+                        ${this._sourceLabel}
                     </a>
                 </div>
                 ${this.renderToolbar()}
@@ -65,8 +69,8 @@ export default class NewsCard extends Component {
   }
 
   onRender(element) {
-    if (this.articleId) {
-      element.setAttribute('news-card', this.articleId);
+    if (this._articleId) {
+      element.setAttribute('news-card', this._articleId);
     }
     this.onRenderSaveBtn(element);
     this.onRenderDeleteBtn(element);
@@ -169,13 +173,13 @@ export default class NewsCard extends Component {
       } else {
         backendApiClient
           .createArticle({
-            keyword: this.keyword,
-            title: this.title,
-            text: this.contentText,
-            date: this.createdAt,
-            source: this.sourceLabel,
-            link: this.sourceLink,
-            image: this.imageLink,
+            keyword: this._keyword,
+            title: this._title,
+            text: this._contentText,
+            date: this._createdAt,
+            source: this._sourceLabel,
+            link: this._sourceLink,
+            image: this._imageLink,
           }, User.getToken())
           .then((response) => {
             MsgBox.msg('Сохранение статьи', 'Статья была сохранена!');
@@ -213,11 +217,11 @@ export default class NewsCard extends Component {
   }
 
   renderToolbar() {
-    if (this.toolbar.length === 0) {
+    if (this._toolbar.length === 0) {
       return '';
     }
     return `<span style="position: relative">
-                ${this.toolbar.map((tbb) => this.renderToolbarButton(tbb)).join(' ')}
+                ${this._toolbar.map((tbb) => this.renderToolbarButton(tbb)).join(' ')}
             </span>`;
   }
 
@@ -229,8 +233,8 @@ export default class NewsCard extends Component {
         return '<i name="delete-btn" class="icon icon_size_40 icon_delete_normal"></i>';
       case 'keyword':
         return `
-                  <a name="keyword-label" class="tooltip" href="https://www.google.com/search?q=${this.keyword}" target="_blank">
-                    ${this.keyword}
+                  <a name="keyword-label" class="tooltip" href="https://www.google.com/search?q=${this._keyword}" target="_blank">
+                    ${this._keyword}
                   </a>
                 `;
       default:

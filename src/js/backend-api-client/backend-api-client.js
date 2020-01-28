@@ -2,20 +2,25 @@ import HttpClient from '../http-client/http-client';
 import HttpRequest from '../http-client/http-request';
 
 export default class BackendApiClient {
-  constructor(host) {
-    this.httpClient = HttpClient.create({
-      baseUrl: `${host}`,
-      responseFormat: HttpClient.RESPONSE_JSON,
-      mode: HttpRequest.MODE_CORS,
-      cache: HttpRequest.CACHE_NO_CACHE,
-      headers: {
+  constructor({ host, httpClient }) {
+    if (httpClient === undefined) {
+      this._httpClient = HttpClient.create();
+    } else {
+      this._httpClient = httpClient;
+    }
+
+    this._httpClient
+      .setBaseUrl(host)
+      .setResponseFormat(HttpClient.RESPONSE_JSON)
+      .setMode(HttpRequest.MODE_CORS)
+      .setCache(HttpRequest.CACHE_NO_CACHE)
+      .setHeaders({
         'Content-Type': 'application/json',
-      },
-    });
+      });
   }
 
   signup(name, email, password) {
-    return this.httpClient.post('/signup', {
+    return this._httpClient.post('/signup', {
       body: JSON.stringify({
         name, email, password,
       }),
@@ -23,7 +28,7 @@ export default class BackendApiClient {
   }
 
   signin(email, password) {
-    return this.httpClient.post('/signin', {
+    return this._httpClient.post('/signin', {
       body: JSON.stringify({
         email, password,
       }),
@@ -31,7 +36,7 @@ export default class BackendApiClient {
   }
 
   getUserInfo(token) {
-    return this.httpClient.fetch('/users/me', {
+    return this._httpClient.fetch('/users/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,7 +46,7 @@ export default class BackendApiClient {
   createArticle({
     keyword, title, text, date, source, link, image,
   }, token) {
-    return this.httpClient.post('/articles', {
+    return this._httpClient.post('/articles', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -58,7 +63,7 @@ export default class BackendApiClient {
   }
 
   removeArticle(id, token) {
-    return this.httpClient.delete(`/articles/${id}`, {
+    return this._httpClient.delete(`/articles/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -66,7 +71,7 @@ export default class BackendApiClient {
   }
 
   getArticles(token) {
-    return this.httpClient.fetch('/articles', {
+    return this._httpClient.fetch('/articles', {
       headers: {
         Authorization: `Bearer ${token}`,
       },

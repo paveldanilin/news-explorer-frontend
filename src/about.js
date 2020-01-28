@@ -1,4 +1,5 @@
 import './images/favicon.png';
+import './images/user.png';
 import 'normalize.css';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './components/theme.css';
@@ -33,7 +34,7 @@ Carousel.create({
     const avatar = record.get('avatar');
     return `<div class="ycard">
               <div class="flex-container">
-                <img src="${avatar}" alt="Иконка пользователя GitHub" class="ycard__icon">
+                <img src="${avatar || 'images/user.png'}" alt="Иконка пользователя GitHub" class="ycard__icon">
                 <span class="flex-container flex-container_direction_col">
                   <span class="ycard__title">${name}</span>
                   <span class="ycard__subtitle">${email}</span>
@@ -43,14 +44,12 @@ Carousel.create({
             </div>`;
   },
   listeners: {
-    afterrender: (event) => {
-      event.component.Engine.on('resize', () => {
-        if (window.innerWidth < 768) {
-          event.component.setPerView(1);
-        } else {
-          event.component.setPerView(3);
-        }
-      });
+    resize: (event) => {
+      if (window.innerWidth < 768) {
+        event.component.setPerView(1);
+      } else {
+        event.component.setPerView(3);
+      }
     },
   },
 });

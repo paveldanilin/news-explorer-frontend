@@ -84,7 +84,7 @@
           <i class="dialog__close icon icon_size_24 icon_close_black"></i>
         </div>
         <div class="dialog__body">
-          <form name="signinForm" class="form" onsubmit="User.signInForm(this); resetForms(); return false;">
+          <form name="signinForm" class="form" onsubmit="User.signInForm(this); return false;">
             <ul>
               <li>
                 <label for="signin_email">Email</label>
@@ -120,7 +120,7 @@
           <i class="dialog__close icon icon_size_24 icon_close_black"></i>
         </div>
         <div class="dialog__body">
-          <form name="signupForm" class="form" onsubmit="User.signUpForm(this); resetForms(); return false;">
+          <form name="signupForm" class="form" onsubmit="User.signUpForm(this); return false;">
             <ul>
               <li>
                 <label for="signup_email">Email</label>

@@ -13,22 +13,22 @@ export default class ImageButton extends Button {
   }
 
   getImage() {
-    return this.image;
+    return this._image;
   }
 
   setImage(image) {
     if (image === null || image === undefined || typeof image !== 'string' || image.trim().length === 0) {
       throw new Error('Path to image must be non empty string');
     }
-    this.image = image;
+    this._image = image;
   }
 
   getHoverImage() {
-    return this.hoverImage;
+    return this._hoverImage;
   }
 
   setHoverImage(hoverImage) {
-    this.hoverImage = hoverImage;
+    this._hoverImage = hoverImage;
   }
 
   render() {

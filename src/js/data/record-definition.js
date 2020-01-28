@@ -6,13 +6,13 @@ export default class RecordDefinition {
     if (!Array.isArray(definition)) {
       throw new Error('Expected array of definition');
     }
-    this.definition = definition.map((def) => {
+    this._definition = definition.map((def) => {
       if (ObjectHelper.isPlain(def)) {
         return FieldDefinition.create(def);
       }
       return def;
     });
-    this.definition.forEach((def, index) => {
+    this._definition.forEach((def, index) => {
       if (!(def instanceof FieldDefinition)) {
         throw new Error(`Expected instance of Definition. index=${index}`);
       }
@@ -27,11 +27,11 @@ export default class RecordDefinition {
    * @returns {Array.<FieldDefinition>}
    */
   get Definition() {
-    return this.definition;
+    return this._definition;
   }
 
   get(id) {
-    return this.definition[id] || null;
+    return this._definition[id] || null;
   }
 
   /**
@@ -68,7 +68,7 @@ export default class RecordDefinition {
 
   validate(data) {
     const errors = [];
-    this.definition.forEach((def) => {
+    this._definition.forEach((def) => {
       const field = ObjectHelper.find(data, def.Mapping);
       if (field === undefined && def.Mandatory === true) {
         errors.push(`Not found field with name "${def.Name}<${def.Mapping}>" in raw data`);

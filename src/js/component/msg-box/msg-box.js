@@ -14,15 +14,15 @@ export default class MsgBox extends Component {
       closeIconClassList,
       iconClassList,
     } = props;
-    this.title = title || '';
-    this.message = message || '';
-    this.headerClassList = headerClassList || [];
-    this.titleClassList = titleClassList || [];
-    this.bodyClassList = bodyClassList || [];
-    this.innerClassList = innerClassList || [];
-    this.outerClassList = outerClassList || [];
-    this.closeIconClassList = closeIconClassList || [];
-    this.iconClassList = iconClassList || [];
+    this._title = title || '';
+    this._message = message || '';
+    this._headerClassList = headerClassList || [];
+    this._titleClassList = titleClassList || [];
+    this._bodyClassList = bodyClassList || [];
+    this._innerClassList = innerClassList || [];
+    this._outerClassList = outerClassList || [];
+    this._closeIconClassList = closeIconClassList || [];
+    this._iconClassList = iconClassList || [];
   }
 
   static error(title, message, container) {
@@ -64,24 +64,24 @@ export default class MsgBox extends Component {
   }
 
   get Message() {
-    return this.message;
+    return this._message;
   }
 
   get Title() {
-    return this.title;
+    return this._title;
   }
 
   render() {
     return `<div data-dialog>
-                <div name="msgbox-outer-container" class="${this.outerClassList.join(' ')}">
-                  <div name="msgbox-inner-container" class="${this.innerClassList.join(' ')}">
-                      <div name="msgbox-header" class="${this.headerClassList.join(' ')}">
-                          <i class="${this.iconClassList.join(' ')}"></i>
-                          <h3 class="${this.titleClassList.join(' ')}">${this.title}</h3>
-                          <i name="msgbox-close" class="${this.closeIconClassList.join(' ')}"></i>
+                <div name="msgbox-outer-container" class="${this._outerClassList.join(' ')}">
+                  <div name="msgbox-inner-container" class="${this._innerClassList.join(' ')}">
+                      <div name="msgbox-header" class="${this._headerClassList.join(' ')}">
+                          <i class="${this._iconClassList.join(' ')}"></i>
+                          <h3 class="${this._titleClassList.join(' ')}">${this._title}</h3>
+                          <i name="msgbox-close" class="${this._closeIconClassList.join(' ')}"></i>
                       </div>
-                      <div name="msgbox-body" class="${this.bodyClassList.join(' ')}">
-                          ${this.message}
+                      <div name="msgbox-body" class="${this._bodyClassList.join(' ')}">
+                          ${this._message}
                       </div>
                   </div>
                 </div>

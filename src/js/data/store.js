@@ -15,17 +15,17 @@ export default class Store extends Observable {
       throw new Error('Expected instance of RecordDefinition');
     }
 
-    this.recordDefinition = recordDefinition;
-    this.dataRoot = dataRoot || null;
-    this.records = [];
+    this._recordDefinition = recordDefinition;
+    this._dataRoot = dataRoot || null;
+    this._records = [];
     this.setRecords(data || []);
-    this.dataProxy = dataProxy || null;
+    this._dataProxy = dataProxy || null;
     if (pageSize === undefined || pageSize === null) {
-      this.paginator = null;
+      this._paginator = null;
     } else {
-      this.paginator = Paginator.create({ pageSize, mode: pageMode });
+      this._paginator = Paginator.create({ pageSize, mode: pageMode });
     }
-    this.pageNumber = 1;
+    this._pageNumber = 1;
 
     const eventListeners = listeners || [];
     Object
@@ -79,14 +79,14 @@ export default class Store extends Observable {
    * @returns {?DataProxy}
    */
   get DataProxy() {
-    return this.dataProxy;
+    return this._dataProxy;
   }
 
   /**
    * @returns {RecordDefinition}
    */
   get RecordDefinition() {
-    return this.recordDefinition;
+    return this._recordDefinition;
   }
 
   /**
@@ -94,10 +94,10 @@ export default class Store extends Observable {
    * @returns {Array.<Record>}
    */
   get Records() {
-    if (this.paginator) {
-      return this.paginator.paginate(this.records, this.pageNumber);
+    if (this._paginator) {
+      return this._paginator.paginate(this._records, this._pageNumber);
     }
-    return this.records;
+    return this._records;
   }
 
   /**
@@ -105,70 +105,72 @@ export default class Store extends Observable {
    * @returns {Array.<Record>}
    */
   get All() {
-    return this.records;
+    return this._records;
   }
 
   /**
    * @returns {Array.<Record>}
    */
   get CurrentPageRecords() {
-    if (this.paginator) {
-      return this.paginator.paginate(this.records, this.pageNumber, Paginator.MODE_PAGE);
+    if (this._paginator) {
+      return this._paginator.paginate(this._records, this._pageNumber, Paginator.MODE_PAGE);
     }
-    return this.records;
+    return this._records;
   }
 
   /**
    * @returns {null|Paginator}
    */
   get Paginator() {
-    return this.paginator;
+    return this._paginator;
   }
 
   /**
    * @returns {number}
    */
   getPageCount() {
-    if (this.paginator) {
-      return this.paginator.getPageCount(this.records);
+    if (this._paginator) {
+      return this._paginator.getPageCount(this._records);
     }
     return 1;
   }
 
   nextPage() {
-    if (this.pageNumber + 1 <= this.getPageCount()) {
-      this.pageNumber += 1;
+    if (this._pageNumber + 1 <= this.getPageCount()) {
+      this._pageNumber += 1;
     }
-    return this.pageNumber;
+    return this._pageNumber;
   }
 
   prevPage() {
-    if (this.pageNumber - 1 !== 0) {
-      this.pageNumber -= 1;
+    if (this._pageNumber - 1 !== 0) {
+      this._pageNumber -= 1;
     }
-    return this.pageNumber;
+    return this._pageNumber;
   }
 
   /**
    * @returns {number}
    */
   getCurrentPage() {
-    return this.pageNumber;
+    return this._pageNumber;
   }
 
   count() {
-    return this.records.length;
+    return this._records.length;
   }
 
   setRecords(records, mapper) {
     let inRecords = records;
-    if (this.dataRoot !== null && this.dataRoot !== undefined && ObjectHelper.isPlain(inRecords)) {
-      inRecords = ObjectHelper.find(inRecords, this.dataRoot, '.');
+    if (this._dataRoot !== null
+      && this._dataRoot !== undefined
+      && ObjectHelper.isPlain(inRecords)) {
+      inRecords = ObjectHelper.find(inRecords, this._dataRoot, '.');
     }
     if (!Array.isArray(inRecords)) {
       throw new Error('Expected array of records');
     }
-    this.records = inRecords.map((item, index) => {
+    this._records = inRecords.map((item, index) => {
       if (typeof mapper === 'function') {
         return mapper(item, index);
       }
@@ -176,12 +178,12 @@ export default class Store extends Observable {
         return item;
       }
       if (ObjectHelper.isPlain(item)) {
-        return Record.create(this.recordDefinition, item, UuidGenerator.generate());
+        return Record.create(this._recordDefinition, item, UuidGenerator.generate());
       }
       throw new Error(`Expected plain object or instance of Record. index=${index}`);
     });
-    if (this.paginator) {
-      this.pageNumber = 1;
+    if (this._paginator) {
+      this._pageNumber = 1;
     }
   }
 
@@ -191,7 +193,7 @@ export default class Store extends Observable {
       return;
     }
     if (ObjectHelper.isPlain(data)) {
-      this.addRecord(Record.create(this.recordDefinition, data, UuidGenerator.generate()));
+      this.addRecord(Record.create(this._recordDefinition, data, UuidGenerator.generate()));
       return;
     }
     throw new Error('Expected plain object or instance of Record');
@@ -204,11 +206,11 @@ export default class Store extends Observable {
     if (!this.RecordDefinition.isEqual(record.Definition)) {
       throw new Error('Record definition miss match');
     }
-    this.records.push(record);
+    this._records.push(record);
   }
 
   get(id) {
-    return this.records[id] || undefined;
+    return this._records[id] || undefined;
   }
 
   findBy(fieldName, predicate) {
@@ -218,7 +220,7 @@ export default class Store extends Observable {
     if (typeof predicate === 'function') {
       throw new Error('Predicate must be pure JS function');
     }
-    return this.records.filter((record) => predicate(record.get(fieldName)));
+    return this._records.filter((record) => predicate(record.get(fieldName)));
   }
 
   reload(url, queryParams) {

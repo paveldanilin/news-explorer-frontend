@@ -16,10 +16,14 @@ import MsgBox from './js/component/msg-box/msg-box';
 import Page from './js/util/page';
 import Component from './js/component/component';
 import Element from './js/component/element';
+import HttpClient from './js/http-client/http-client';
 import './js/menu';
 import Text from './js/util/text';
 
-const backendApiClient = new BackendApiClient(Config.BACKEND_API_HOST);
+const backendApiClient = new BackendApiClient({
+  host: Config.BACKEND_API_HOST,
+  httpClient: HttpClient.create(),
+});
 const noResultSection = Element.wrap('#noresult').hide();
 const resultSection = Element.wrap('#result').show();
 const welcomeLabel = Element.wrap('#welcome');

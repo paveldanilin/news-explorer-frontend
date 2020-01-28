@@ -1,9 +1,9 @@
 export default class FieldDefinition {
   constructor(name, mapping, type, mandatory) {
-    this.name = name;
-    this.mapping = mapping || name;
-    this.type = type || FieldDefinition.TYPE_AUTO;
-    this.madatory = mandatory || false;
+    this._name = name;
+    this._mapping = mapping || name;
+    this._type = type || FieldDefinition.TYPE_AUTO;
+    this._madatory = mandatory || false;
   }
 
   static get TYPE_AUTO() {
@@ -41,28 +41,28 @@ export default class FieldDefinition {
    * @returns {string}
    */
   get Name() {
-    return this.name;
+    return this._name;
   }
 
   /**
    * @returns {string}
    */
   get Mapping() {
-    return this.mapping;
+    return this._mapping;
   }
 
   /**
    * @returns {string}
    */
   get Type() {
-    return this.type;
+    return this._type;
   }
 
   /**
    * @returns {boolean}
    */
   get Mandatory() {
-    return this.madatory;
+    return this._madatory;
   }
 
   isEqual(fieldDefinition) {

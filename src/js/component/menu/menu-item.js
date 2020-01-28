@@ -8,10 +8,10 @@ export default class MenuItem extends Component {
       renderer, link, text, selected,
     } = props;
 
-    this.selected = selected || false;
-    this.renderer = renderer || null;
-    this.link = link || '#';
-    this.text = text || '';
+    this._selected = selected || false;
+    this._renderer = renderer || null;
+    this._link = link || '#';
+    this._text = text || '';
   }
 
   static create(props) {
@@ -19,18 +19,18 @@ export default class MenuItem extends Component {
   }
 
   getLink() {
-    if (this.selected) {
+    if (this._selected) {
       return '#';
     }
-    return this.link;
+    return this._link;
   }
 
   getText() {
-    return this.text;
+    return this._text;
   }
 
   render() {
-    if (typeof this.renderer === 'function') {
+    if (typeof this._renderer === 'function') {
       return this.callRenderer();
     }
 
@@ -40,18 +40,18 @@ export default class MenuItem extends Component {
   }
 
   getSelectedClass() {
-    if (this.ParentComponent && this.selected) {
+    if (this.ParentComponent && this._selected) {
       return this.ParentComponent.getItemSelectedClass();
     }
     return '';
   }
 
   callRenderer() {
-    if (typeof this.renderer !== 'function') {
+    if (typeof this._renderer !== 'function') {
       throw new Error('Renderer must be a function');
     }
 
-    const rendered = this.renderer(this);
+    const rendered = this._renderer(this);
 
     if (rendered === null || rendered === undefined) {
       return '';

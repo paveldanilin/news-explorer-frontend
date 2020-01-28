@@ -4,24 +4,24 @@ import RecordDefinition from './record-definition';
 
 export default class Record {
   constructor(id, definition, data) {
-    this.id = id;
-    this.definition = null;
-    this.data = data || {};
+    this._id = id;
+    this._definition = null;
+    this._data = data || {};
 
     if (definition instanceof RecordDefinition) {
-      this.definition = definition;
+      this._definition = definition;
     } else if (ObjectHelper.isPlain(definition)) {
-      this.definition = RecordDefinition.create(definition);
+      this._definition = RecordDefinition.create(definition);
     } else {
       throw new Error('Expected instance of RecordDefinition');
     }
 
-    const validationErrors = this.definition.validate(this.data);
+    const validationErrors = this._definition.validate(this._data);
 
     if (validationErrors.length > 0) {
       throw new Error(
         `Record validation errors: [${validationErrors.join(',')}].
-        Raw data: ${JSON.stringify(this.data)}`,
+        Raw data: ${JSON.stringify(this._data)}`,
       );
     }
   }
@@ -31,7 +31,7 @@ export default class Record {
   }
 
   get Id() {
-    return this.id;
+    return this._id;
   }
 
   /**
@@ -39,7 +39,7 @@ export default class Record {
    * @returns {*|{}}
    */
   get Data() {
-    return this.data;
+    return this._data;
   }
 
   /**
@@ -47,7 +47,7 @@ export default class Record {
    * @returns {RecordDefinition}
    */
   get Definition() {
-    return this.definition;
+    return this._definition;
   }
 
   /**
@@ -60,7 +60,7 @@ export default class Record {
     if (fieldDef === undefined) {
       Record.UnknownFieldError(fieldName, this);
     }
-    return ObjectHelper.find(this.data, fieldDef.Mapping);
+    return ObjectHelper.find(this._data, fieldDef.Mapping);
   }
 
   /**
@@ -74,7 +74,7 @@ export default class Record {
     if (fieldDef === undefined) {
       Record.UnknownFieldError(fieldName, this);
     }
-    return ObjectHelper.setVal(this.data, value, fieldDef.Mapping);
+    return ObjectHelper.setVal(this._data, value, fieldDef.Mapping);
   }
 
   static UnknownFieldError(fieldName, record) {

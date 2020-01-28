@@ -21,7 +21,8 @@ const loadHTML = (url, container, onLoad, onInject) => {
 
     containers.forEach((containerEl) => {
       const el = containerEl;
-      el.innerHTML = loadedTemplate;
+      // el.innerHTML = loadedTemplate;
+      el.insertAdjacentHTML('afterbegin', loadedTemplate);
       if (typeof onInject === 'function') {
         onInject(el, loadedTemplate);
       }

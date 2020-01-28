@@ -10,35 +10,35 @@ export default class Menu extends Component {
       items, renderer, itemClassList, itemSelectedClass,
     } = props;
 
-    this.itemRenderer = renderer || null;
-    this.itemClassList = itemClassList || [];
-    this.itemSelectedClass = itemSelectedClass || null;
+    this._itemRenderer = renderer || null;
+    this._itemClassList = itemClassList || [];
+    this._itemSelectedClass = itemSelectedClass || null;
 
     this.setItems(items || []);
   }
 
   getItem(index) {
-    return this.items[index] || null;
+    return this._items[index] || null;
   }
 
   setItems(items) {
-    this.items = items.map((item) => this.processItem(item));
+    this._items = items.map((item) => this.processItem(item));
   }
 
   getItems() {
-    return this.items;
+    return this._items;
   }
 
   findById(id) {
-    return this.items.find((menuItem) => menuItem.Id === id) || null;
+    return this._items.find((menuItem) => menuItem.Id === id) || null;
   }
 
   findByName(name) {
-    return this.items.find((menuItem) => menuItem.Name === name) || null;
+    return this._items.find((menuItem) => menuItem.Name === name) || null;
   }
 
   getItemSelectedClass() {
-    return this.itemSelectedClass;
+    return this._itemSelectedClass;
   }
 
   render() {
@@ -47,7 +47,7 @@ export default class Menu extends Component {
   }
 
   mountItems() {
-    this.items.forEach((menuItem) => {
+    this._items.forEach((menuItem) => {
       menuItem.mount(this);
     });
   }
@@ -61,13 +61,13 @@ export default class Menu extends Component {
     if (ObjectHelper.isPlain(item)) {
       if (item.renderer === undefined) {
         // eslint-disable-next-line no-param-reassign
-        item.renderer = this.itemRenderer;
+        item.renderer = this._itemRenderer;
       }
       if (item.classList === undefined) {
         // eslint-disable-next-line no-param-reassign
-        item.classList = this.itemClassList;
+        item.classList = this._itemClassList;
       } else {
-        this.itemClassList.forEach((itemCls) => {
+        this._itemClassList.forEach((itemCls) => {
           if (item.classList.includes(itemCls) === false) {
             item.classList.push(itemCls);
           }

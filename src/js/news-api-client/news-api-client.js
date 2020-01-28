@@ -2,25 +2,36 @@ import HttpClient from '../http-client/http-client';
 import HttpRequest from '../http-client/http-request';
 
 export default class NewsApiClient {
-  constructor(apiKey, language, pageSize) {
-    this.apiKey = apiKey;
-    this.pageSize = pageSize || 100;
-    this.language = language;
-    this.httpClient = HttpClient.create({
-      baseUrl: 'https://newsapi.org/v2',
-      responseFormat: HttpClient.RESPONSE_JSON,
-      mode: HttpRequest.MODE_CORS,
-      cache: HttpRequest.CACHE_NO_CACHE,
-    });
+  constructor({
+    apiKey, language, pageSize, httpClient,
+  }) {
+    this._apiKey = apiKey;
+    this._pageSize = pageSize || 100;
+    this._language = language;
+
+    if (httpClient === undefined) {
+      this._httpClient = HttpClient.create();
+    } else {
+      this._httpClient = httpClient;
+    }
+
+    this._httpClient
+      .setBaseUrl(NewsApiClient.NEWSAPI_URL)
+      .setResponseFormat(HttpClient.RESPONSE_JSON)
+      .setMode(HttpRequest.MODE_CORS)
+      .setCache(HttpRequest.CACHE_NO_CACHE);
   }
 
   static create(props) {
-    const { apiKey, language, pageSize } = props;
-    return new NewsApiClient(apiKey, language, pageSize);
+    return new NewsApiClient(props);
   }
 
   static get RESULT_STATUS_OK() {
     return 'ok';
+  }
+
+  static get NEWSAPI_URL() {
+    return 'https://newsapi.org/v2';
   }
 
   search(searchText, language, fromDate, toDate) {
@@ -38,16 +49,16 @@ export default class NewsApiClient {
     }
 
     const queryParams = {
-      apiKey: this.apiKey,
+      apiKey: this._apiKey,
       q: searchText,
       sortBy: 'publishedAt',
-      pageSize: this.pageSize,
+      pageSize: this._pageSize,
       from: NewsApiClient.formatDate(reqFromDate),
       to: NewsApiClient.formatDate(reqToDate),
-      language: language || this.language || 'en',
+      language: language || this._language || 'en',
     };
 
-    return this.httpClient.fetch('/everything', { queryParams });
+    return this._httpClient.fetch('/everything', { queryParams });
   }
 
   static formatDate(date) {

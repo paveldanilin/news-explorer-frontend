@@ -3,11 +3,16 @@ import Config from '../config';
 import Dialog from '../../components/dialog/dialog';
 import { notify } from '../component/event-bus';
 import MsgBox from '../component/msg-box/msg-box';
+import HttpClient from '../http-client/http-client';
+import HttpRequestError from '../http-client/http-request-error';
 
 /**
  * @type {BackendApiClient}
  */
-const backendApiClient = new BackendApiClient(Config.BACKEND_API_HOST);
+const backendApiClient = new BackendApiClient({
+  host: Config.BACKEND_API_HOST,
+  httpClient: HttpClient.create(),
+});
 
 export default class User {
   static signInForm(form) {
@@ -18,19 +23,18 @@ export default class User {
       .signin(inputEmail.value, inputPassword.value)
       .then((response) => {
         backendApiClient.getUserInfo(response.token).then((userInfo) => {
-          window.localStorage.setItem('user.token', response.token);
-          window.localStorage.setItem('user.name', userInfo.name);
-          window.localStorage.setItem('user.email', userInfo.email);
-
-          notify('USER_SIGNIN', userInfo);
-
+          User.login({ ...userInfo, token: response.token });
           Dialog.close('dialog_signin');
         });
       })
       .catch((error) => {
-        error.Response.json().then((errorBody) => {
-          Dialog.show('dialog_error', errorBody.message.replace(/&quot;/g, '"'));
-        });
+        if (error instanceof HttpRequestError) {
+          MsgBox.error('Ошибка авторизации');
+        } else {
+          error.Response.json().then((errorBody) => {
+            Dialog.show('dialog_error', errorBody.message.replace(/&quot;/g, '"'));
+          });
+        }
       });
   }
 
@@ -43,12 +47,16 @@ export default class User {
       .signup(inputName.value, inputEmail.value, inputPassword.value)
       .then(() => {
         Dialog.close('dialog_signup');
-        MsgBox.msg('Пользователь успешно заркгистрирован');
+        MsgBox.msg('Пользователь успешно зарегистрирован');
       })
       .catch((error) => {
-        error.Response.json().then((errorBody) => {
-          Dialog.show('dialog_error', errorBody.message.replace(/&quot;/g, '"'));
-        });
+        if (error instanceof HttpRequestError) {
+          MsgBox.error('Ошибка регистрации');
+        } else {
+          error.Response.json().then((errorBody) => {
+            Dialog.show('dialog_error', errorBody.message.replace(/&quot;/g, '"'));
+          });
+        }
       });
   }
 
@@ -57,6 +65,13 @@ export default class User {
     window.localStorage.removeItem('user.name');
     window.localStorage.removeItem('user.email');
     notify('USER_LOGOUT');
+  }
+
+  static login({ name, email, token }) {
+    window.localStorage.setItem('user.token', token);
+    window.localStorage.setItem('user.name', name);
+    window.localStorage.setItem('user.email', email);
+    notify('USER_SIGNIN', { name, email, token });
   }
 
   static getName() {

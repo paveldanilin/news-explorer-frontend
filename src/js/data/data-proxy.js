@@ -10,11 +10,11 @@ export default class DataProxy extends Observable {
       url, method, headers, queryParams, listeners,
     } = props;
 
-    this.url = url || null;
-    this.method = (method || 'GET').toUpperCase();
-    this.headers = headers || null;
-    this.queryParams = queryParams || null;
-    this.httpClient = null;
+    this._url = url || null;
+    this._method = (method || 'GET').toUpperCase();
+    this._headers = headers || null;
+    this._queryParams = queryParams || null;
+    this._httpClient = null;
 
     const eventListeners = listeners || [];
     Object
@@ -27,13 +27,13 @@ export default class DataProxy extends Observable {
   }
 
   load(url, queryParams) {
-    this.fireEvent('beforeload', { url: url || this.url, method: this.method, queryParams: queryParams || this.queryParams });
-    switch (this.method) {
+    this.fireEvent('beforeload', { url: url || this._url, method: this._method, queryParams: queryParams || this._queryParams });
+    switch (this._method) {
       case 'GET':
         this.getHttpClient()
           .fetch(
-            url || this.url,
-            { headers: this.headers, queryParams: queryParams || this.queryParams },
+            url || this._url,
+            { headers: this._headers, queryParams: queryParams || this._queryParams },
           )
           .then((response) => {
             this.fireEvent('load', response);
@@ -45,8 +45,8 @@ export default class DataProxy extends Observable {
       case 'POST':
         this.getHttpClient()
           .post(
-            url || this.url,
-            { headers: this.headers, queryParams: queryParams || this.queryParams },
+            url || this._url,
+            { headers: this._headers, queryParams: queryParams || this._queryParams },
           )
           .then((response) => {
             this.fireEvent('load', response);
@@ -56,18 +56,18 @@ export default class DataProxy extends Observable {
         return;
 
       default:
-        throw new Error(`DataProxy does not supper method "${this.method}" for data request`);
+        throw new Error(`DataProxy does not supper method "${this._method}" for data request`);
     }
   }
 
   getHttpClient() {
-    if (this.httpClient === null) {
-      this.httpClient = HttpClient.create({
+    if (this._httpClient === null) {
+      this._httpClient = HttpClient.create({
         responseFormat: HttpClient.RESPONSE_JSON,
         mode: HttpRequest.MODE_CORS,
         cache: HttpRequest.CACHE_NO_CACHE,
       });
     }
-    return this.httpClient;
+    return this._httpClient;
   }
 }

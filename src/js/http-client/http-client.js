@@ -6,14 +6,14 @@ export default class HttpClient {
   constructor({
     baseUrl, headers, mode, cache, redirect, credentials, throwError, responseFormat,
   } = {}) {
-    this.baseUrl = HttpClient.filterOptionBaseUrl(baseUrl || '');
-    this.headers = headers || {};
-    this.mode = mode || HttpRequest.MODE_SAME_ORIGIN;
-    this.cache = cache || HttpRequest.CACHE_DEFAULT;
-    this.redirect = redirect || HttpRequest.REDIRECT_FOLLOW;
-    this.credentials = credentials || HttpRequest.CREDENTIALS_SAME_ORIGIN;
-    this.throwError = throwError || true;
-    this.responseFormat = HttpClient.filterOptionResponseFormat(responseFormat || undefined);
+    this.setBaseUrl(baseUrl || '');
+    this.setHeaders(headers || {});
+    this.setMode(mode || HttpRequest.MODE_SAME_ORIGIN);
+    this.setCache(cache || HttpRequest.CACHE_DEFAULT);
+    this.setRedirect(redirect || HttpRequest.REDIRECT_FOLLOW);
+    this.setCredentials(credentials || HttpRequest.CREDENTIALS_SAME_ORIGIN);
+    this.setResponseFormat(responseFormat);
+    this._throwError = throwError || true;
   }
 
   static get RESPONSE_JSON() {
@@ -58,6 +58,41 @@ export default class HttpClient {
 
   static deleteRequest(url, options) {
     return HttpClient.create().delete(url, options);
+  }
+
+  setBaseUrl(url) {
+    this._baseUrl = HttpClient.filterOptionBaseUrl(url);
+    return this;
+  }
+
+  setHeaders(headers) {
+    this._headers = headers;
+    return this;
+  }
+
+  setMode(mode) {
+    this._mode = mode;
+    return this;
+  }
+
+  setCache(cache) {
+    this._cache = cache;
+    return this;
+  }
+
+  setRedirect(redirect) {
+    this._redirect = redirect;
+    return this;
+  }
+
+  setCredentials(credentials) {
+    this._credentials = credentials;
+    return this;
+  }
+
+  setResponseFormat(responseFormat) {
+    this._responseFormat = HttpClient.filterOptionResponseFormat(responseFormat || undefined);
+    return this;
   }
 
   fetch(url, {
@@ -157,16 +192,17 @@ export default class HttpClient {
     responseFormat,
     params,
   ) {
-    const reqHeaders = Object.assign(this.headers, headers || {});
-    const reqMode = mode || this.mode;
-    const reqCache = cache || this.cache;
-    const reqRedirect = redirect || this.redirect;
-    const reqCredentials = credentials || this.credentials;
+    const reqHeaders = { ...this._headers, ...headers };
+    // Object.assign(this._headers, headers || {});
+    const reqMode = mode || this._mode;
+    const reqCache = cache || this._cache;
+    const reqRedirect = redirect || this._redirect;
+    const reqCredentials = credentials || this._credentials;
     const reqResponseFormat = HttpClient.filterOptionResponseFormat(
       responseFormat,
-      this.responseFormat,
+      this._responseFormat,
     );
-    let reqUrl = this.baseUrl.length > 0 ? this.baseUrl + url : url;
+    let reqUrl = this._baseUrl.length > 0 ? this._baseUrl + url : url;
 
     if (params) {
       const queryParams = HttpClient.toParamsString(params);
@@ -185,33 +221,40 @@ export default class HttpClient {
       credentials: HttpRequest.filterOptionCredentials(reqCredentials),
     });
 
-    const response = await fetch(request);
+    try {
+      const response = await fetch(request);
 
-    if (this.throwError === true && !response.ok) {
-      throw new HttpRequestError(request, response);
-    }
-
-    if (response.ok) {
-      switch (reqResponseFormat) {
-        default:
-        case HttpClient.RESPONSE_TEXT:
-          return response.text();
-
-        case HttpClient.RESPONSE_ARRAY_BUFFER:
-          return response.arrayBuffer();
-
-        case HttpClient.RESPONSE_BLOB:
-          return response.blob();
-
-        case HttpClient.RESPONSE_FORM_DATA:
-          return response.formData();
-
-        case HttpClient.RESPONSE_JSON:
-          return response.json();
+      if (this._throwError === true && !response.ok) {
+        throw new HttpRequestError(request, response);
       }
-    }
 
-    return response;
+      if (response.ok) {
+        switch (reqResponseFormat) {
+          default:
+          case HttpClient.RESPONSE_TEXT:
+            return response.text();
+
+          case HttpClient.RESPONSE_ARRAY_BUFFER:
+            return response.arrayBuffer();
+
+          case HttpClient.RESPONSE_BLOB:
+            return response.blob();
+
+          case HttpClient.RESPONSE_FORM_DATA:
+            return response.formData();
+
+          case HttpClient.RESPONSE_JSON:
+            return response.json();
+        }
+      }
+
+      return response;
+    } catch (e) {
+      if (e instanceof HttpRequestError) {
+        throw e;
+      }
+      throw new HttpRequestError(request, null, e);
+    }
   }
 
   static toParamsString(params) {

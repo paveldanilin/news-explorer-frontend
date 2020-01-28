@@ -11,21 +11,21 @@ export default class ListView extends StorableComponent {
       itemRenderer, itemClassList, itemLabelField, itemListeners,
     } = props;
 
-    this.itemListeners = itemListeners || {};
-    this.itemLabelField = itemLabelField || null;
-    this.itemRenderer = itemRenderer || null;
-    this.itemClassList = itemClassList || [];
+    this._itemListeners = itemListeners || {};
+    this._itemLabelField = itemLabelField || null;
+    this._itemRenderer = itemRenderer || null;
+    this._itemClassList = itemClassList || [];
 
-    if (this.itemRenderer !== null && typeof this.itemRenderer !== 'function') {
+    if (this._itemRenderer !== null && typeof this._itemRenderer !== 'function') {
       throw new Error('Item tenderer must be a function');
     }
 
-    if (typeof this.itemLabelField !== 'string' && typeof this.itemRenderer !== 'function') {
+    if (typeof this._itemLabelField !== 'string' && typeof this._itemRenderer !== 'function') {
       throw new Error('You should define either itemLabelField or item renderer function');
     }
 
-    if (typeof this.itemLabelField === 'string' && !this.Store.RecordDefinition.has(this.itemLabelField)) {
-      throw new Error(`Value field "${this.itemLabelField}" not found in RecordDefinition`);
+    if (typeof this._itemLabelField === 'string' && !this.Store.RecordDefinition.has(this._itemLabelField)) {
+      throw new Error(`Value field "${this._itemLabelField}" not found in RecordDefinition`);
     }
   }
 
@@ -33,12 +33,12 @@ export default class ListView extends StorableComponent {
     if (this.Store.Paginator && this.Store.Paginator.Mode === Paginator.MODE_APPEND) {
       // Append only new data
       this.Store.CurrentPageRecords.forEach((record) => {
-        const rendered = this.itemRenderer(record);
+        const rendered = this._itemRenderer(record);
         if (rendered instanceof Component) {
           rendered.mount(
             ListViewItem
-              .create({ classList: this.itemClassList })
-              .attachListeners(this.itemListeners)
+              .create({ classList: this._itemClassList })
+              .attachListeners(this._itemListeners)
               .mount(this),
           );
         }
@@ -55,29 +55,29 @@ export default class ListView extends StorableComponent {
   }
 
   mountItems() {
-    if (this.itemLabelField) {
+    if (this._itemLabelField) {
       this.Store.Records.forEach((record) => {
         ListViewItem
           .create({
-            classList: this.itemClassList,
+            classList: this._itemClassList,
           })
-          .attachListeners(this.itemListeners)
+          .attachListeners(this._itemListeners)
           .mount(this)
           .on('render', (event) => {
             // eslint-disable-next-line no-param-reassign
-            event.element.textContent = record.get(this.itemLabelField);
+            event.element.textContent = record.get(this._itemLabelField);
           });
       });
       return;
     }
 
     this.Store.Records.forEach((record) => {
-      const rendered = this.itemRenderer(record);
+      const rendered = this._itemRenderer(record);
       if (rendered instanceof Component) {
         rendered.mount(
           ListViewItem
-            .create({ classList: this.itemClassList })
-            .attachListeners(this.itemListeners)
+            .create({ classList: this._itemClassList })
+            .attachListeners(this._itemListeners)
             .mount(this),
         );
       }

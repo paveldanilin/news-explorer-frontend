@@ -8,15 +8,15 @@ export default class DropDown extends StorableComponent {
       valueField, descriptionField,
     } = props;
 
-    this.valueField = valueField;
-    this.descriptionField = descriptionField;
+    this._valueField = valueField;
+    this._descriptionField = descriptionField;
 
-    if (!this.Store.RecordDefinition.has(this.valueField)) {
-      throw new Error(`Value field "${this.valueField}" not found in RecordDefinition`);
+    if (!this.Store.RecordDefinition.has(this._valueField)) {
+      throw new Error(`Value field "${this._valueField}" not found in RecordDefinition`);
     }
 
-    if (!this.Store.RecordDefinition.has(this.descriptionField)) {
-      throw new Error(`Description field "${this.descriptionField}" not found in RecordDefinition`);
+    if (!this.Store.RecordDefinition.has(this._descriptionField)) {
+      throw new Error(`Description field "${this._descriptionField}" not found in RecordDefinition`);
     }
   }
 
@@ -52,8 +52,8 @@ export default class DropDown extends StorableComponent {
   }
 
   renderItem(record) {
-    return `<option id="${record.Id}" value="${record.get(this.valueField)}">
-                ${record.get(this.descriptionField)}
+    return `<option id="${record.Id}" value="${record.get(this._valueField)}">
+                ${record.get(this._descriptionField)}
             </option>`;
   }
 }

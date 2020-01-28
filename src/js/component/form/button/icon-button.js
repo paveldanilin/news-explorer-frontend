@@ -16,11 +16,11 @@ export default class IconButton extends Button {
   }
 
   setIconClassList(classList) {
-    this.iconClassList = classList;
+    this._iconClassList = classList;
   }
 
   getIconClassList() {
-    return this.iconClassList;
+    return this._iconClassList;
   }
 
   setTextAlign(align) {
@@ -28,15 +28,15 @@ export default class IconButton extends Button {
     if (textAlign !== IconButton.TEXT_ALIGN_RIGHT && textAlign !== IconButton.TEXT_ALIGN_LEFT) {
       throw new Error(`Bad text align value "${align}"`);
     }
-    this.textAlign = textAlign;
+    this._textAlign = textAlign;
   }
 
   getTextAlign() {
-    return this.textAlign;
+    return this._textAlign;
   }
 
   setText(text) {
-    this.text = text;
+    this._text = text;
     if (this.HtmlElement) {
       this.HtmlElement.querySelector('span[name="icon-button-text"]').textContent = text;
     }

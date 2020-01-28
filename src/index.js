@@ -17,12 +17,21 @@ import TextField from './js/component/form/text-field/text-field';
 import Element from './js/component/element';
 import Record from './js/data/record';
 import UuidGenerator from './js/util/uuid-generator';
+import HttpClient from './js/http-client/http-client';
 import './js/menu';
 
 /**
  * @type {NewsApiClient}
  */
-const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
+const newsApiClient = NewsApiClient.create({
+  apiKey: Config.NEWS_API_TOKEN,
+  language: Config.NEWS_API_LANGUAGE,
+  httpClient: HttpClient.create(), // Вообще в таких условиях ,
+  // когда нет ни контейнера (где можно сконфигурировать базовый HttpClient)
+  // и нет необходимости переиспользовать HttpClient (или любую другую зависимость)
+  // проще создавать инстансы внутри класса
+  // Иначе это выглядит как черезмерное усложнение имхо
+});
 
 /**
  * Cards grid

@@ -10,9 +10,9 @@ export default class StorableComponent extends Component {
 
     if (store) {
       if (store instanceof Store) {
-        this.store = store;
+        this._store = store;
       } else if (ObjectHelper.isPlain(store)) {
-        this.store = Store.create(store);
+        this._store = Store.create(store);
       } else {
         throw new Error('Expected instance of Store or object store definition');
       }
@@ -20,7 +20,7 @@ export default class StorableComponent extends Component {
       throw new Error('Expected instance of Store or object store definition');
     }
 
-    this.store.on('load', () => {
+    this.Store.on('load', () => {
       this.refresh();
     });
   }
@@ -29,7 +29,7 @@ export default class StorableComponent extends Component {
    * @returns {Store}
    */
   get Store() {
-    return this.store;
+    return this._store;
   }
 
   removeAll() {

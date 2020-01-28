@@ -1,63 +1,63 @@
 export default class Element {
   constructor(htmlElement) {
-    this.htmlElement = htmlElement;
-    this.oldStyleDisplay = null;
+    this._htmlElement = htmlElement;
+    this._oldStyleDisplay = null;
   }
 
   get ClassList() {
-    if (this.htmlElement) {
-      return this.htmlElement.classList;
+    if (this._htmlElement) {
+      return this._htmlElement.classList;
     }
     return new NodeList();
   }
 
   get HtmlElement() {
-    return this.htmlElement;
+    return this._htmlElement;
   }
 
   hide() {
-    if (this.htmlElement && this.htmlElement.style.display !== 'none') {
-      this.oldStyleDisplay = this.htmlElement.style.display;
-      this.htmlElement.style.display = 'none';
+    if (this._htmlElement && this._htmlElement.style.display !== 'none') {
+      this._oldStyleDisplay = this._htmlElement.style.display;
+      this._htmlElement.style.display = 'none';
     }
     return this;
   }
 
   show() {
-    if (this.htmlElement && (this.htmlElement.style.display === null || this.htmlElement.style.display === 'none')) {
-      this.htmlElement.style.display = this.oldStyleDisplay;
+    if (this._htmlElement && (this._htmlElement.style.display === null || this._htmlElement.style.display === 'none')) {
+      this._htmlElement.style.display = this._oldStyleDisplay;
     }
     return this;
   }
 
   isVisible() {
-    if (this.htmlElement) {
-      return this.htmlElement.style.display !== 'none'
-        && this.htmlElement.style.display !== undefined
-        && this.htmlElement.style.display !== null;
+    if (this._htmlElement) {
+      return this._htmlElement.style.display !== 'none'
+        && this._htmlElement.style.display !== undefined
+        && this._htmlElement.style.display !== null;
     }
     return false;
   }
 
   pos(x, y) {
-    if (this.htmlElement) {
+    if (this._htmlElement) {
       if (typeof x === 'number') {
-        this.htmlElement.style.left = `${x}px`;
+        this._htmlElement.style.left = `${x}px`;
       } else {
-        this.htmlElement.style.left = x;
+        this._htmlElement.style.left = x;
       }
       if (typeof y === 'number') {
-        this.htmlElement.style.top = `${y}px`;
+        this._htmlElement.style.top = `${y}px`;
       } else {
-        this.htmlElement.style.top = y;
+        this._htmlElement.style.top = y;
       }
     }
     return this;
   }
 
   posStyle(style) {
-    if (this.htmlElement) {
-      this.htmlElement.style.position = style;
+    if (this._htmlElement) {
+      this._htmlElement.style.position = style;
     }
     return this;
   }
@@ -71,38 +71,65 @@ export default class Element {
     } else {
       throw new Error('Host element must be an instance of HTMLElement');
     }
-    host.appendChild(this.htmlElement);
+    host.appendChild(this._htmlElement);
     return this;
   }
 
   text(text) {
-    if (text === undefined && this.htmlElement) {
-      return this.htmlElement.textContent;
+    if (text === undefined && this._htmlElement) {
+      return this._htmlElement.textContent;
     }
-    if (this.htmlElement) {
-      this.htmlElement.textContent = text;
+    if (this._htmlElement) {
+      this._htmlElement.textContent = text;
     }
     return this;
   }
 
   on(eventType, handler) {
-    if (this.htmlElement) {
-      this.htmlElement.addEventListener(eventType, (event) => handler(event));
+    if (this._htmlElement) {
+      this._htmlElement.addEventListener(eventType, (event) => handler(event));
     }
     return this;
   }
 
-  static wrap(selector) {
-    let el;
-    if (typeof selector === 'string') {
-      el = document.querySelector(selector);
-    } else {
-      el = selector;
+  /**
+   * @param html
+   * @param position {string|undefined} 'beforebegin'|'afterbegin'|'beforeend'|'afterend'
+   */
+  insertHTML(html, position) {
+    const insertPosition = position || 'afterbegin';
+    if (this._htmlElement) {
+      this._htmlElement.insertAdjacentHTML(insertPosition, html);
     }
-    if (!el) {
+    return this;
+  }
+
+  removeChild() {
+    if (this._htmlElement) {
+      const node = this._htmlElement;
+      while (node.firstChild) {
+        node.removeChild(node.firstChild);
+      }
+    }
+    return this;
+  }
+
+  html(html) {
+    this.removeChild();
+    this.insertHTML(html);
+  }
+
+  static wrap(selector) {
+    let node;
+    if (typeof selector === 'string') {
+      node = document.querySelector(selector);
+    } else {
+      node = selector;
+    }
+    if (!node) {
       return null;
     }
-    return new this(el);
+    return new this(node);
   }
 
   static $(selector) {
@@ -224,7 +251,8 @@ export default class Element {
       throw new Error('Expected string');
     }
     const tmp = document.createElement('span');
-    tmp.innerHTML = html;
+    // tmp.innerHTML = html;
+    tmp.insertAdjacentHTML('afterbegin', html);
     return tmp.firstChild;
   }
 

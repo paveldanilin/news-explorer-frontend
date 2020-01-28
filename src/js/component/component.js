@@ -5,19 +5,17 @@ import UuidGenerator from '../util/uuid-generator';
 export default class Component extends Observable {
   constructor(props) {
     super();
-    // HTML
-    this.htmlElement = null;
-    this.containerHtmlElement = null;
-    // Component props
-    this.id = props.id || UuidGenerator.generate();
-    this.name = props.name || null;
-    this.hidden = props.hidden || false;
-    this.classList = props.classList || [];
-    this.listeners = props.listeners || {};
-    this.parentComponent = null;
-    this.placeholderTag = props.placeholderTag || 'span';
+    this._htmlElement = null;
+    this._containerHtmlElement = null;
+    this._id = props.id || UuidGenerator.generate();
+    this._name = props.name || null;
+    this._hidden = props.hidden || false;
+    this._classList = props.classList || [];
+    this._listeners = props.listeners || {};
+    this._parentComponent = null;
+    this._placeholderTag = props.placeholderTag || 'span';
 
-    this.attachListeners(this.listeners);
+    this.attachListeners(this._listeners);
 
     /*
     if (Component.instances[this.id]) {
@@ -43,35 +41,35 @@ export default class Component extends Observable {
   }
 
   get Id() {
-    return this.id;
+    return this._id;
   }
 
   /**
    * @returns {string|null}
    */
   get Name() {
-    return this.name;
+    return this._name;
   }
 
   /**
    * @returns {null|HTMLElement}
    */
   get HtmlElement() {
-    return this.htmlElement;
+    return this._htmlElement;
   }
 
   /**
    * @returns {null|HTMLElement}
    */
   get ContainerHtmlElement() {
-    return this.containerHtmlElement;
+    return this._containerHtmlElement;
   }
 
   /**
    * @returns {null|Component}
    */
   get ParentComponent() {
-    return this.parentComponent;
+    return this._parentComponent;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -83,7 +81,7 @@ export default class Component extends Observable {
     if (this.isHidden() === false) {
       return this;
     }
-    this.hidden = false;
+    this._hidden = false;
     this.replaceElement(this.$render());
     setTimeout(() => this.fireEvent('show'), 0);
     return this;
@@ -93,7 +91,7 @@ export default class Component extends Observable {
     if (this.isHidden()) {
       return this;
     }
-    this.hidden = true;
+    this._hidden = true;
     this.replaceElement(this.$createPlaceholder());
     setTimeout(() => this.fireEvent('hide'), 0);
     return this;
@@ -101,11 +99,11 @@ export default class Component extends Observable {
 
   replaceElement(newHtmlElement, copyClassList) {
     const clone = document.getElementById(this.Id).cloneNode(true);
-    this.htmlElement = newHtmlElement;
-    this.containerHtmlElement.replaceChild(this.htmlElement, document.getElementById(this.Id));
-    this.htmlElement.setAttribute('id', this.Id);
+    this._htmlElement = newHtmlElement;
+    this._containerHtmlElement.replaceChild(this._htmlElement, document.getElementById(this.Id));
+    this._htmlElement.setAttribute('id', this.Id);
     if (copyClassList === true) {
-      clone.classList.forEach((cssClass) => this.htmlElement.classList.add(cssClass));
+      clone.classList.forEach((cssClass) => this._htmlElement.classList.add(cssClass));
     }
     return this;
   }
@@ -114,10 +112,12 @@ export default class Component extends Observable {
     if (!this.HtmlElement) {
       return this;
     }
+    /*
     const node = this.HtmlElement;
     while (node.firstChild) {
       node.removeChild(node.firstChild);
-    }
+    } */
+    Element.wrap(this.HtmlElement).removeChild();
     return this;
   }
 
@@ -125,16 +125,16 @@ export default class Component extends Observable {
     if (!this.HtmlElement) {
       return false;
     }
-    this.containerHtmlElement.removeChild(this.HtmlElement);
-    this.htmlElement = null;
-    this.containerHtmlElement = null;
-    this.parentComponent = null;
+    this._containerHtmlElement.removeChild(this.HtmlElement);
+    this._htmlElement = null;
+    this._containerHtmlElement = null;
+    this._parentComponent = null;
     delete Component.instances[this.Id];
     return true;
   }
 
   isHidden() {
-    return this.hidden;
+    return this._hidden;
   }
 
   toggle() {
@@ -203,7 +203,7 @@ export default class Component extends Observable {
       newElement.setAttribute('name', this.Name);
     }
 
-    this.classList.forEach((cssClass) => newElement.classList.add(cssClass));
+    this._classList.forEach((cssClass) => newElement.classList.add(cssClass));
 
     this.fireEvent('render', { element: newElement });
 
@@ -214,25 +214,25 @@ export default class Component extends Observable {
 
   $mount(container, mode) {
     const containerSelector = container || 'body';
-    this.containerHtmlElement = null;
+    this._containerHtmlElement = null;
 
     if (typeof containerSelector === 'string') {
-      this.containerHtmlElement = document.querySelector(containerSelector);
+      this._containerHtmlElement = document.querySelector(containerSelector);
     }
 
     if (container instanceof Component) {
-      this.containerHtmlElement = container.HtmlElement;
-      this.parentComponent = container;
+      this._containerHtmlElement = container.HtmlElement;
+      this._parentComponent = container;
     }
 
-    if (this.containerHtmlElement instanceof HTMLElement) {
-      this.htmlElement = this.$render();
+    if (this._containerHtmlElement instanceof HTMLElement) {
+      this._htmlElement = this.$render();
       if (mode === 'append') {
-        this.containerHtmlElement
-          .appendChild(this.htmlElement);
+        this._containerHtmlElement
+          .appendChild(this._htmlElement);
       } else if (mode === 'first') {
-        this.containerHtmlElement
-          .insertBefore(this.htmlElement, this.containerHtmlElement.firstChild);
+        this._containerHtmlElement
+          .insertBefore(this._htmlElement, this._containerHtmlElement.firstChild);
       } else {
         throw new Error(`Unknown mount mode "${mode}"`);
       }
@@ -248,9 +248,21 @@ export default class Component extends Observable {
 
   $createPlaceholder() {
     return Element.create({
-      tag: this.placeholderTag,
+      tag: this._placeholderTag,
       attributes: { id: this.Id, style: 'width:0px;height:0px;' },
     });
+  }
+
+  $(selector, wrap) {
+    if (this.HtmlElement) {
+      if (wrap === true) {
+        return Array
+          .from(this.HtmlElement.querySelectorAll(selector))
+          .map((node) => Element.wrap(node));
+      }
+      return Array.from(this.HtmlElement.querySelectorAll(selector));
+    }
+    return [];
   }
 
   /**
@@ -263,6 +275,17 @@ export default class Component extends Observable {
 
   static has(id) {
     return Component.instances[id] !== undefined;
+  }
+
+  /**
+   * Notifies all components about event
+   * @param eventType
+   * @param props
+   */
+  static notify(eventType, props) {
+    Object
+      .keys(Component.instances)
+      .forEach((componentId) => Component.instances[componentId].fireEvent(eventType, props));
   }
 }
 

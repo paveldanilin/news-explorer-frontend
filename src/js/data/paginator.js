@@ -1,8 +1,8 @@
 export default class Paginator {
   constructor(props) {
     const { pageSize, mode } = props;
-    this.pageSize = pageSize || 10;
-    this.mode = mode || Paginator.MODE_PAGE;
+    this._pageSize = pageSize || 10;
+    this._mode = mode || Paginator.MODE_PAGE;
   }
 
   static create(props) {
@@ -18,11 +18,11 @@ export default class Paginator {
   }
 
   get Mode() {
-    return this.mode;
+    return this._mode;
   }
 
   get PageSize() {
-    return this.pageSize;
+    return this._pageSize;
   }
 
   paginate(items, pageNumber, mode) {
@@ -33,15 +33,15 @@ export default class Paginator {
       return [];
     }
 
-    if ((mode || this.mode) === Paginator.MODE_APPEND) {
-      return items.slice(0, pageNumber * this.pageSize);
+    if ((mode || this._mode) === Paginator.MODE_APPEND) {
+      return items.slice(0, pageNumber * this._pageSize);
     }
 
     // Paginator.MODE_PAGE
     const startOffset = pageNumber - 1;
     return items.slice(
-      startOffset * this.pageSize,
-      (startOffset + 1) * this.pageSize,
+      startOffset * this._pageSize,
+      (startOffset + 1) * this._pageSize,
     );
   }
 
@@ -49,6 +49,6 @@ export default class Paginator {
     if (!Array.isArray(items)) {
       throw new Error('Expected an array');
     }
-    return Math.ceil(items.length / this.pageSize);
+    return Math.ceil(items.length / this._pageSize);
   }
 }

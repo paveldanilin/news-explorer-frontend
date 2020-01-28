@@ -4,49 +4,49 @@ import '@glidejs/glide/dist/css/glide.theme.min.css';
 import Glide from '@glidejs/glide';
 import StorableComponent from '../storable-component';
 
-
 export default class Carousel extends StorableComponent {
   constructor(props) {
     super(props);
 
-    this.title = props.title || '';
-    this.renderer = props.renderer || null;
-    this.carousel = new Glide('.glide', {
+    this._title = props.title || '';
+    this._renderer = props.renderer || null;
+    this._carousel = new Glide('.glide', {
       type: 'carousel',
       startAt: 0,
       perView: props.perView || 3,
+    }).on('resize', () => {
+      this.fireEvent('resize');
     });
 
-    if (this.renderer && typeof this.renderer !== 'function') {
+    if (this._renderer && typeof this._renderer !== 'function') {
       throw new Error('Renderer must be a function');
     }
 
-    this.ready = false;
-  }
-
-  get Engine() {
-    return this.carousel;
+    this._ready = false;
   }
 
   setPerView(perView) {
-    this.carousel.update({ perView });
+    this._carousel.update({ perView });
   }
 
   refresh() {
     if (!this.HtmlElement) {
       return this;
     }
-    this.HtmlElement.querySelector('.glide__slides').innerHTML = this.renderItems();
-    if (this.ready === false) {
-      this.ready = true;
-      this.carousel.mount();
+    this.$('.glide__slides', true)
+      .forEach((glideNode) => {
+        glideNode.html(this.renderItems());
+      });
+    if (this._ready === false) {
+      this._ready = true;
+      this._carousel.mount();
     }
     return this;
   }
 
   render() {
     return `<div>
-                <h2 name="carousel-title">${this.title}</h2>
+                <h2 name="carousel-title">${this._title}</h2>
                 <div name="carousel-container" class="glide">
                     <div class="glide__track" data-glide-el="track">
                         <ul class="glide__slides">
@@ -63,8 +63,8 @@ export default class Carousel extends StorableComponent {
   }
 
   renderItem(record) {
-    if (this.renderer) {
-      return `<li class="glide__slide">${this.renderer(record)}</li>`;
+    if (this._renderer) {
+      return `<li class="glide__slide">${this._renderer(record)}</li>`;
     }
     return `<li class="glide__slide">${record.get('label')}</li>`;
   }
