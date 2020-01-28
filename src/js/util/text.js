@@ -42,4 +42,21 @@ export default class Text {
 
     return concat.join('');
   }
+
+
+  static escape(str) {
+    const htmlEscapes = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      '/': '&#x2F;',
+    };
+
+    // eslint-disable-next-line no-useless-escape
+    const htmlEscaper = /[&<>"'\/]/g;
+
+    return (`${str}`).replace(htmlEscaper, (match) => htmlEscapes[match]);
+  }
 }

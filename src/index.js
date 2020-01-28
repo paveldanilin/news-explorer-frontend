@@ -18,7 +18,10 @@ import Element from './js/component/element';
 import Record from './js/data/record';
 import UuidGenerator from './js/util/uuid-generator';
 import HttpClient from './js/http-client/http-client';
+import Text from './js/util/text';
 import './js/menu';
+
+console.log(Text.escape('Test <a hred="http://1.com">ABC</a> End'))
 
 /**
  * @type {NewsApiClient}
@@ -57,9 +60,9 @@ ListView.create({
   itemRenderer: (record) => NewsCard.create({
     imageLink: record.get('imageLink'),
     createdAt: record.get('createdAt'),
-    title: record.get('title'),
-    contentText: record.get('contentText'),
-    sourceLabel: record.get('sourceLabel'),
+    title: Text.escape(record.get('title')),
+    contentText: Text.escape(record.get('contentText')),
+    sourceLabel: Text.escape(record.get('sourceLabel')),
     sourceLink: record.get('sourceLink'),
     keyword: record.get('keyword'),
     toolbar: ['save'],

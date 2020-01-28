@@ -7,10 +7,11 @@ import DataProxy from './data-proxy';
 import Paginator from './paginator';
 
 export default class Store extends Observable {
-  constructor(
+  constructor({
     data, recordDefinition, dataProxy, listeners, autoload, dataRoot, pageSize, pageMode,
-  ) {
+  }) {
     super();
+
     if (!(recordDefinition instanceof RecordDefinition)) {
       throw new Error('Expected instance of RecordDefinition');
     }
@@ -49,9 +50,6 @@ export default class Store extends Observable {
   }
 
   static create(pros) {
-    const {
-      data, listeners, autoload, dataRoot, pageSize, pageMode,
-    } = pros;
     let { recordDefinition } = pros;
     let { dataProxy } = pros;
 
@@ -63,16 +61,7 @@ export default class Store extends Observable {
       dataProxy = DataProxy.create(dataProxy);
     }
 
-    return new Store(
-      data || [],
-      recordDefinition,
-      dataProxy,
-      listeners,
-      autoload,
-      dataRoot,
-      pageSize,
-      pageMode,
-    );
+    return new Store({ ...pros, ...{ recordDefinition, dataProxy } });
   }
 
   /**
@@ -162,14 +151,17 @@ export default class Store extends Observable {
 
   setRecords(records, mapper) {
     let inRecords = records;
+
     if (this._dataRoot !== null
       && this._dataRoot !== undefined
       && ObjectHelper.isPlain(inRecords)) {
       inRecords = ObjectHelper.find(inRecords, this._dataRoot, '.');
     }
+
     if (!Array.isArray(inRecords)) {
       throw new Error('Expected array of records');
     }
+
     this._records = inRecords.map((item, index) => {
       if (typeof mapper === 'function') {
         return mapper(item, index);
@@ -182,6 +174,7 @@ export default class Store extends Observable {
       }
       throw new Error(`Expected plain object or instance of Record. index=${index}`);
     });
+
     if (this._paginator) {
       this._pageNumber = 1;
     }

@@ -11,6 +11,7 @@ import Dialog from './components/dialog/dialog';
 import Carousel from './js/component/carousel/carousel';
 import Config from './js/config';
 import './js/menu';
+import Text from './js/util/text';
 
 Carousel.create({
   container: '.gh-commits',
@@ -30,7 +31,7 @@ Carousel.create({
   renderer: (record) => {
     const name = record.get('name');
     const email = record.get('email');
-    const msg = record.get('message');
+    const msg = Text.escape(record.get('message'));
     const avatar = record.get('avatar');
     return `<div class="ycard">
               <div class="flex-container">
