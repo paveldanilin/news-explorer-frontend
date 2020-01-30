@@ -1,12 +1,12 @@
 import './header.css';
-import Dialog from '../dialog/dialog';
-import Nav from '../nav/nav';
 
+/*
 const mainMenuElement = document.querySelector('[data-main-menu]');
 const mobileMenuElement = document.querySelector('[data-mobile-menu]');
 let isMobileVisible = false;
 let isColorInverse = false;
-
+*/
+/*
 const showSigninDialog = () => {
   Dialog.show('dialog_signin');
 };
@@ -74,3 +74,4 @@ window.addEventListener('resize', () => {
 });
 
 export { showSigninDialog, toggleMobileMenu, onSigninHandler };
+*/

@@ -43,7 +43,7 @@ const bindFormElementValidation = () => {
 
     invalidMessageElements.forEach((msgElement) => {
       const inputId = msgElement.getAttribute('data-invalid-message');
-      const inputElement = document.getElementById(inputId);
+      const inputElement = document.querySelector(`#${inputId}`);
 
       if (inputElement) {
         form.inputElements.push(inputElement);

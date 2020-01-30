@@ -1,4 +1,8 @@
 export default class Config {
+  static get BACKEND_API_HOST() {
+    return 'https://breakingnews-explorer.ml';
+  }
+
   static get NEWS_API_TOKEN() {
     return '43d52ebfb7ed449986028b50cbcee7c7';
   }
@@ -8,7 +12,7 @@ export default class Config {
   }
 
   static get GH_COMMITS_REPO() {
-    return 'news-explorer-api';
+    return 'news-explorer-frontend';
   }
 
   static get GH_COMMITS_OWNER() {

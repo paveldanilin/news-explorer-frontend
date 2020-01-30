@@ -10,38 +10,8 @@
 </head>
 <body>
   <header class="header header_bg">
-    <!-- Main menu -->
-    <nav>
-      <ul data-main-menu class="header__desktop-menu header__desktop-menu_separator_light nav">
-        <li class="nav__item nav__item_style_light logo logo_light">
-          <a href="index.html">NewsExplorer</a>
-        </li>
-        <li class="nav__item nav__item_style_light nav__item_pull-right nav__item_selected">
-          <a href="index.html">Главная</a>
-        </li>
-        <li class="nav__item nav__item_style_smoke">
-          <a href="about.html">О проекте</a>
-        </li>
-        <li class="nav__item">
-          <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_transparent" onclick="showSigninDialog()">Авторизоваться</button>
-        </li>
-        <li class="nav__item header__mobile-toggle">
-          <button class="btn btn_brd_none btn_transparent btn_size_xxs" onclick="toggleMobileMenu()">
-            <i class="icon icon_size_24 icon_menu_white"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Mobile menu -->
-    <nav data-mobile-menu class="header__mobile-menu nav nav_vert nav_visible_false nav_position_absolute">
-      <a class="nav__item nav__item_style_light" href="index.html">Главная</a>
-      <a class="nav__item nav__item_style_light" href="about.html">О проект</a>
-      <a class="nav__item nav__item_style_light" href="articles.html">Сохраненные статьи</a>
-      <span class="nav__item nav__item_style_light">
-        <button class="btn btn_rad_80 btn_brd_1 btn_style_snow btn_size_s btn_size_full btn_transparent" onclick="onSigninHandler()">Вход</button>
-      </span>
-    </nav>
+    <nav id="mainMenuDesktop"></nav>
+    <nav id="mainMenuMobile"></nav>
 
     <h1 class="header__title">
       Что в мире творится?
@@ -54,23 +24,18 @@
     <div class="header__searchbox">
       <div class="search">
         <div class="search__textbox">
-          <input type="text" class="textfield textfield_size_m textfield_brd_none" placeholder="Введите тему новости">
         </div>
         <div class="search__button">
-          <button class="btn btn_style_primary btn_size_m btn_rad_100 btn_brd_none">Искать</button>
         </div>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="search-result">
+    <section id="searchResult" class="search-result">
       <div class="search-result__container">
         <h3>Результаты поиска</h3>
-        <div class="search-result__grid"></div>
-        <button class="btn btn_style_light btn_size_m btn_rad_100 btn_brd_none search-result__btn-more" onclick="onClickShowMoreNews(this)">
-          Показать еще
-        </button>
+        <div id="cardsGrid"></div>
       </div>
     </section>
 
@@ -119,7 +84,7 @@
           <i class="dialog__close icon icon_size_24 icon_close_black"></i>
         </div>
         <div class="dialog__body">
-          <form name="signinForm" class="form" onsubmit="login(this); return false;">
+          <form name="signinForm" class="form" onsubmit="User.signInForm(this); return false;">
             <ul>
               <li>
                 <label for="signin_email">Email</label>
@@ -129,8 +94,8 @@
 
               <li>
                 <label for="signin_password">Пароль</label>
-                <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
-                <span data-invalid-message="signin_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+                <input required id="signin_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="7" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signin_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [7-20] символов</span>
               </li>
 
               <li>
@@ -140,7 +105,7 @@
           </form>
         </div>
         <div class="dialog__footer">
-          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signup');resetForms()">Зарегистрироваться</a></span>
+          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signup');resetForms();">Зарегистрироваться</a></span>
         </div>
       </div>
     </div>
@@ -155,7 +120,7 @@
           <i class="dialog__close icon icon_size_24 icon_close_black"></i>
         </div>
         <div class="dialog__body">
-          <form name="signupForm" class="form" onsubmit="register(this); return false;">
+          <form name="signupForm" class="form" onsubmit="User.signUpForm(this); return false;">
             <ul>
               <li>
                 <label for="signup_email">Email</label>
@@ -165,8 +130,8 @@
 
               <li>
                 <label for="signup_password">Пароль</label>
-                <input required id="signup_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="4" maxlength="20" placeholder="Введите пароль" autocomplete="off">
-                <span data-invalid-message="signup_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [4-20] символов</span>
+                <input required id="signup_password" type="password" class="textfield textfield_size_s textfield_brd_b" minlength="7" maxlength="20" placeholder="Введите пароль" autocomplete="off">
+                <span data-invalid-message="signup_password" class="form__invalid-message form__invalid-message_visibility_hidden">Пароль должен быть [7-20] символов</span>
               </li>
 
               <li>
@@ -182,13 +147,12 @@
           </form>
         </div>
         <div class="dialog__footer">
-          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signin');resetForms()">Войти</a></span>
+          <span class="text text_center">или <a href="#" onclick="Dialog.toggle('dialog_signin');resetForms();">Войти</a></span>
         </div>
       </div>
     </div>
   </span>
 
-  <!-- Empty keyword dialog -->
   <span id="dialog_error" class="dialog-error" data-dialog>
     <div class="dialog dialog_style_white dialog_align_center">
       <div class="dialog__content dialog__content_border_full">
@@ -201,8 +165,6 @@
       </div>
     </div>
   </span>
-
-  <span id="list"></span>
 
 </body>
 </html>

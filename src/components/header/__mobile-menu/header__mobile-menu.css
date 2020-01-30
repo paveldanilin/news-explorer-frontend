@@ -19,11 +19,11 @@
 .header__mobile-menu > .nav__item {
   padding-bottom: 24px;
 }
-
+/*
 .header__mobile-menu > .nav__item:last-child {
   width: 95%;
 }
-
+*/
 @media (min-width: 767px) {
   .header__mobile-menu.nav {
     visibility: hidden;

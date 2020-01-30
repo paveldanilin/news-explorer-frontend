@@ -5,191 +5,171 @@ import './components/theme.css';
 import './components/styles.css';
 import './components/components';
 import resetForms from './components/form/form';
-import { showSigninDialog, onSigninHandler, toggleMobileMenu } from './components/header/header';
+import User from './js/user/user';
 import Dialog from './components/dialog/dialog';
-import register from './js/user/register';
-import login from './js/user/login';
-import { search } from './components/search/search';
-import { searchResult } from './components/search-result/search-result';
 import NewsApiClient from './js/news-api-client/news-api-client';
 import Config from './js/config';
-import Component from './component';
+import Button from './js/component/form/button/button';
+import Component from './js/component/component';
+import ListView from './js/component/list-view/list-view';
+import NewsCard from './js/component/news-card/news-card';
+import TextField from './js/component/form/text-field/text-field';
+import Element from './js/component/element';
+import Record from './js/data/record';
+import UuidGenerator from './js/util/uuid-generator';
+import HttpClient from './js/http-client/http-client';
+import Text from './js/util/text';
+import './js/menu';
 
-const newsApiClient = new NewsApiClient(Config.NEWS_API_TOKEN, Config.NEWS_API_LANGUAGE);
-
-search.onSearch((searchText) => {
-  if (searchText !== null && searchText !== undefined && searchText.trim().length > 0) {
-    searchResult.beginLoading();
-    newsApiClient.search(searchText).then((response) => {
-      if (response.status === NewsApiClient.RESULT_STATUS_OK) {
-        const articles = response.articles.map((articleRawData) => ({
-          imageLink: articleRawData.urlToImage,
-          createdAt: articleRawData.publishedAt,
-          title: articleRawData.title,
-          contentText: articleRawData.description,
-          sourceLink: articleRawData.url,
-          sourceLabel: articleRawData.source.name,
-        }));
-        searchResult.update(articles);
-      }
-    }, () => {
-      Dialog.show('dialog_error', Config.ERROR_TXT_REQUEST_NOT_COMPLETED);
-    });
-  } else {
-    Dialog.show('dialog_error', Config.ERROR_TXT_NO_BLANK_ALLOWED);
-  }
+/**
+ * @type {NewsApiClient}
+ */
+const newsApiClient = NewsApiClient.create({
+  apiKey: Config.NEWS_API_TOKEN,
+  language: Config.NEWS_API_LANGUAGE,
+  httpClient: HttpClient.create(), // Вообще в таких условиях ,
+  // когда нет ни контейнера (где можно сконфигурировать базовый HttpClient)
+  // и нет необходимости переиспользовать HttpClient (или любую другую зависимость)
+  // проще создавать инстансы внутри класса
+  // Иначе это выглядит как черезмерное усложнение имхо
 });
 
-function onClickShowMoreNews() {
-  searchResult.showNextPage();
-}
-
-class Button extends Component {
-  constructor(props) {
-    super(props);
-    this.setText(props.text || '');
-  }
-
-  getText() {
-    return this.text;
-  }
-
-  setText(text) {
-    this.text = text;
-  }
-
-  render() {
-    return `<button>${this.text}</button>`;
-  }
-}
-
-class List extends Component {
-  constructor(props) {
-    super(props);
-    this.setItems(props.items || []);
-    this.selected = null;
-    this.renderer = props.renderer || null;
-
-    this.on('click', (event) => {
-      if (event.domEvent.target.tagName.toLowerCase() === 'li') {
-        if (this.selected) {
-          this.selected.style.backgroundColor = 'white';
-        }
-        this.selected = event.domEvent.target;
-        this.selected.style.backgroundColor = 'red';
-      }
-    });
-
-    this.on('render', () => {
-      if (this.selected) {
-        this.selected = document.getElementById(this.selected.getAttribute('id'));
-        if (this.selected) {
-          this.selected.style.backgroundColor = 'red';
-        }
-      }
-    });
-  }
-
-  setItems(items) {
-    this.items = items;
-  }
-
-  getItems() {
-    return this.items;
-  }
-
-  addItem(item) {
-    this.items.push(item);
-    this.fireEvent('additem', {
-      component: this,
-      newItem: item,
-    });
-    this.refresh();
-  }
-
-  removeItem(id) {
-    this.selected = null;
-    this.items.splice(Number(id), 1);
-    this.refresh();
-  }
-
-  getSelected() {
-    return this.selected;
-  }
-
-  getSelectedId() {
-    if (!this.selected) {
-      return null;
-    }
-    return this
-      .selected
-      .getAttribute('id')
-      .replace(`${this.getId()}-`, '');
-  }
-
-  renderItem(index, item) {
-    if (this.renderer) {
-      return `<li id="${this.getId()}-${index}">${this.renderer(item, index)}</li>`;
-    }
-    return `<li id="${this.getId()}-${index}">${item}</li>`;
-  }
-
-  render() {
-    return `<ul>${this.getItems().map((item, index) => this.renderItem(index, item)).join('')}</ul>`;
-  }
-}
-
-const btn = new Button({
-  text: 'Add',
-  classList: ['btn', 'btn_size_s'],
-  listeners: {
-    click: () => {
-      const lstCmp = Component.getCmp('lst');
-      lstCmp.addItem(lstCmp.getItems().length + 1);
-    },
-    render: (event) => console.log('render', event.component),
-    mount: (event) => console.log('mount', event),
-  },
-});
-btn.mountTo();
-
-(new Button({
-  text: 'Del',
-  classList: ['btn', 'btn_size_s'],
-  listeners: {
-    click: () => {
-      const lstCmp = Component.getCmp('lst');
-      if (lstCmp.getSelected()) {
-        lstCmp.removeItem(lstCmp.getSelectedId());
-      }
-    },
-  },
-})).mountTo();
-
-const lst = new List({
-  id: 'lst',
-  items: [
-    { link: 'http://1', text: 'CCC' },
-    { link: 'http://2', text: 'BBB' },
-    { link: 'http://3', text: 'AAA' },
+/**
+ * Cards grid
+ */
+ListView.create({
+  id: 'cards',
+  container: '#cardsGrid',
+  classList: ['search-result__grid'],
+  store: {
+    recordDefinition: [
+      { name: 'imageLink', mapping: 'urlToImage' },
+      { name: 'createdAt', mapping: 'publishedAt' },
+      { name: 'title' },
+      { name: 'keyword' },
+      { name: 'contentText', mapping: 'description' },
+      { name: 'sourceLabel', mapping: 'source.name' },
+      { name: 'sourceLink', mapping: 'url' },
     ],
-  listeners: {
-    click: (event) => console.log(event.component.getSelected()),
+    dataRoot: 'articles',
+    pageSize: 3,
+    pageMode: 'append',
   },
-  renderer: (item) => `<a href="${item.link}">${item.text}</a>`,
+  itemRenderer: (record) => NewsCard.create({
+    imageLink: record.get('imageLink'),
+    createdAt: record.get('createdAt'),
+    title: Text.escape(record.get('title')),
+    contentText: Text.escape(record.get('contentText')),
+    sourceLabel: Text.escape(record.get('sourceLabel')),
+    sourceLink: record.get('sourceLink'),
+    keyword: record.get('keyword'),
+    toolbar: ['save'],
+  }),
 });
-lst.mountTo();
 
+/**
+ * Show more news button
+ */
+Button.create({
+  id: 'showMoreButton',
+  container: '.search-result__container',
+  text: 'Показать еще',
+  classList: ['btn', 'btn_style_light', 'btn_size_m', 'btn_rad_100', 'btn_brd_none', 'search-result__btn-more'],
+  listeners: {
+    click: (event) => {
+      const cardsGrid = Component.get('cards');
+      cardsGrid.Store.nextPage();
+      cardsGrid.refresh();
+      if (cardsGrid.Store.getCurrentPage() === cardsGrid.Store.getPageCount()) {
+        event.component.hide();
+      }
+    },
+  },
+});
 
-setTimeout(() => console.log(Component.getCmp('lst').getSelected()), 10);
+/**
+ * Sections: loading, noResult, result
+ */
+const loadingSection = Element.wrap('#loading').hide();
+const noresultSection = Element.wrap('#noresult').hide();
+const resultSection = Element.wrap('#searchResult').hide();
+
+/**
+ * Handles search action
+ * @param text {string}
+ */
+function searchNews(text) {
+  const searchText = (text || '').trim();
+  if (searchText.length === 0) {
+    Dialog.show('dialog_error', Config.ERROR_TXT_NO_BLANK_ALLOWED);
+    return;
+  }
+
+  Element.wrap(Component.get('newsSearchButton').HtmlElement).disable();
+
+  const cards = Component.get('cards');
+  cards.removeAll();
+  loadingSection.show();
+  resultSection.hide();
+  noresultSection.hide();
+
+  newsApiClient.search(searchText).then((response) => {
+    if (response.status === NewsApiClient.RESULT_STATUS_OK) {
+      loadingSection.hide();
+      if (response.totalResults === 0) {
+        noresultSection.show();
+      } else {
+        resultSection.show();
+      }
+      cards.Store.setRecords(response, (article) => Record
+        .create(
+          cards.Store.RecordDefinition,
+          { ...article, ...{ keyword: text } },
+          UuidGenerator.generate(),
+        ));
+      cards.refresh();
+    }
+    Element.wrap(Component.get('newsSearchButton').HtmlElement).enable();
+  }, () => {
+    Dialog.show('dialog_error', Config.ERROR_TXT_REQUEST_NOT_COMPLETED);
+    Element.wrap(Component.get('newsSearchButton').HtmlElement).enable();
+  });
+}
+
+/**
+ * Search button
+ */
+Button.create({
+  id: 'newsSearchButton',
+  container: '.search__button',
+  text: 'Искать',
+  classList: ['btn', 'btn_style_primary', 'btn_size_m', 'btn_rad_100', 'btn_brd_none'],
+  listeners: {
+    click: () => {
+      searchNews(Component.get('newsSearchText').getValue());
+    },
+  },
+});
+
+/**
+ * Search text
+ */
+TextField.create({
+  id: 'newsSearchText',
+  container: '.search__textbox',
+  placeholder: 'Введите тему новости',
+  classList: ['textfield', 'textfield_size_m', 'textfield_brd_none'],
+  listeners: {
+    keypress: (event) => {
+      if (event.domEvent.keyCode === 13) {
+        searchNews(event.component.getValue());
+      }
+    },
+  },
+});
 
 export {
   resetForms,
-  showSigninDialog,
-  onSigninHandler,
-  toggleMobileMenu,
-  onClickShowMoreNews,
-  login,
-  register,
+  User,
   Dialog,
 };

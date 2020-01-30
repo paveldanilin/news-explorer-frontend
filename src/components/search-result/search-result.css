@@ -10,7 +10,7 @@
 @import './__card-created/search-result__card-created.css';
 
 .search-result {
-  display: none;
+  display: block;
   background-color: #F5F6F7;
 }
 
