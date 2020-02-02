@@ -1,7 +1,7 @@
 # news-explorer-frontend
 YP диплом. 
-[Нажмите тут чтобы открыть проект на GH pages](https://paveldanilin.github.io/news-explorer-frontend/)
-[Нажмите тут чтобы открыть проект на news-explorer-front.ml](http://news-explorer-front.ml)
+- [Нажмите тут чтобы открыть проект на GH pages](https://paveldanilin.github.io/news-explorer-frontend/)
+- [Нажмите тут чтобы открыть проект на news-explorer-front.ml](http://news-explorer-front.ml)
 
 
 ### Внешние API
