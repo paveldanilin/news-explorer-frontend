@@ -115,7 +115,10 @@ ListView.create({
       deleteitem: () => {
         Component.get('cards').Store.delete('articleId', record.get('articleId'));
         refreshWelcomeText(Component.get('cards').Store.All.length);
-        const keywordsList = Component.get('cards').Store.All.map((storedRecord) => storedRecord.get('keyword'));
+        const keywordsList = Component.get('cards')
+          .Store
+          .All
+          .map((storedRecord) => storedRecord.get('keyword'));
         refreshArticleStatText(keywordsList.slice(0, 2), keywordsList.length);
       },
     },
@@ -123,7 +126,6 @@ ListView.create({
 });
 
 if (User.getName() === null) {
-  // Redirect to start page
   Page.redirect('index.html');
 }
 
@@ -131,7 +133,7 @@ refreshWelcomeText('N');
 refreshArticleStatText('', 0);
 refreshGrid();
 
-watch('USER_LOGOUT', () => {
+watch(User.EVENT_USER_LOGOUT, () => {
   Page.redirect('index.html');
 });
 

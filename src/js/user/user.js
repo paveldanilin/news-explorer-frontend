@@ -16,6 +16,14 @@ const backendApiClient = new BackendApiClient({
 });
 
 export default class User {
+  static get EVENT_USER_LOGOUT() {
+    return 'USER_LOGOUT';
+  }
+
+  static get EVENT_USER_SIGNIN() {
+    return 'USER_SIGNIN';
+  }
+
   static signInForm(form) {
     const inputEmail = Element.wrap(form.querySelector('#signin_email'));
     const inputPassword = Element.wrap(form.querySelector('#signin_password'));
@@ -90,14 +98,14 @@ export default class User {
     window.localStorage.removeItem('user.token');
     window.localStorage.removeItem('user.name');
     window.localStorage.removeItem('user.email');
-    notify('USER_LOGOUT');
+    notify(User.EVENT_USER_LOGOUT);
   }
 
   static login({ name, email, token }) {
     window.localStorage.setItem('user.token', token);
     window.localStorage.setItem('user.name', name);
     window.localStorage.setItem('user.email', email);
-    notify('USER_SIGNIN', { name, email, token });
+    notify(User.EVENT_USER_SIGNIN, { name, email, token });
   }
 
   static getName() {

@@ -4,12 +4,16 @@ import '@glidejs/glide/dist/css/glide.theme.min.css';
 import Glide from '@glidejs/glide';
 import StorableComponent from '../storable-component';
 
+/**
+ * Wrapper for Glide
+ */
 export default class Carousel extends StorableComponent {
   constructor(props) {
     super(props);
 
     this._title = props.title || '';
     this._renderer = props.renderer || null;
+    this._trackClassList = props.trackClassList || [];
     this._carousel = new Glide('.glide', {
       type: 'carousel',
       startAt: 0,
@@ -48,7 +52,7 @@ export default class Carousel extends StorableComponent {
     return `<div>
                 <h2 name="carousel-title">${this._title}</h2>
                 <div name="carousel-container" class="glide">
-                    <div class="glide__track" data-glide-el="track">
+                    <div class="glide__track ${this._trackClassList.join(' ')}" data-glide-el="track">
                         <ul class="glide__slides">
                             ${this.renderItems()}
                         </ul>

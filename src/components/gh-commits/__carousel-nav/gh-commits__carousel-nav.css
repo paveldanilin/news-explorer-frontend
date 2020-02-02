@@ -6,6 +6,9 @@
   background-color: black;
 }
 
+.gh-commits__carousel-nav .glide__track {
+  padding-bottom: 40px;
+}
 
 .gh-commits__carousel-nav.glide__bullets {
   bottom: unset;

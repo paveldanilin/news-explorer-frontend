@@ -13,8 +13,29 @@ import Config from './js/config';
 import './js/menu';
 import Text from './js/util/text';
 
+function renderCarouselCard(record) {
+  const name = record.get('name');
+  const email = record.get('email');
+  const msg = Text.escape(record.get('message'));
+  const avatar = record.get('avatar');
+
+  return `<div class="ycard">
+              <div class="flex-container">
+                <img src="${avatar || 'images/user.png'}"
+                     alt="Иконка пользователя GitHub"
+                     class="ycard__icon">
+                <span class="flex-container flex-container_direction_col">
+                  <span class="ycard__title">${name}</span>
+                  <span class="ycard__subtitle">${email}</span>
+                </span>
+              </div>
+              <div class="ycard__body">${msg}</div>
+          </div>`;
+}
+
 Carousel.create({
   container: '.gh-commits',
+  classList: ['gh-commits__carousel-nav'],
   store: {
     recordDefinition: [
       { name: 'name', mapping: 'commit.author.name' },
@@ -28,22 +49,7 @@ Carousel.create({
     },
     autoload: true,
   },
-  renderer: (record) => {
-    const name = record.get('name');
-    const email = record.get('email');
-    const msg = Text.escape(record.get('message'));
-    const avatar = record.get('avatar');
-    return `<div class="ycard">
-              <div class="flex-container">
-                <img src="${avatar || 'images/user.png'}" alt="Иконка пользователя GitHub" class="ycard__icon">
-                <span class="flex-container flex-container_direction_col">
-                  <span class="ycard__title">${name}</span>
-                  <span class="ycard__subtitle">${email}</span>
-                </span>
-              </div>
-              <div class="ycard__body">${msg}</div>
-            </div>`;
-  },
+  renderer: renderCarouselCard,
   listeners: {
     resize: (event) => {
       if (window.innerWidth < 768) {
@@ -54,7 +60,6 @@ Carousel.create({
     },
   },
 });
-
 
 export {
   resetForms, Dialog, User,
