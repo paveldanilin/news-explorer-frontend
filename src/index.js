@@ -27,11 +27,7 @@ import './js/menu';
 const newsApiClient = NewsApiClient.create({
   apiKey: Config.NEWS_API_TOKEN,
   language: Config.NEWS_API_LANGUAGE,
-  httpClient: HttpClient.create(), // Вообще в таких условиях ,
-  // когда нет ни контейнера (где можно сконфигурировать базовый HttpClient)
-  // и нет необходимости переиспользовать HttpClient (или любую другую зависимость)
-  // проще создавать инстансы внутри класса
-  // Иначе это выглядит как черезмерное усложнение имхо
+  httpClient: HttpClient.create(),
 });
 
 /**
@@ -74,7 +70,14 @@ Button.create({
   id: 'showMoreButton',
   container: '.search-result__container',
   text: 'Показать еще',
-  classList: ['btn', 'btn_style_light', 'btn_size_m', 'btn_rad_100', 'btn_brd_none', 'search-result__btn-more'],
+  classList: [
+    'btn',
+    'btn_style_light',
+    'btn_size_m',
+    'btn_rad_100',
+    'btn_brd_none',
+    'search-result__btn-more',
+  ],
   listeners: {
     click: (event) => {
       const cardsGrid = Component.get('cards');

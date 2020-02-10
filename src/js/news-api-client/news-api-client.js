@@ -16,7 +16,7 @@ export default class NewsApiClient {
     }
 
     this._httpClient
-      .setBaseUrl(NewsApiClient.NEWSAPI_URL)
+      .setBaseUrl(NewsApiClient.NEWSAPI_URL_V2)
       .setResponseFormat(HttpClient.RESPONSE_JSON)
       .setMode(HttpRequest.MODE_CORS)
       .setCache(HttpRequest.CACHE_NO_CACHE);
@@ -30,7 +30,7 @@ export default class NewsApiClient {
     return 'ok';
   }
 
-  static get NEWSAPI_URL() {
+  static get NEWSAPI_URL_V2() {
     return 'https://newsapi.org/v2';
   }
 

@@ -148,7 +148,7 @@ Menu.create({
         id: 'logoutButton',
         text: 'Выход',
         textAlign: IconButton.TEXT_ALIGN_LEFT,
-        iconClassList: ['icon', 'icon_size_24', 'icon_logout'],
+        iconClassList: ['icon', 'icon_size_24'],
         classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_size_s', 'btn_transparent'],
         listeners: {
           click: () => User.logout(),
@@ -158,11 +158,15 @@ Menu.create({
             switch (Page.getName()) {
               default:
               case 'index.html':
+                // btn.HtmlElement.classList.add('icon_logout_white');
                 btn.HtmlElement.classList.add('btn_style_snow');
+                btn.IconHtmlElement.classList.add('icon_logout_white');
                 break;
               case 'articles.html':
               case 'about.html':
+                // btn.HtmlElement.classList.add('icon_logout_black');
                 btn.HtmlElement.classList.add('btn_style_light');
+                btn.IconHtmlElement.classList.add('icon_logout_black');
                 break;
             }
           },
@@ -173,12 +177,30 @@ Menu.create({
       id: 'menuToggleButton',
       classList: ['header__mobile-toggle'],
       renderer: () => IconButton.create({
+        classList: ['btn_brd_none'],
         iconClassList: ['icon', 'icon_size_24'],
         listeners: {
-          click: () => {
+          click: (event) => {
+            const btn = event.component;
+            const logo = Component.get('logoMenuItem');
+
             Component.get('mobileMenu').toggle();
             Component.get('desktopMenu')
               .HtmlElement.classList.toggle('header__desktop-menu_bg-color_dark');
+
+            if (Page.getName() === 'articles.html' || Page.getName() === 'about.html') {
+              if (btn.HtmlElement.classList.contains('icon_menu_black')) {
+                btn.HtmlElement.classList.remove('icon_menu_black');
+                btn.HtmlElement.classList.add('icon_menu_white');
+                logo.HtmlElement.classList.remove('nav__item_style_dark');
+                logo.HtmlElement.classList.add('nav__item_style_light');
+              } else {
+                btn.HtmlElement.classList.add('icon_menu_black');
+                btn.HtmlElement.classList.remove('icon_menu_white');
+                logo.HtmlElement.classList.add('nav__item_style_dark');
+                logo.HtmlElement.classList.remove('nav__item_style_light');
+              }
+            }
           },
           afterrender: (event) => {
             const btn = event.component;
@@ -256,7 +278,14 @@ Menu.create({
       placeholderTag: 'li',
       renderer: () => Button.create({
         text: 'Авторизоваться',
-        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
+        classList: [
+          'btn',
+          'btn_rad_80',
+          'btn_brd_1',
+          'btn_style_snow',
+          'btn_size_s',
+          'btn_transparent',
+        ],
         listeners: { click: () => Dialog.show('dialog_signin') },
       }),
     },
@@ -266,7 +295,14 @@ Menu.create({
       placeholderTag: 'li',
       renderer: () => Button.create({
         text: 'Выход  ',
-        classList: ['btn', 'btn_rad_80', 'btn_brd_1', 'btn_style_snow', 'btn_size_s', 'btn_transparent'],
+        classList: [
+          'btn',
+          'btn_rad_80',
+          'btn_brd_1',
+          'btn_style_snow',
+          'btn_size_s',
+          'btn_transparent',
+        ],
         listeners: { click: () => User.logout() },
       }),
     },
@@ -301,5 +337,5 @@ window.addEventListener('resize', () => {
   }
 });
 
-watch('USER_SIGNIN', onUserLogged);
-watch('USER_LOGOUT', onUserLogout);
+watch(User.EVENT_USER_SIGNIN, onUserLogged);
+watch(User.EVENT_USER_LOGOUT, onUserLogout);

@@ -23,6 +23,10 @@ export default class IconButton extends Button {
     return this._iconClassList;
   }
 
+  get IconHtmlElement() {
+    return this.$('i')[0] || null;
+  }
+
   setTextAlign(align) {
     const textAlign = align.toLowerCase();
     if (textAlign !== IconButton.TEXT_ALIGN_RIGHT && textAlign !== IconButton.TEXT_ALIGN_LEFT) {

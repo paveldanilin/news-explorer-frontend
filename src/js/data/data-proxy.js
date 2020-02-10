@@ -27,7 +27,14 @@ export default class DataProxy extends Observable {
   }
 
   load(url, queryParams) {
-    this.fireEvent('beforeload', { url: url || this._url, method: this._method, queryParams: queryParams || this._queryParams });
+    this.fireEvent(
+      'beforeload',
+      {
+        url: url || this._url,
+        method: this._method,
+        queryParams: queryParams || this._queryParams,
+      },
+    );
     switch (this._method) {
       case 'GET':
         this.getHttpClient()

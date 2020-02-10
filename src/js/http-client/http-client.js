@@ -91,7 +91,8 @@ export default class HttpClient {
   }
 
   setResponseFormat(responseFormat) {
-    this._responseFormat = HttpClient.filterOptionResponseFormat(responseFormat || undefined);
+    this._responseFormat = HttpClient
+      .filterOptionResponseFormat(responseFormat || undefined);
     return this;
   }
 

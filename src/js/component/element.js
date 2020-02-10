@@ -24,7 +24,8 @@ export default class Element {
   }
 
   show() {
-    if (this._htmlElement && (this._htmlElement.style.display === null || this._htmlElement.style.display === 'none')) {
+    if (this._htmlElement
+      && (this._htmlElement.style.display === null || this._htmlElement.style.display === 'none')) {
       this._htmlElement.style.display = this._oldStyleDisplay;
     }
     return this;

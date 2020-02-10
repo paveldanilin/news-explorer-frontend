@@ -16,15 +16,6 @@ export default class Component extends Observable {
     this._placeholderTag = props.placeholderTag || 'span';
 
     this.attachListeners(this._listeners);
-
-    /*
-    if (Component.instances[this.id]) {
-      throw new Error(`
-        Could create component [${this.constructor.name}.<${this.Id}>].
-        Component with the same Id already exists ${Component.instances[this.Id].constructor.name}`
-      );
-    }
-     */
   }
 
   /**
@@ -100,7 +91,8 @@ export default class Component extends Observable {
   replaceElement(newHtmlElement, copyClassList) {
     const clone = document.querySelector(`[id="${this.Id}"]`).cloneNode(true);
     this._htmlElement = newHtmlElement;
-    this._containerHtmlElement.replaceChild(this._htmlElement, document.querySelector(`[id="${this.Id}"]`));
+    this._containerHtmlElement
+      .replaceChild(this._htmlElement, document.querySelector(`[id="${this.Id}"]`));
     this._htmlElement.setAttribute('id', this.Id);
     if (copyClassList === true) {
       clone.classList.forEach((cssClass) => this._htmlElement.classList.add(cssClass));
@@ -112,11 +104,6 @@ export default class Component extends Observable {
     if (!this.HtmlElement) {
       return this;
     }
-    /*
-    const node = this.HtmlElement;
-    while (node.firstChild) {
-      node.removeChild(node.firstChild);
-    } */
     Element.wrap(this.HtmlElement).removeChild();
     return this;
   }
